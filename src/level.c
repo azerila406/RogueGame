@@ -54,6 +54,48 @@ void initLevel(Level* L) {
     }
   }
 
+  DSU dsu;
+  int E[10][3], e;
+  bool ok;
+  do {
+    ok = 1;
+    initDSU(&dsu, L->num_room);
+    // randomly connect two rooms
+    e = rnd(L->num_room - 1, 10);
+    printf("NUMBER OF ROOMS: %d", L->num_room);
+    for (int i = 0; i < e; i++) {
+      int x = rnd(0, L->num_room - 1), y;
+      do {
+        y = rnd(0, L->num_room - 1);
+      } while (x == y);
+      assert(y != x);
+      int tx, ty;
+      do {
+        if (rand() & 1) {
+          tx = rnd(L->room[x].x + 1, L->room[x].x + L->room[x].height - 1);
+          ty = rand() & 1 ? getY0(&(L->room[x])) : getY1(&(L->room[x]));
+        } else {
+          ty = rnd(L->room[x].y + 1, L->room[x].y + L->room[x].width - 1);
+          tx = rand() & 1 ? getX0(&(L->room[x])) : getX1(&(L->room[x]));
+        }
+        printf("%d %d\n", tx, ty);
+      } while (L->tile[tx][ty].type == 7);
+      renderMsg("HERE");
+      // ok &= bfsDoor(L, tx, ty, y, 0);  //???
+      // merge(&dsu, x, y);
+      printf("MERGING %d %d\n", x, y);
+      E[i][0] = tx;
+      E[i][1] = ty;
+      E[i][2] = y;
+    }
+  } while (!ok);  // ||
+                  // dsu.connected_component != 1);  // graph of rooms are not
+                  // connected
+  return;
+  for (int i = 0; i < e; i++) {
+    bfsDoor(L, E[i][0], E[i][1], E[i][2], 1);
+  }
+
   for (int i = 0; i < L->num_room; ++i) {
     initRoom(L, &(L->room[i]));
   }
