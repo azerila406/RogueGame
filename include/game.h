@@ -5,6 +5,7 @@
 #include <ncurses.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
 
 #define MAX_ITEMS_PLAYER 100
@@ -25,7 +26,7 @@ typedef struct DSU {
 
 int gpr(DSU *, int);
 void merge(DSU *, int, int);
-void init_dsu(DSU *);
+void initDSU(DSU *, int);
 
 typedef struct Item {
 } Item;
@@ -83,12 +84,13 @@ typedef struct Game {
 
 /* Screen Fucntions */
 void initScreen();
-void render(Level *);
-void renderHUD(Level *);
+void renderMsg(char *string);
+void render(Level *level);
+void renderHUD(Level *level);
 
 /* Tile Fucntions*/
 char tileChar(Tile *);
-int whichRoomID(Level * level, int x, int y);
+int whichRoomID(Level *level, int x, int y);
 
 /* Player Functions*/
 void initPlayer(Player *, Level *, int);  // AFTER LEVEL INIT
@@ -96,10 +98,10 @@ void movePlayer(Level *, int, int);
 
 /* Room Functions*/
 void initRoom(Level *, Room *);
-int getX0(Room * room);
-int getX1(Room * room);
-int getY0(Room * room);
-int getY1(Room * room);
+int getX0(Room *room);
+int getX1(Room *room);
+int getY0(Room *room);
+int getY1(Room *room);
 
 /* Level Functions*/
 void initLevel(Level *);
@@ -112,13 +114,13 @@ char *to_string(char);
 int rnd(int L, int R);
 int max(int, int);
 int min(int, int);
-void rand_permute(int * a, int n);
+void rand_permute(int *a, int n);
 
 /* Game Logic */
 void gameloop();
 void processInput(int, Level *);
 
 /* BFS functions*/
-void bfsDoor(Level * level, int sx, int sy, int roomID, bool rep);
+bool bfsDoor(Level *level, int sx, int sy, int roomID, bool rep);
 
 #endif
