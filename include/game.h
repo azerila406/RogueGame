@@ -23,9 +23,9 @@ typedef struct DSU {
   int connected_component;
 } DSU;
 
-int gpr(DSU*, int);
-void merge(DSU*, int, int);
-void init_dsu(DSU*);
+int gpr(DSU *, int);
+void merge(DSU *, int, int);
+void init_dsu(DSU *);
 
 typedef struct Item {
 } Item;
@@ -41,7 +41,7 @@ typedef struct Player {
   Item items[MAX_ITEMS_PLAYER];
 } Player;
 
-extern Player* P;
+extern Player *P;
 
 typedef struct Room {
   int type;
@@ -58,11 +58,12 @@ typedef struct Tile {
   int num_item;
   Item items[MAX_ITEMS_TILE];
   bool visible;
-  Room* room;
+  Room *room;
   int type;
   /*
   Type is floor, wall, door(!!)
   1 -> vert wall && corner |
+  2 -> corridor #
   3 -> horz wall -
   5 -> nothing
   7 -> door (normal door)
@@ -82,35 +83,42 @@ typedef struct Game {
 
 /* Screen Fucntions */
 void initScreen();
-void render(Level*);
-void renderHUD(Level*);
+void render(Level *);
+void renderHUD(Level *);
 
 /* Tile Fucntions*/
-char tileChar(Tile*);
-int whichRoomID(Level*, int, int);
+char tileChar(Tile *);
+int whichRoomID(Level * level, int x, int y);
 
 /* Player Functions*/
-void initPlayer(Player*, Level*, int);  // AFTER LEVEL INIT
-void movePlayer(Level*, int, int);
+void initPlayer(Player *, Level *, int);  // AFTER LEVEL INIT
+void movePlayer(Level *, int, int);
 
 /* Room Functions*/
-void initRoom(Level*, Room*);
+void initRoom(Level *, Room *);
+int getX0(Room * room);
+int getX1(Room * room);
+int getY0(Room * room);
+int getY1(Room * room);
 
 /* Level Functions*/
-void initLevel(Level*);
+void initLevel(Level *);
 
 /* Game Fucntions */
-void initGame(Game*);
+void initGame(Game *);
 
 /* Util Functions*/
-char* to_string(char);
-int rnd(int, int);
+char *to_string(char);
+int rnd(int L, int R);
 int max(int, int);
 int min(int, int);
-void rand_permute(int*, int);
+void rand_permute(int * a, int n);
 
 /* Game Logic */
 void gameloop();
-void processInput(int, Level*);
+void processInput(int, Level *);
+
+/* BFS functions*/
+void bfsDoor(Level * level, int sx, int sy, int roomID, bool rep);
 
 #endif
