@@ -77,6 +77,7 @@ void renderHUD(Level*);
 
 /* Tile Fucntions*/
 char tileChar(Tile*);
+int whichRoomID(Level*, int, int);
 
 /* Player Functions*/
 void initPlayer(Player*, Level*, int);  // AFTER LEVEL INIT
