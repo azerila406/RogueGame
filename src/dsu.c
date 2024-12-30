@@ -1,14 +1,19 @@
 #include "game.h"
 
-void init_dsu(DSU* dsu, int n) {
+void initDSU(DSU* dsu, int n) {
   for (int i = 0; i < n; i++) dsu->dpr[i] = i;
   dsu->connected_component = n;
 }
 
 int gpr(DSU* dsu, int x) {
-  return dsu->dpr[x] = (x == dsu->dpr[x] ? x : gpr(dsu, x));
+  assert(x < MAX_ROOMS_PER_LEVEL);
+  return x == dsu->dpr[x] ? x : (dsu->dpr[x] = gpr(dsu, x));
 }
 
 void merge(DSU* dsu, int u, int v) {
-  dsu->dpr[gpr(dsu, u)] = dsu->dpr[gpr(dsu, v)];
+  u = gpr(dsu, u);
+  v = gpr(dsu, v);
+  if (u == v) return;
+  --dsu->connected_component;
+  dsu->dpr[u] = v;
 }
