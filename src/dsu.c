@@ -6,8 +6,8 @@ void initDSU(DSU* dsu, int n) {
 }
 
 int gpr(DSU* dsu, int x) {
-  assert(x < MAX_ROOMS_PER_LEVEL);
-  return x == dsu->dpr[x] ? x : (dsu->dpr[x] = gpr(dsu, x));
+  assert(0 <= x && x < MAX_ROOMS_PER_LEVEL);
+  return x == dsu->dpr[x] ? x : (dsu->dpr[x] = gpr(dsu, dsu->dpr[x]));
 }
 
 void merge(DSU* dsu, int u, int v) {
