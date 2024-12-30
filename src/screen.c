@@ -15,6 +15,7 @@ void renderHUD(Level *l) {
 
 /* Render each Frame */
 void render(Level *l) {
+  renderHUD(l);
   for (int i = 0; i < HEIGHT; ++i) {
     for (int j = 0; j < WIDTH; ++j) {
       Tile *t = &(l->tile[i][j]);

@@ -1,6 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include <assert.h>
 #include <ncurses.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -12,6 +13,10 @@
 #define HEIGHT 30
 #define WIDTH 100
 #define MAX_LEVELS 4
+#define MAX_ROOMS_PER_LEVEL 7
+#define MIN_ROOMS_PER_LEVEL 6
+#define MIN_INTERIOR_OF_ROOM 6
+#define MAX_INTERIOR_OF_ROOM 15
 
 typedef struct Item {
 } Item;
@@ -74,8 +79,11 @@ void renderHUD(Level*);
 char tileChar(Tile*);
 
 /* Player Functions*/
-void initPlayer(Player*, Level*, int, int, int);
+void initPlayer(Player*, Level*, int);  // AFTER LEVEL INIT
 void movePlayer(Level*, int, int);
+
+/* Room Functions*/
+void initRoom(Level*, Room*);
 
 /* Level Functions*/
 void initLevel(Level*);

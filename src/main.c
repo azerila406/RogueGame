@@ -10,7 +10,7 @@ void gameloop() {
   P = (Player *)malloc(sizeof(Player));
   G = (Game *)malloc(sizeof(Game));
   initLevel(&(G->lvl[0]));
-  initPlayer(P, &(G->lvl[0]), 5, 5, DIFF_LEVELS[DIFF_LEVEL]);
+  initPlayer(P, &(G->lvl[0]), DIFF_LEVELS[DIFF_LEVEL]);
 
   render(&(G->lvl[0]));
   int ch = -1;
