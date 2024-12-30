@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -lncurses -I$(IDIR) -g
+CFLAGS = -Wall -lncurses -I$(IDIR) -g -fsanitize=undefined
 
 IDIR = ./include/
 SRCDIR = ./src/
