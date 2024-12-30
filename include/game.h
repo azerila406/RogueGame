@@ -10,7 +10,6 @@
 
 #define MAX_ITEMS_PLAYER 100
 #define MAX_ITEMS_TILE 100
-#define MAX_ROOMS 6
 #define HEIGHT 30
 #define WIDTH 100
 #define MAX_LEVELS 4
@@ -74,7 +73,7 @@ typedef struct Tile {
 typedef struct Level {
   int lvl_num;
   int num_room;
-  Room room[MAX_ROOMS];
+  Room room[MAX_ROOMS_PER_LEVEL];
   Tile tile[HEIGHT][WIDTH];
 } Level;
 
