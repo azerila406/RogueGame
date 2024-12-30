@@ -14,3 +14,15 @@ int rnd(int l, int r) {
 int max(int x, int y) { return x < y ? y : x; }
 
 int min(int x, int y) { return x < y ? x : y; }
+
+void swap(int *x, int *y) {
+  int t = *x;
+  *x = *y;
+  *y = t;
+}
+
+void rand_permute(int *a, int n) {
+  for (int i = 1; i < n; i++) {
+    swap(a + i, a + rnd(0, i - 1));
+  }
+}

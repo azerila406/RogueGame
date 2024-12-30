@@ -61,10 +61,11 @@ typedef struct Tile {
   Room* room;
   int type;
   /*
-  Type is floor, wall, door(?)
+  Type is floor, wall, door(!!)
   1 -> vert wall && corner |
   3 -> horz wall -
   5 -> nothing
+  7 -> door (normal door)
   */
 } Tile;
 
@@ -106,6 +107,7 @@ char* to_string(char);
 int rnd(int, int);
 int max(int, int);
 int min(int, int);
+void rand_permute(int*, int);
 
 /* Game Logic */
 void gameloop();
