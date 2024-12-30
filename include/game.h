@@ -18,6 +18,15 @@
 #define MIN_INTERIOR_OF_ROOM 6
 #define MAX_INTERIOR_OF_ROOM 15
 
+typedef struct DSU {
+  int dpr[MAX_ROOMS_PER_LEVEL];
+  int connected_component;
+} DSU;
+
+int gpr(DSU*, int);
+void merge(DSU*, int, int);
+void init_dsu(DSU*);
+
 typedef struct Item {
 } Item;
 
