@@ -84,7 +84,7 @@ typedef struct Game {
 
 /* Screen Fucntions */
 void initScreen();
-void renderMsg(char *string);
+void renderMsg(const char *string);
 void render(Level *level);
 void renderHUD(Level *level);
 
