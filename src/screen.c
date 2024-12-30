@@ -3,6 +3,7 @@
 int getColor(Tile *t) {
   switch (t->type) {
     case 0:
+      return 2;
     case 5:
       return 1;
     case 1:
