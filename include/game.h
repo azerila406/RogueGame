@@ -114,6 +114,7 @@ int rnd(int L, int R);
 int max(int, int);
 int min(int, int);
 void rand_permute(int *a, int n);
+char *randomPass(int n);
 
 /* Game Logic */
 void gameloop();
@@ -123,6 +124,8 @@ void processInput(int, Level *);
 bool bfsDoor(Level *level, int sx, int sy, int roomID, bool rep);
 
 /*MENU*/
+bool checkInfo(const char *s);
+char *getInput(const char *msg, bool is_echo);
 int createMenu(char *s[], char *msg[], int n);
 void renderMenu(char *s[], char *msg[], int n, int x);
 void gameMenu();

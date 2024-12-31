@@ -1,10 +1,18 @@
 #include "game.h"
 
+char *getInput(const char *msg, bool enable_echo) {
+  clear();
+  renderMsg(msg);
+  char *s = (char *)malloc(100 * sizeof(char));
+  if (enable_echo) echo();
+  getnstr(s, 99);
+  if (enable_echo) noecho();
+  return s;
+}
+
 void renderMenu(char *s[], char *msg[], int n, int x) {
   clear();
-  attron(COLOR_PAIR(1));
-  mvprintw(0, 0, msg[x]);
-  attroff(COLOR_PAIR(1));
+  renderMsg(msg[x]);
 
   for (int i = 0; i < n; i++) {
     if (i == x) attron(A_REVERSE | A_BOLD);

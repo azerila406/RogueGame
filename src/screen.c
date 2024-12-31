@@ -54,9 +54,9 @@ void initScreen() {
 }
 
 void renderMsg(const char *s) {
-  attron(COLOR_PAIR(2));
+  attron(COLOR_PAIR(1));
   mvprintw(0, 1, s);
-  attroff(COLOR_PAIR(2));
+  attroff(COLOR_PAIR(1));
 }
 
 void renderHUD(Level *l) {
