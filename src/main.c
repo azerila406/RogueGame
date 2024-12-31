@@ -7,6 +7,7 @@ Game *G;
 Player *P;
 
 void gameloop() {
+  clear();
   P = (Player *)malloc(sizeof(Player));
   G = (Game *)malloc(sizeof(Game));
   initLevel(&(G->lvl[0]));
@@ -22,7 +23,8 @@ void gameloop() {
 
 signed main() {
   initScreen();
-  gameloop();
+  mainMenu();
+  // gameloop();
   endwin();
   return 0;
 }

@@ -9,7 +9,7 @@ int getColor(Tile *t) {
     case 1:
     case 3:
     case 2:
-    case 7:
+    case 6:
       return 4;
     default:
       exit(5);
@@ -28,7 +28,7 @@ char tileChar(Tile *t) {
       return '-';
     case 5:
       return ' ';
-    case 7:
+    case 6:
       return '+';
     default:
       exit(5);
