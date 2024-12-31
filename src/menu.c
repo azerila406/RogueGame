@@ -49,3 +49,28 @@ void gameMenu() {
     if (x == 0) gameloop();
   }
 }
+
+void userMenu() {
+  char *s[4] = {"Login", "Register", "Forget Password", "Scoreboard"};
+  char *msg[4] = {"", "", "", ""};
+
+  while (1) {
+    int x = createMenu(s, msg, 4);
+    switch (x) {
+      case -1:
+        return;
+      case 0:
+        userLogin();
+        continue;
+      case 1:
+        userRegister();
+        continue;
+      case 2:
+        userForgetPass();
+        continue;
+      case 3:
+        userScoreboard();
+        continue;
+    }
+  }
+}

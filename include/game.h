@@ -126,5 +126,12 @@ bool bfsDoor(Level *level, int sx, int sy, int roomID, bool rep);
 int createMenu(char *s[], char *msg[], int n);
 void renderMenu(char *s[], char *msg[], int n, int x);
 void gameMenu();
+void userMenu();
+
+/* User management */
+void userLogin();
+void userRegister();
+void userForgetPass();
+void userScoreboard();
 
 #endif
