@@ -137,4 +137,7 @@ void userRegister();
 void userForgetPass();
 void userScoreboard();
 
+/* Check if the input is corrct */
+bool isCorrectFormEmail(const char *email);
+
 #endif

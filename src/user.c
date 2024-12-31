@@ -47,7 +47,7 @@ void userRegister() {
   char *email;
   do {
     email = getInput("Enter Your E-Mail: ", 1);
-  } while (!confirmInfo(email));  // TODO CHECK IF EMAIL IS IN CORRECT FORM
+  } while (!confirmInfo(email) || !isCorrectFormEmail(email));  // TODO CHECK IF EMAIL IS IN CORRECT FORM
 
   char *pass, *pass2;
   if (checkInfo("Do you want randomly generated password? (y/N)")) {
