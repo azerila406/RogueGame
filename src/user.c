@@ -60,6 +60,9 @@ void userRegister() {
       pass2 = getInput("Repeat Your Password: ", 0);
     } while (strcmp(pass, pass2));
   }
+  clear();
+  renderMsg("Registered Succesfully... Log in to continue");
+  getch();
 }
 void userForgetPass() {}
 void userScoreboard() {}
