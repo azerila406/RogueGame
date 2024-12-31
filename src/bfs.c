@@ -38,7 +38,7 @@ void BFS(Level *l, int sx, int sy, bool (*check)(Level *, int, int)) {
 
 bool checkDoors(Level *L, int x, int y) {
   int t = L->tile[x][y].type;
-  if (t == 1 || t == 3 || t == 7) return 0;
+  if (t == 1 || t == 3 || t == 6) return 0;
   return 1;
 }
 
@@ -59,7 +59,7 @@ bool bfsDoor(Level *l, int sx, int sy, int c, bool replace) {
   }
   if (x == -1) return 0;
   if (replace) {
-    l->tile[x][y].type = 7;
+    l->tile[x][y].type = 6;
     while (pr[x][y][0] != -1) {
       int tx = pr[x][y][0];
       int ty = pr[x][y][1];
@@ -67,7 +67,7 @@ bool bfsDoor(Level *l, int sx, int sy, int c, bool replace) {
       y = ty;
       l->tile[x][y].type = 2;
     }
-    l->tile[x][y].type = 7;
+    l->tile[x][y].type = 6;
     assert(x == sx && y == sy);
   }
   return 1;

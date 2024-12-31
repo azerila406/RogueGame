@@ -66,7 +66,7 @@ typedef struct Tile {
   2 -> corridor #
   3 -> horz wall -
   5 -> nothing
-  7 -> door (normal door)
+  6 -> door (normal door)
   */
 } Tile;
 
@@ -121,5 +121,10 @@ void processInput(int, Level *);
 
 /* BFS functions*/
 bool bfsDoor(Level *level, int sx, int sy, int roomID, bool rep);
+
+/*MENU*/
+int createMenu(char *s[], char *msg[], int n);
+void renderMenu(char *s[], char *msg[], int n, int x);
+void mainMenu();
 
 #endif

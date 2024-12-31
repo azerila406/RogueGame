@@ -16,8 +16,9 @@ void initPlayer(Player* P, Level* L, int max_health) {
 }
 
 void movePlayer(Level* L, int x, int y) {
-  if (x < 0 || x >= HEIGHT || y < 0 || y >= WIDTH || (L->tile[x][y].type & 1))
-    return;
+  if (x < 0 || x >= HEIGHT || y < 0 || y >= WIDTH) return;
+  int t = L->tile[x][y].type;
+  if (t & 1) return;
   P->x = x;
   P->y = y;
 }
