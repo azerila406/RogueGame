@@ -17,3 +17,6 @@ bool isCorrectFormEmail(const char *s) {
   }
   return at_sign == 1 && dot == 1;
 }
+
+// TODO
+bool doesUserExists(const char *user) { return 0; }
