@@ -62,6 +62,7 @@ void renderMsg(const char *s) {
 void renderMsgAndWait(const char *s) {
   clear();
   renderMsg(s);
+  move(0, 1);
   getch();
 }
 
