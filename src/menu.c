@@ -39,7 +39,7 @@ int createMenu(char *s[], char *msg[], int n) {
   return -1;
 }
 
-void mainMenu() {
+void gameMenu() {
   char *s[2] = {"New Game", "Continue Game"};
   char *msg[2] = {"Starts a New Game", "Continues previous game if exists"};
   while (1) {

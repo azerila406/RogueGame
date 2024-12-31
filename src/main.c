@@ -23,7 +23,7 @@ void gameloop() {
 
 signed main() {
   initScreen();
-  mainMenu();
+  gameMenu();
   // gameloop();
   endwin();
   return 0;
