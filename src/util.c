@@ -26,3 +26,14 @@ void rand_permute(int *a, int n) {
     swap(a + i, a + rnd(0, i - 1));
   }
 }
+
+const char PASS_CHAR[] =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$^&*()-_="
+    "+[]{}|;:,.<>?";
+
+char *randomPass(int n) {
+  const int SZ = strlen(PASS_CHAR);
+  char *pass = (char *)malloc(sizeof(char) * n);
+  for (int i = 0; i < n; i++) pass[i] = PASS_CHAR[rand() % SZ];
+  return pass;
+}
