@@ -60,7 +60,7 @@ void userRegister() {
     do {
       pass = getInput("Enter Your Password: ", 0);
       pass2 = getInput("Repeat Your Password: ", 0);
-    } while (strcmp(pass, pass2));
+    } while (strcmp(pass, pass2) || !isCorrectFormPass(pass));
   }
   clear();
   renderMsg("Registered Succesfully... Log in to continue");

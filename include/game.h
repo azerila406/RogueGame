@@ -139,6 +139,7 @@ void userScoreboard();
 
 /* Check if the input is corrct */
 bool isCorrectFormEmail(const char *email);
+bool isCorrectFormPass(const char *password);
 bool doesUserExists(const char *user);
 
 #endif

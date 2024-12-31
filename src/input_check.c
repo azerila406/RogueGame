@@ -18,5 +18,16 @@ bool isCorrectFormEmail(const char *s) {
   return at_sign == 1 && dot == 1;
 }
 
+bool isCorrectFormPass(const char *pass) {
+  int n = strlen(pass);
+  int num = 0, bigAlpha = 0, smallAlpha = 0;
+  for (int i = 0; i < n; ++i) {
+    num += '0' <= pass[i] && pass[i] <= '9';
+    bigAlpha += 'A' <= pass[i] && pass[i] <= 'Z';
+    smallAlpha += 'a' <= pass[i] && pass[i] <= 'z';
+  }
+  return n >= 7 && num && bigAlpha && smallAlpha;
+}
+
 // TODO
 bool doesUserExists(const char *user) { return 0; }
