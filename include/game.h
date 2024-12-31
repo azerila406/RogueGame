@@ -84,6 +84,7 @@ typedef struct Game {
 /* Screen Fucntions */
 void initScreen();
 void renderMsg(const char *string);
+void renderMsgAndWait(const char *string);
 void render(Level *level);
 void renderHUD(Level *level);
 
@@ -138,8 +139,8 @@ void userForgetPass();
 void userScoreboard();
 
 /* Check if the input is corrct */
-bool isCorrectFormEmail(const char *email);
-bool isCorrectFormPass(const char *password);
-bool doesUserExists(const char *user);
+bool isCorrectFormEmail(const char *email, bool error);
+bool isCorrectFormPass(const char *password, bool error);
+bool doesUserExists(const char *user, bool error);
 
 #endif
