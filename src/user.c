@@ -25,7 +25,19 @@ bool confirmInfo(const char *s) {
   return checkInfo(t);
 }
 
-void userLogin() {}
+bool isUserCorrect(const char *user, const char *pass) { return 1; }  // TODO
+
+void userLogin() {
+  char *user, *pass;
+  do {
+    user = getInput("Enter Your Username: ", 1);
+    pass = getInput("Enter Your Password: ", 0);
+  } while (!isUserCorrect(user, pass));
+  clear();
+  renderMsg("Logged in Successfully...");
+  getch();
+  gameMenu();
+}
 void userRegister() {
   char *user;
   do {
