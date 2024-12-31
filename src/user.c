@@ -12,8 +12,6 @@ bool checkInfo(const char *s) {
         return 0;
       case 'y':
       case 'Y':
-      case '\n':
-      case '\r':
         return 1;
     }
   }
@@ -21,7 +19,7 @@ bool checkInfo(const char *s) {
 
 bool confirmInfo(const char *s) {
   char t[200];
-  sprintf(t, "Do you confirm ? %s (Y/n)", s);
+  sprintf(t, "Do you confirm ? %s (y/n)", s);
   return checkInfo(t);
 }
 
@@ -42,17 +40,15 @@ void userRegister() {
   char *user;
   do {
     user = getInput("Enter Your Username: ", 1);
-  } while (!confirmInfo(user) || doesUserExists(user));
+  } while (doesUserExists(user, 1) || !confirmInfo(user));
 
   char *email;
   do {
     email = getInput("Enter Your E-Mail: ", 1);
-  } while (
-      !confirmInfo(email) ||
-      !isCorrectFormEmail(email));  // TODO CHECK IF EMAIL IS IN CORRECT FORM
+  } while (!isCorrectFormEmail(email, 1) || !confirmInfo(email));
 
   char *pass, *pass2;
-  if (checkInfo("Do you want randomly generated password? (y/N)")) {
+  if (checkInfo("Do you want randomly generated password? (y/n)")) {
     do {
       pass = randomPass(rnd(9, 20));
     } while (!confirmInfo(pass));
@@ -60,7 +56,7 @@ void userRegister() {
     do {
       pass = getInput("Enter Your Password: ", 0);
       pass2 = getInput("Repeat Your Password: ", 0);
-    } while (strcmp(pass, pass2) || !isCorrectFormPass(pass));
+    } while (!isCorrectFormPass(pass, 1) || strcmp(pass, pass2));
   }
   clear();
   renderMsg("Registered Succesfully... Log in to continue");
