@@ -59,6 +59,12 @@ void renderMsg(const char *s) {
   attroff(COLOR_PAIR(1));
 }
 
+void renderMsgAndWait(const char *s) {
+  clear();
+  renderMsg(s);
+  getch();
+}
+
 void renderHUD(Level *l) {
   attron(COLOR_PAIR(1));
   mvprintw(HEIGHT + 2, 0,
