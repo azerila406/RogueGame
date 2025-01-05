@@ -1,6 +1,5 @@
 #include "game.h"
 
-
 Game *G;
 Player *P;
 
@@ -8,7 +7,7 @@ void gameloop() {
   clear();
 
   initGame();
-  
+
   render(&(G->lvl[G->cur]));
   int ch = -1;
   while ((ch = getch()) != 'q') {
@@ -19,8 +18,9 @@ void gameloop() {
 
 signed main() {
   initScreen();
-  userMenu();
-  // gameloop();
+  gameMenu();
+  // userMenu();
+  //  gameloop();
   endwin();
   return 0;
 }

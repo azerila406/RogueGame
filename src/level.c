@@ -86,6 +86,11 @@ void initLevel(Level* L) {
   initRoomHallway(L);
 }
 
-void initLevelWithARoom(Level *L, Room *R) {
-
+void initLevelWithARoom(Level* L, Room* R) {
+  do {
+    initRooms(L);
+    memcpy(&(L->room[0]), R, sizeof(Room));
+    // TODO maybe change type of ROOM?
+  } while (roomsCollide(L->room, L->num_room));
+  initRoomHallway(L);
 }
