@@ -109,10 +109,10 @@ int getY0(Room *room);
 int getY1(Room *room);
 
 /* Level Functions*/
-void initLevel(Level *);
+void initLevel(Level *lvl);
 
 /* Game Fucntions */
-void initGame(Game *);
+void initGame();
 
 /* Util Functions*/
 char *to_string(char);

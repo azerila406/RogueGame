@@ -18,7 +18,7 @@ bool roomsCollide(Room r[], int n) {
   return 0;
 }
 
-void initLevel(Level* L) {
+void initRooms(Level* L) {
   for (int i = 0; i < HEIGHT; ++i) {
     for (int j = 0; j < WIDTH; ++j) {
       L->tile[i][j].type = 5;
@@ -26,15 +26,19 @@ void initLevel(Level* L) {
   }
   L->num_room = rnd(MIN_ROOMS_PER_LEVEL, MAX_ROOMS_PER_LEVEL);
 
+  for (int i = 0; i < L->num_room; ++i) {
+    L->room[i].width = rnd(MIN_INTERIOR_OF_ROOM, MAX_INTERIOR_OF_ROOM);
+    L->room[i].height = rnd(MIN_INTERIOR_OF_ROOM, MAX_INTERIOR_OF_ROOM);
+    L->room[i].x = rnd(2, HEIGHT - L->room[i].height - 2);
+    L->room[i].y = rnd(2, WIDTH - L->room[i].width - 2);
+    L->room[i].type = 0;
+    L->room[i].visible = 0;
+  }
+}
+
+void initLevel(Level* L) {
   do {
-    for (int i = 0; i < L->num_room; ++i) {
-      L->room[i].width = rnd(MIN_INTERIOR_OF_ROOM, MAX_INTERIOR_OF_ROOM);
-      L->room[i].height = rnd(MIN_INTERIOR_OF_ROOM, MAX_INTERIOR_OF_ROOM);
-      L->room[i].x = rnd(2, HEIGHT - L->room[i].height - 2);
-      L->room[i].y = rnd(2, WIDTH - L->room[i].width - 2);
-      L->room[i].type = 0;
-      L->room[i].visible = 0;
-    }
+    initRooms(L);
   } while (roomsCollide(L->room, L->num_room));
 
   for (int i = 0; i < L->num_room; ++i) {

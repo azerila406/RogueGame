@@ -1,14 +1,14 @@
 #include "game.h"
 
-void initGame(Game *g) {
-  initLevel(&(g->lvl[0]));
-  g->lvl[0].lvl_num = 0;
-  // TODO DEBUGGING
-  /*
-  for (int i = 0; i < MAX_LEVELS; i++) {
+#define DIFF_LEVEL 3
+const int DIFF_LEVELS[4] = {100, 50, 25, 10};
 
-  }
-  */
+void initGame() {
+  P = (Player *)malloc(sizeof(Player));
+  G = (Game *)malloc(sizeof(Game));
+  G->cur = 0;
+  initLevel(&(G->lvl[0]));
+  initPlayer(P, &(G->lvl[G->cur]), DIFF_LEVELS[DIFF_LEVEL]);
 }
 
 void processInput(int x, Level *L) {
