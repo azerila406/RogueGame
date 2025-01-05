@@ -42,6 +42,7 @@ typedef struct Player {
 } Player;
 
 extern Player *P;
+extern Game *G;
 
 typedef struct Room {
   int type;
@@ -79,6 +80,7 @@ typedef struct Level {
 
 typedef struct Game {
   Level lvl[MAX_LEVELS];
+  int cur;
 } Game;
 
 /* Screen Fucntions */

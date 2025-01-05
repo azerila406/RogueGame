@@ -10,14 +10,15 @@ void gameloop() {
   clear();
   P = (Player *)malloc(sizeof(Player));
   G = (Game *)malloc(sizeof(Game));
-  initLevel(&(G->lvl[0]));
-  initPlayer(P, &(G->lvl[0]), DIFF_LEVELS[DIFF_LEVEL]);
+  G->cur = 0;
+  initLevel(&(G->lvl[G->cur]));
+  initPlayer(P, &(G->lvl[G->cur]), DIFF_LEVELS[DIFF_LEVEL]);
 
-  render(&(G->lvl[0]));
+  render(&(G->lvl[G->cur]));
   int ch = -1;
   while ((ch = getch()) != 'q') {
-    processInput(ch, &(G->lvl[0]));
-    render(&(G->lvl[0]));
+    processInput(ch, &(G->lvl[G->cur]));
+    render(&(G->lvl[G->cur]));
   }
 }
 
