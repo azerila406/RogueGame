@@ -111,6 +111,10 @@ int getY1(Room *room);
 
 /* Level Functions*/
 void initLevel(Level *lvl);
+void initLevelWithARoom(Level *lvl, Room *R);
+void initHallway(Level *lvl);
+void initRooms(Level *lvl);
+void initRoomHallway(Level *lvl);
 
 /* Game Fucntions */
 void initGame();

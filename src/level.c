@@ -36,15 +36,7 @@ void initRooms(Level* L) {
   }
 }
 
-void initLevel(Level* L) {
-  do {
-    initRooms(L);
-  } while (roomsCollide(L->room, L->num_room));
-
-  for (int i = 0; i < L->num_room; ++i) {
-    initRoom(L, &(L->room[i]));
-  }
-
+void initHallway(Level* L) {
   DSU dsu;
   int E[10][3], e;
   bool ok;
@@ -78,4 +70,22 @@ void initLevel(Level* L) {
   for (int i = 0; i < e; i++) {
     bfsDoor(L, E[i][0], E[i][1], E[i][2], 1);
   }
+}
+
+void initRoomHallway(Level* L) {
+  for (int i = 0; i < L->num_room; ++i) {
+    initRoom(L, &(L->room[i]));
+  }
+  initHallway(L);
+}
+
+void initLevel(Level* L) {
+  do {
+    initRooms(L);
+  } while (roomsCollide(L->room, L->num_room));
+  initRoomHallway(L);
+}
+
+void initLevelWithARoom(Level *L, Room *R) {
+
 }
