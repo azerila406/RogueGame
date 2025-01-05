@@ -10,9 +10,11 @@ int getColor(Tile *t) {
     case 3:
     case 2:
     case 6:
+    case 8:
+    case 10:
       return 4;
     default:
-      exit(5);
+      exit(17);
   }
 }
 
@@ -30,8 +32,12 @@ char tileChar(Tile *t) {
       return ' ';
     case 6:
       return '+';
+    case 8:
+      return '^';
+    case 10:
+      return 'v';
     default:
-      exit(5);
+      exit(18);
   }
 }
 
