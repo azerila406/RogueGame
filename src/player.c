@@ -22,3 +22,16 @@ void movePlayer(Level* L, int x, int y) {
   P->x = x;
   P->y = y;
 }
+
+void moveStairs(Level* L, int where) {
+  int x = P->x, y = P->y, t = L->tile[x][y].type;
+  if (where == -1) {
+    if (t == 10) {
+      G->cur--;
+    }
+  } else if (where == +1) {
+    if (t == 8) {
+      G->cur++;
+    }
+  }
+}

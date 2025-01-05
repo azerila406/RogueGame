@@ -68,6 +68,8 @@ typedef struct Tile {
   3 -> horz wall -
   5 -> nothing
   6 -> door (normal door)
+  8 -> upstairs
+  10 -> downstairs
   */
 } Tile;
 
@@ -97,6 +99,7 @@ int whichRoomID(Level *level, int x, int y);
 /* Player Functions*/
 void initPlayer(Player *, Level *, int);  // AFTER LEVEL INIT
 void movePlayer(Level *, int, int);
+void moveStairs(Level *lvl, int where);
 
 /* Room Functions*/
 void initRoom(Level *, Room *);

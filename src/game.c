@@ -29,6 +29,11 @@ void processInput(int x, Level *L) {
     case 'd':
       movePlayer(L, P->x, P->y + 1);
       return;
+    case KEY_UP:
+      moveStairs(L, +1);
+      return;
+    case KEY_DOWN:
+      moveStairs(L, -1);
+      return;
   }
-  exit(6);
 }
