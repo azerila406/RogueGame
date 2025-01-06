@@ -1,5 +1,7 @@
 #include "game.h"
 
+char *top_msg = "";
+
 int getColor(Tile *t) {
   switch (t->type) {
     case 0:
@@ -59,7 +61,14 @@ void initScreen() {
   refresh();
 }
 
+void clearMsg() {
+  attron(COLOR_PAIR(1));
+  for (int i = 0; i < WIDTH; ++i) mvprintw(0, i, " ");
+  attroff(COLOR_PAIR(1));
+}
+
 void renderMsg(const char *s) {
+  clearMsg();
   attron(COLOR_PAIR(1));
   mvprintw(0, 1, s);
   attroff(COLOR_PAIR(1));
@@ -73,6 +82,8 @@ void renderMsgAndWait(const char *s) {
 }
 
 void renderHUD(Level *l) {
+  clearMsg();
+  renderMsg(top_msg);
   attron(COLOR_PAIR(1));
   mvprintw(
       HEIGHT + 2, 0,
@@ -108,4 +119,8 @@ void render(Level *l) {
   mvprintw(P->x + 1, P->y + 1, "@");
   move(P->x + 1, P->y + 1);
   attroff(COLOR_PAIR(1));
+
+  top_msg = "";
 }
+
+void setTopMsg(char *s) { top_msg = s; }

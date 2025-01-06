@@ -18,6 +18,7 @@ void gameloop() {
 }
 
 signed main() {
+  srand(time(0));
   initScreen();
   gameMenu();
   // userMenu();

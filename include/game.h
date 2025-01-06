@@ -126,6 +126,8 @@ void initRoomHallway(Level *lvl);
 
 /* Game Fucntions */
 void initGame();
+void clearMsg();
+void setTopMsg(char *str);
 
 /* Util Functions*/
 char *to_string(char);

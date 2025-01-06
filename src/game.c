@@ -58,5 +58,8 @@ void processInput(int x, Level *L) {
     case 'M':
       toggle_map_status ^= 1;
       return;
+    default:
+      setTopMsg("Illegal Command");
+      return;
   }
 }
