@@ -6,6 +6,7 @@ int getColor(Tile *t) {
   switch (t->type) {
     case 0:
       return 2;
+    case 16:
     case 5:
       return 1;
     case 1:
@@ -17,6 +18,8 @@ int getColor(Tile *t) {
     case 12:
     case 14:
       return 4;
+    case 18:
+      return 3;
     default:
       exit(17);
   }
@@ -42,6 +45,10 @@ char tileChar(Tile *t) {
       return '^';
     case 10:
       return 'v';
+    case 16:
+      return '&';
+    case 18:
+      return '@';
     default:
       exit(18);
   }
@@ -61,6 +68,7 @@ void initScreen() {
   init_pair(2, COLOR_WHITE, COLOR_BLACK);
   init_pair(3, COLOR_RED, COLOR_BLACK);
   init_pair(4, COLOR_CYAN, COLOR_BLACK);
+  init_pair(5, COLOR_GREEN, COLOR_BLACK);
 
   refresh();
 }
