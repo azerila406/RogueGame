@@ -79,8 +79,8 @@ typedef struct Tile {
   10 -> downstairs
   12 -> hidden normal door |
   14 -> hidden normal door -
-  16 -> secret generator &
-  18 -> hidden secret door @
+  16 -> pass generator &
+  18 -> pass door @
   */
 } Tile;
 
