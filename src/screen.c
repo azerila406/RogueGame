@@ -1,6 +1,7 @@
 #include "game.h"
 
 char *top_msg = "";
+clock_t timer_clock;
 
 int getColor(Tile *t) {
   switch (t->type) {
@@ -135,4 +136,12 @@ void render(Level *l) {
   top_msg = "";
 }
 
-void setTopMsg(char *s) { top_msg = s; }
+void setTopMsg(char *s) {
+  top_msg = s;
+  timer_clock = clock();
+}
+
+void checkTimerMsg() {
+  clock_t t = clock();
+  if ((1.0 * t - timer_clock) / CLOCKS_PER_SEC >= MSG_RESET_TIME) top_msg = "";
+}

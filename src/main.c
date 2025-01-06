@@ -9,6 +9,7 @@ void gameloop() {
   initGame();
 
   while (1) {
+    checkTimerMsg();
     processUnseen(&(G->lvl[G->cur]));
     render(&(G->lvl[G->cur]));
     int ch = getch();

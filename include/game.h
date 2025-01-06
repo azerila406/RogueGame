@@ -20,6 +20,7 @@
 #define MAX_INTERIOR_OF_ROOM 15
 #define MIN_HALLWAY_LEN 10
 #define HALLWAY_SIGHT 2
+#define MSG_RESET_TIME 30
 
 typedef struct DSU {
   int dpr[MAX_ROOMS_PER_LEVEL];
@@ -94,6 +95,7 @@ typedef struct Game {
   Level lvl[MAX_LEVELS];
   int cur;
   int num_level;
+  int pass;
 } Game;
 
 extern Game *G;
@@ -134,6 +136,7 @@ void initRoomHallway(Level *lvl);
 void initGame();
 void clearMsg();
 void setTopMsg(char *str);
+void checkTimerMsg();
 
 /* Util Functions*/
 char *to_string(char);
