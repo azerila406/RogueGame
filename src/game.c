@@ -48,6 +48,22 @@ void processInput(int x, Level *L) {
     case 'd':
       movePlayer(L, P->x, P->y + 1);
       return;
+    case 'u':
+    case 'U':
+      movePlayer(L, P->x - 1, P->y + 1);
+      return;
+    case 'y':
+    case 'Y':
+      movePlayer(L, P->x - 1, P->y - 1);
+      return;
+    case 'n':
+    case 'N':
+      movePlayer(L, P->x + 1, P->y + 1);
+      return;
+    case 'B':
+    case 'b':
+      movePlayer(L, P->x + 1, P->y - 1);
+      return;
     case KEY_UP:
       moveStairs(L, +1);
       return;
