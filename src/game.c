@@ -12,8 +12,9 @@ void initGame() {
   G->cur = 0;
   initLevel(&(G->lvl[0]));
   initPlayer(P, &(G->lvl[0]), DIFF_LEVELS[DIFF_LEVEL]);
+  G->num_level = rnd(MIN_LEVELS, MAX_LEVELS);
   int lst_r = whichRoomID(&(G->lvl[0]), P->x, P->y);
-  for (int i = 0; i + 1 < MAX_LEVELS; ++i) {
+  for (int i = 0; i + 1 < G->num_level; ++i) {
     int r, x, y;
     do {
       r = rand() % G->lvl[i].num_room;

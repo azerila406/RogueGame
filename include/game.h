@@ -12,7 +12,8 @@
 #define MAX_ITEMS_TILE 100
 #define HEIGHT 30
 #define WIDTH 100
-#define MAX_LEVELS 4
+#define MIN_LEVELS 4
+#define MAX_LEVELS 5
 #define MAX_ROOMS_PER_LEVEL 7
 #define MIN_ROOMS_PER_LEVEL 6
 #define MIN_INTERIOR_OF_ROOM 6
@@ -87,6 +88,7 @@ typedef struct Level {
 typedef struct Game {
   Level lvl[MAX_LEVELS];
   int cur;
+  int num_level;
 } Game;
 
 extern Game *G;

@@ -74,9 +74,11 @@ void renderMsgAndWait(const char *s) {
 
 void renderHUD(Level *l) {
   attron(COLOR_PAIR(1));
-  mvprintw(HEIGHT + 2, 0,
-           " Level: %d    Health: %d / %d    Gold: %d    Exp: %d    Items: %d",
-           G->cur + 1, P->health, P->max_health, P->gold, P->exp, P->num_item);
+  mvprintw(
+      HEIGHT + 2, 0,
+      " Level: %d / %d    Health: %d / %d    Gold: %d    Exp: %d    Items: %d",
+      G->cur + 1, G->num_level, P->health, P->max_health, P->gold, P->exp,
+      P->num_item);
   attroff(COLOR_PAIR(1));
 }
 
