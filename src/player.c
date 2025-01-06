@@ -48,7 +48,9 @@ void processUnseen(Level* L) {
   BFS(L, P->x, P->y, checkUnseen);
   for (int i = 0; i < HEIGHT; ++i) {
     for (int j = 0; j < WIDTH; ++j) {
-      if (dist[i][j] <= 5) {
+      int t = L->tile[i][j].type;
+      if (dist[i][j] <= HALLWAY_SIGHT &&
+          (t == 0 || t == 2 || t == 6 || t == 8 || t == 10)) {
         L->tile[i][j].visible = 1;
       }
     }
