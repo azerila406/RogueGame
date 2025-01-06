@@ -3,7 +3,10 @@
 #define DIFF_LEVEL 3
 const int DIFF_LEVELS[4] = {100, 50, 25, 10};
 
+bool toggle_map_status;
+
 void initGame() {
+  toggle_map_status = 0;
   P = (Player *)malloc(sizeof(Player));
   G = (Game *)malloc(sizeof(Game));
   G->cur = 0;
@@ -49,6 +52,10 @@ void processInput(int x, Level *L) {
       return;
     case KEY_DOWN:
       moveStairs(L, -1);
+      return;
+    case 'm':
+    case 'M':
+      toggle_map_status ^= 1;
       return;
   }
 }

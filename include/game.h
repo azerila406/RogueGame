@@ -45,6 +45,7 @@ typedef struct Player {
 extern Player *P;
 extern int pr[HEIGHT][WIDTH][2], dist[HEIGHT][WIDTH], X[HEIGHT * WIDTH],
     Y[HEIGHT * WIDTH];
+extern bool toggle_map_status;
 
 typedef struct Room {
   int type;

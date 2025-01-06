@@ -89,7 +89,8 @@ void render(Level *l) {
       Tile *t = &(l->tile[i][j]);
       // TODO
       int r = whichRoomID(l, i, j);
-      bool vis = t->visible | (r != -1 && l->room[r].visible);
+      bool vis =
+          toggle_map_status | t->visible | (r != -1 && l->room[r].visible);
       if (vis) {
         attron(COLOR_PAIR(getColor(t)));
         mvprintw(i + 1, j + 1, to_string(tileChar(t)));
