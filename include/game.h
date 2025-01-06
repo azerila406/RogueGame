@@ -17,6 +17,7 @@
 #define MIN_ROOMS_PER_LEVEL 6
 #define MIN_INTERIOR_OF_ROOM 6
 #define MAX_INTERIOR_OF_ROOM 15
+#define MIN_HALLWAY_LEN 10
 
 typedef struct DSU {
   int dpr[MAX_ROOMS_PER_LEVEL];
