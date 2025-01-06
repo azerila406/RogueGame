@@ -88,7 +88,8 @@ void render(Level *l) {
     for (int j = 0; j < WIDTH; ++j) {
       Tile *t = &(l->tile[i][j]);
       // TODO
-      bool vis = t->visible | l->room[whichRoomID(l, i, j)].visible;
+      int r = whichRoomID(l, i, j);
+      bool vis = t->visible | (r != -1 && l->room[r].visible);
       if (vis) {
         attron(COLOR_PAIR(getColor(t)));
         mvprintw(i + 1, j + 1, to_string(tileChar(t)));

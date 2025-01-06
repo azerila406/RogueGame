@@ -46,9 +46,11 @@ void processUnseen(Level* L) {
   int r = whichRoomID(L, P->x, P->y);
   if (r != -1) L->room[r].visible = 1;
   BFS(L, P->x, P->y, checkUnseen);
-  for (int i = 0; i < HEIGHT; ++i)
-    for (int j = 0; j < WIDTH; ++j)
+  for (int i = 0; i < HEIGHT; ++i) {
+    for (int j = 0; j < WIDTH; ++j) {
       if (dist[i][j] <= 5) {
         L->tile[i][j].visible = 1;
       }
+    }
+  }
 }
