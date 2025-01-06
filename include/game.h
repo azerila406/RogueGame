@@ -72,11 +72,12 @@ typedef struct Tile {
   1 -> vert wall && corner |
   2 -> corridor #
   3 -> horz wall -
-  4 -> hidden normal door
   5 -> nothing
   6 -> door (normal door)
   8 -> upstairs
   10 -> downstairs
+  12 -> hidden normal door |
+  14 -> hidden normal door -
   */
 } Tile;
 

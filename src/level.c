@@ -37,6 +37,18 @@ void initRooms(Level* L) {
   }
 }
 
+void makeDoorHidden(Level* L, int r) {
+  int x0 = getX0(&(L->room[r])), x1 = getX1(&(L->room[r])),
+      y0 = getY0(&(L->room[r])), y1 = getY1(&(L->room[r]));
+
+  for (int i = x0; i <= x1; ++i) {
+    for (int j = y0; j <= y1; ++j) {
+      if (L->tile[i][j].type == 6)
+        L->tile[i][j].type = (i == x0 || i == x1 ? 14 : 12);
+    }
+  }
+}
+
 void initHallway(Level* L) {
   DSU dsu;
   int E[10][3], e;
@@ -71,6 +83,7 @@ void initHallway(Level* L) {
   for (int i = 0; i < e; i++) {
     bfsDoor(L, E[i][0], E[i][1], E[i][2], 1);
   }
+  makeDoorHidden(L, rnd(0, L->num_room - 1));
 }
 
 void initRoomHallway(Level* L) {

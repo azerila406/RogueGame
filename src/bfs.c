@@ -45,8 +45,8 @@ bool checkDoors(Level *L, int x, int y) {
 bool bfsDoor(Level *l, int sx, int sy, int c, bool replace) {
   BFS(l, sx, sy, checkDoors);
   int x = -1, y = -1;
-  for (int i = getX0(&(l->room[c])); i < getX1(&(l->room[c])); ++i) {
-    for (int j = getY0(&(l->room[c])); j < getY1(&(l->room[c])); ++j)
+  for (int i = getX0(&(l->room[c])); i <= getX1(&(l->room[c])); ++i) {
+    for (int j = getY0(&(l->room[c])); j <= getY1(&(l->room[c])); ++j)
       if (pr[i][j][0] != -1) {
         int t = l->tile[i][j].type;
         if ((t == 1 || t == 3) && dist[i][j] >= MIN_HALLWAY_LEN) {

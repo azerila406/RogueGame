@@ -17,7 +17,7 @@ void initPlayer(Player* P, Level* L, int max_health) {
 
 void discoverTile(Level* L, int x, int y) {
   int t = L->tile[x][y].type;
-  if (t == 4) {              // HIDDEN DOOR
+  if (t == 12 || t == 14) {  // HIDDEN DOOR
     L->tile[x][y].type = 6;  // Discovered
   }
 }
