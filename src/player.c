@@ -35,3 +35,20 @@ void moveStairs(Level* L, int where) {
     }
   }
 }
+
+bool checkUnseen(Level* L, int x, int y) {
+  int t = L->tile[x][y].type;
+  if (t == 0 || t == 2 || t == 8 || t == 10) return 1;
+  return 0;
+}
+
+void processUnseen(Level* L) {
+  int r = whichRoomID(L, P->x, P->y);
+  if (r != -1) L->room[r].visible = 1;
+  BFS(L, P->x, P->y, checkUnseen);
+  for (int i = 0; i < HEIGHT; ++i)
+    for (int j = 0; j < WIDTH; ++j)
+      if (dist[i][j] <= 5) {
+        L->tile[i][j].visible = 1;
+      }
+}

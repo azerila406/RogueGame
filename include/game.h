@@ -42,6 +42,8 @@ typedef struct Player {
 } Player;
 
 extern Player *P;
+extern int pr[HEIGHT][WIDTH][2], dist[HEIGHT][WIDTH], X[HEIGHT * WIDTH],
+    Y[HEIGHT * WIDTH];
 
 typedef struct Room {
   int type;
@@ -62,6 +64,7 @@ typedef struct Tile {
   int type;
   /*
   Type is floor, wall, door(!!)
+  0 -> .
   1 -> vert wall && corner |
   2 -> corridor #
   3 -> horz wall -
@@ -101,6 +104,7 @@ int whichRoomID(Level *level, int x, int y);
 void initPlayer(Player *, Level *, int);  // AFTER LEVEL INIT
 void movePlayer(Level *, int, int);
 void moveStairs(Level *lvl, int where);
+void processUnseen(Level *lvl);
 
 /* Room Functions*/
 void initRoom(Level *, Room *);
@@ -132,6 +136,7 @@ void gameloop();
 void processInput(int, Level *);
 
 /* BFS functions*/
+void BFS(Level *l, int sx, int sy, bool (*check)(Level *, int, int));
 bool bfsDoor(Level *level, int sx, int sy, int roomID, bool rep);
 
 /*MENU*/

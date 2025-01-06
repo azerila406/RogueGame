@@ -76,7 +76,7 @@ void renderHUD(Level *l) {
   attron(COLOR_PAIR(1));
   mvprintw(HEIGHT + 2, 0,
            " Level: %d    Health: %d / %d    Gold: %d    Exp: %d    Items: %d",
-           l->lvl_num, P->health, P->max_health, P->gold, P->exp, P->num_item);
+           G->cur + 1, P->health, P->max_health, P->gold, P->exp, P->num_item);
   attroff(COLOR_PAIR(1));
 }
 
@@ -88,11 +88,15 @@ void render(Level *l) {
     for (int j = 0; j < WIDTH; ++j) {
       Tile *t = &(l->tile[i][j]);
       // TODO
-      // bool vis = t->visible | t->room->visible;
-      if (1) {
+      bool vis = t->visible | l->room[whichRoomID(l, i, j)].visible;
+      if (vis) {
         attron(COLOR_PAIR(getColor(t)));
         mvprintw(i + 1, j + 1, to_string(tileChar(t)));
         attroff(COLOR_PAIR(getColor(t)));
+      } else {
+        attron(COLOR_PAIR(1));
+        mvprintw(i + 1, j + 1, " ");
+        attroff(COLOR_PAIR(1));
       }
     }
   }

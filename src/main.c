@@ -8,11 +8,12 @@ void gameloop() {
 
   initGame();
 
-  render(&(G->lvl[G->cur]));
-  int ch = -1;
-  while ((ch = getch()) != 'q') {
-    processInput(ch, &(G->lvl[G->cur]));
+  while (1) {
+    processUnseen(&(G->lvl[G->cur]));
     render(&(G->lvl[G->cur]));
+    int ch = getch();
+    if (ch == 'q') return;
+    processInput(ch, &(G->lvl[G->cur]));
   }
 }
 

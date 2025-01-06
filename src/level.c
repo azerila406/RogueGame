@@ -22,6 +22,7 @@ void initRooms(Level* L) {
   for (int i = 0; i < HEIGHT; ++i) {
     for (int j = 0; j < WIDTH; ++j) {
       L->tile[i][j].type = 5;
+      L->tile[i][j].visible = 0;
     }
   }
   L->num_room = rnd(MIN_ROOMS_PER_LEVEL, MAX_ROOMS_PER_LEVEL);
