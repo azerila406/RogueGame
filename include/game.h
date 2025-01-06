@@ -72,6 +72,7 @@ typedef struct Tile {
   1 -> vert wall && corner |
   2 -> corridor #
   3 -> horz wall -
+  4 -> hidden normal door
   5 -> nothing
   6 -> door (normal door)
   8 -> upstairs
@@ -110,6 +111,7 @@ void initPlayer(Player *, Level *, int);  // AFTER LEVEL INIT
 void movePlayer(Level *, int, int);
 void moveStairs(Level *lvl, int where);
 void processUnseen(Level *lvl);
+void discoverTile(Level *lvl, int x, int y);
 
 /* Room Functions*/
 void initRoom(Level *, Room *);

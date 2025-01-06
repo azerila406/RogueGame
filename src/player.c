@@ -15,12 +15,20 @@ void initPlayer(Player* P, Level* L, int max_health) {
   } while (P->x == -1);
 }
 
+void discoverTile(Level* L, int x, int y) {
+  int t = L->tile[x][y].type;
+  if (t == 4) {              // HIDDEN DOOR
+    L->tile[x][y].type = 6;  // Discovered
+  }
+}
+
 void movePlayer(Level* L, int x, int y) {
   if (x < 0 || x >= HEIGHT || y < 0 || y >= WIDTH) return;
   int t = L->tile[x][y].type;
   if (t & 1) return;
   P->x = x;
   P->y = y;
+  discoverTile(L, x, y);
 }
 
 void moveStairs(Level* L, int where) {

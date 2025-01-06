@@ -4,6 +4,7 @@ char *top_msg = "";
 
 int getColor(Tile *t) {
   switch (t->type) {
+    case 4:
     case 0:
       return 2;
     case 5:
@@ -22,6 +23,7 @@ int getColor(Tile *t) {
 
 char tileChar(Tile *t) {
   switch (t->type) {
+    case 4:
     case 0:
       return '.';
     case 1:
