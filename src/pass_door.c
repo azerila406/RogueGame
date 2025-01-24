@@ -83,13 +83,11 @@ int passDoorLogin(Lock *lock) {
   int x = createMenu(menu, msg, 2);
   if (x == -1) return 0;
   if (x == 0) {  // Guess Password
-    for (int i = 0; i < 3; i++) {
       char *pass = getInput("Enter Password:", 1);
       if (checkPass(lock, pass)) {
         return 1;
-      }
-      renderMsgAndWait(ERRORS[rand() % ERROR_SZ], ERROR_COLOR[i]);
-      lock->tried++;
+      renderMsgAndWait(ERRORS[rand() % ERROR_SZ], ERROR_COLOR[lock->tried++]);
+      return 0;
     }
   } else if (x == 1) {  // TODO
     renderMsgAndWait("Ooops we've been too lazy to implement this...", 1);
