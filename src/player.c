@@ -31,6 +31,10 @@ void movePlayer(Level* L, int x, int y) {
     if (q == 1) L->tile[x][y].type = 20;
     return;
   }
+  if (t == 16) {  // PASS GENERATOR
+    reinitLock(L->tile[x][y].lock);
+    return;
+  }
   P->x = x;
   P->y = y;
   discoverTile(L, x, y);

@@ -114,3 +114,9 @@ void initLock(Lock *lock, bool time_based) {
   lock->tried = 0;
   lock->pass = randomPass(4);
 }
+
+void reinitLock(Lock *lock) {
+  lock->last_generated_pass = clock();
+  lock->pass = randomPass(4);
+  setTopMsg(lock->pass);
+}

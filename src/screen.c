@@ -1,7 +1,32 @@
 #include "game.h"
 
+/*
+  init_pair(1, COLOR_YELLOW, COLOR_BLACK);
+  init_pair(2, COLOR_WHITE, COLOR_BLACK);
+  init_pair(3, COLOR_RED, COLOR_BLACK);
+  init_pair(4, COLOR_CYAN, COLOR_BLACK);
+  init_pair(5, COLOR_GREEN, COLOR_BLACK);
+  init_pair(6, COLOR_RED, COLOR_YELLOW);
+  */
+
 char *top_msg = "";
 clock_t timer_clock;
+
+int itemColor(Tile *t) {
+  if (t->G) {
+    if (t->G->type == 0)
+      return 1;
+    else
+      return 2;
+  } else if (t->F) {
+    return t->F->type + 1;
+  } else if (t->C) {
+    return t->C->type + 1;
+  } else if (t->W) {
+    return t->W->type + 1;
+  }
+  assert(0);
+}
 
 int getColor(Tile *t) {
   switch (t->type) {
@@ -26,6 +51,19 @@ int getColor(Tile *t) {
     default:
       exit(17);
   }
+}
+
+char itemChar(Tile *t) {
+  if (t->G) {
+    return 'G';
+  } else if (t->F) {
+    return 'F';
+  } else if (t->C) {
+    return 'C';
+  } else if (t->W) {
+    return 'W';
+  }
+  assert(0);
 }
 
 char tileChar(Tile *t) {
@@ -53,6 +91,8 @@ char tileChar(Tile *t) {
     case 18:
     case 20:
       return '@';
+    case 42:
+      return itemChar(t);
     default:
       exit(18);
   }
@@ -136,8 +176,6 @@ void render(Level *l) {
   mvprintw(P->x + 1, P->y + 1, "@");
   move(P->x + 1, P->y + 1);
   attroff(COLOR_PAIR(1));
-
-  top_msg = "";
 }
 
 void setTopMsg(char *s) {
@@ -147,5 +185,5 @@ void setTopMsg(char *s) {
 
 void checkTimerMsg() {
   clock_t t = clock();
-  if ((1.0 * t - timer_clock) / CLOCKS_PER_SEC >= MSG_RESET_TIME) top_msg = "";
+  if ((1.0 * t - timer_clock) / CLOCKS_PER_SEC >= MSG_RESET_TIME) setTopMsg("");
 }

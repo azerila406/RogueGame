@@ -22,6 +22,9 @@
 #define HALLWAY_SIGHT 2
 #define MSG_RESET_TIME 30
 #define DURATION_PASS 30
+#define MAX_FOOD 10
+#define MAX_CURSE 10
+#define MAX_WEAPON 10
 
 typedef struct DSU {
   int dpr[MAX_ROOMS_PER_LEVEL];
@@ -32,8 +35,22 @@ int gpr(DSU *, int);
 void merge(DSU *, int, int);
 void initDSU(DSU *, int);
 
-typedef struct Item {
-} Item;
+typedef struct Food {
+  int type;
+} Food;
+
+typedef struct Gold {
+  int gold;
+  int type;
+} Gold;
+
+typedef struct Curse {
+  int type;
+} Curse;
+
+typedef struct Weapon {
+  int type;
+} Weapon;
 
 typedef struct Player {
   int x;
@@ -43,7 +60,9 @@ typedef struct Player {
   int gold;
   int exp;
   int num_item;
-  Item items[MAX_ITEMS_PLAYER];
+  Food food[MAX_FOOD];
+  Weapon weapon[MAX_WEAPON];
+  Curse curse[MAX_CURSE];
 } Player;
 
 typedef struct Vector {
@@ -70,19 +89,17 @@ typedef struct Lock {
 } Lock;
 
 typedef struct Room {
-  int type;
-  /*type = 0 -> Normal Room*/
   int x;
   int y;
   int height;
   int width;
   bool visible;
+  int type;
 } Room;
 
 typedef struct Tile {
   // Enemies
   int num_item;
-  Item items[MAX_ITEMS_TILE];
   bool visible;
   Lock *lock;
   int type;
@@ -101,7 +118,14 @@ typedef struct Tile {
   16 -> pass generator &
   18 -> pass door @ (locked)
   20 -> pass door @ (unlocked)
+  42 -> Item!
   */
+  int room_type;
+  Gold *G;
+  Food *F;
+  Curse *C;
+  Weapon *W;
+
 } Tile;
 
 typedef struct Level {
@@ -197,6 +221,7 @@ bool doesUserExists(const char *user, bool error);
 int passDoorLogin(Lock *L);
 bool checkPass(Lock *L, char *pass);
 void initLock(Lock *L, bool time_based);
+void reinitLock(Lock *L);
 void makePassDoor(Level *L, int room);
 
 #endif
