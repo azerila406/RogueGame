@@ -46,6 +46,17 @@ typedef struct Player {
   Item items[MAX_ITEMS_PLAYER];
 } Player;
 
+typedef struct Vector {
+  int *a;
+  int sz;
+} Vector;
+
+void vec_push(Vector *V, int x);
+void vec_init(Vector *V);
+void vec_pop(Vector *V);
+void vec_free(Vector *V);
+void vec_test();
+
 extern Player *P;
 extern int pr[HEIGHT][WIDTH][2], dist[HEIGHT][WIDTH], X[HEIGHT * WIDTH],
     Y[HEIGHT * WIDTH];
@@ -186,5 +197,6 @@ bool doesUserExists(const char *user, bool error);
 int passDoorLogin(Lock *L);
 bool checkPass(Lock *L, char *pass);
 void initLock(Lock *L, bool time_based);
+void makePassDoor(Level *L, int room);
 
 #endif
