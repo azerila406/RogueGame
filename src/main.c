@@ -19,6 +19,7 @@ void gameloop() {
 }
 
 signed main() {
+  setlocale(LC_ALL, "");
   srand(time(0));
   initScreen();
   gameMenu();
