@@ -1,2 +1,8 @@
 rogue
 .vscode/launch.json
+*.dSYM
+*.dSYM/
+*.plist
+!Info.plist  # Keep the essential Info.plist file
+build/
+DerivedData/
