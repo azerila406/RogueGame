@@ -53,44 +53,44 @@ int getColor(Tile *t) {
   }
 }
 
-char itemChar(Tile *t) {
+wchar_t *itemChar(Tile *t) {
   if (t->G) {
-    return 'G';
+    return L"G";
   } else if (t->F) {
-    return 'F';
+    return L"F";
   } else if (t->C) {
-    return 'C';
+    return L"C️";
   } else if (t->W) {
-    return 'W';
+    return L"W";
   }
   assert(0);
 }
 
-char tileChar(Tile *t) {
+wchar_t *tileChar(Tile *t) {
   switch (t->type) {
     case 0:
-      return '.';
+      return L".";
     case 12:
     case 1:
-      return '|';
+      return L"|";
     case 2:
-      return '#';
+      return L"#";
     case 14:
     case 3:
-      return '-';
+      return L"-";
     case 5:
-      return ' ';
+      return L" ";
     case 6:
-      return '+';
+      return L"+";
     case 8:
-      return '^';
+      return L"^";
     case 10:
-      return 'v';
+      return L"v";
     case 16:
-      return '&';
+      return L"&";
     case 18:
     case 20:
-      return '@';
+      return L"@";
     case 42:
       return itemChar(t);
     default:
@@ -163,18 +163,18 @@ void render(Level *l) {
           toggle_map_status | t->visible | (r != -1 && l->room[r].visible);
       if (vis) {
         attron(COLOR_PAIR(getColor(t)));
-        mvprintw(i + 1, j + 1, to_string(tileChar(t)));
+        mvprintw(i + 1, (j + 1), "%ls", tileChar(t));
         attroff(COLOR_PAIR(getColor(t)));
       } else {
         attron(COLOR_PAIR(1));
-        mvprintw(i + 1, j + 1, " ");
+        mvprintw(i + 1, (j + 1), " ");
         attroff(COLOR_PAIR(1));
       }
     }
   }
   attron(COLOR_PAIR(1));
-  mvprintw(P->x + 1, P->y + 1, "@");
-  move(P->x + 1, P->y + 1);
+  mvprintw(P->x + 1, (P->y + 1), "@");
+  move(P->x + 1, (P->y + 1));
   attroff(COLOR_PAIR(1));
 }
 

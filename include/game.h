@@ -51,6 +51,11 @@ typedef struct Curse {
 
 typedef struct Weapon {
   int type;
+  // Mace ⚒ 0
+  // Dagger 🗡 1
+  // Magic Wand 🪄 2
+  // Normal Arrow ➳ 3
+  // Sword ⚔ 4
 } Weapon;
 
 typedef struct Player {
@@ -153,7 +158,7 @@ void render(Level *level);
 void renderHUD(Level *level);
 
 /* Tile Fucntions*/
-char tileChar(Tile *);
+wchar_t *tileChar(Tile *);
 int whichRoomID(Level *level, int x, int y);
 
 /* Player Functions*/
