@@ -128,11 +128,30 @@ void initRoomHallway(Level* L) {
   initHallway(L);
 }
 
+int roomType() { //get Room Type with some probability
+  return 0;
+}
+
+void initRoomsType(Level *L) {
+  for (int i = 0; i < L->num_room; ++i) {
+    L->room[i].type = roomType();
+
+    int x0 = getX0(&(L->room[i])), x1 = getX1(&(L->room[i])),
+        y0 = getY0(&(L->room[i])), y1 = getY1(&(L->room[i]));
+    for (int i = x0; i <= x1; ++i) {
+      for (int j = y0; j <= y1; ++j) {
+        L->tile[i][j].room_type = L->room[i].type;
+      }
+    }
+  }
+}
+
 void initLevel(Level* L) {
   do {
     initRooms(L);
   } while (roomsCollide(L->room, L->num_room));
   initRoomHallway(L);
+  initRoomsType(L);
 }
 
 void initLevelWithARoom(Level* L, Room* R) {
@@ -142,4 +161,5 @@ void initLevelWithARoom(Level* L, Room* R) {
     // TODO maybe change type of ROOM?
   } while (roomsCollide(L->room, L->num_room));
   initRoomHallway(L);
+  initRoomsType(L);
 }
