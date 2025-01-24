@@ -128,21 +128,67 @@ void initRoomHallway(Level* L) {
   initHallway(L);
 }
 
-int roomType() { //get Room Type with some probability
-  return 0;
+//Food, Weapon, Curse, Gold, Enemy
+//TODO ROOMS TYPE
+//prob is partial sum of x/50
+int rooms_type_prob[4][5] = {
+  {1, 3, 5, 7, 8},
+  {},
+  {},
+  {}
+};
+
+void initFood(Tile *t) {
+  t->type = 42;
+  t->F = (Food*) malloc(sizeof (Food));
+  t->F->type = 0;
 }
 
-void initRoomsType(Level *L) {
-  for (int i = 0; i < L->num_room; ++i) {
-    L->room[i].type = roomType();
+void initWeapon(Tile *t) {
+  t->type = 42;
+  t->W = (Weapon*) malloc(sizeof (Weapon));
+  t->W->type = 0;
+}
 
-    int x0 = getX0(&(L->room[i])), x1 = getX1(&(L->room[i])),
-        y0 = getY0(&(L->room[i])), y1 = getY1(&(L->room[i]));
-    for (int i = x0; i <= x1; ++i) {
-      for (int j = y0; j <= y1; ++j) {
-        L->tile[i][j].room_type = L->room[i].type;
+void initCurse(Tile *t) {
+  t->type = 42;
+  t->C = (Curse*) malloc(sizeof (Curse));
+  t->C->type = 0;
+}
+
+void initGold(Tile *t) {
+  t->type = 42;
+  t->G = (Gold*) malloc(sizeof (Gold));
+  t->G->type = 0;
+  t->G->gold = (t->G->type == 1 ? rnd(10, 50) : rnd(2, 9)); //Gold Values
+}
+
+void initItemsRoom(Level *L, Room *R) {
+  int x0 = getX0(R), x1 = getX1(R),
+    y0 = getY0(R), y1 = getY1(R);
+  int tp = R->type;
+  for (int i = x0; i <= x1; ++i) {
+    for (int j = y0; j <= y1; ++j) if (L->tile[i][j].type == 0) {
+      int r = rand() % 50;
+      void (*initFunctions[])(Tile *) = {
+          initFood,
+          initWeapon,
+          initCurse,
+          initGold};
+      //TODO add initEnemy
+      for (int k = 0; k < 4; k++) {
+        if (r <= rooms_type_prob[tp][k]) {
+          initFunctions[k](&L->tile[i][j]);
+          break;
+        }
       }
     }
+  }
+}
+
+void initItemsLevel(Level *L) { //ROOM TYPE MATTERS HERE: TODO
+  for (int i = 0; i < L->num_room; ++i) {
+    initItemsRoom(L, &L->room[i]);
   }
 }
 
@@ -151,7 +197,6 @@ void initLevel(Level* L) {
     initRooms(L);
   } while (roomsCollide(L->room, L->num_room));
   initRoomHallway(L);
-  initRoomsType(L);
 }
 
 void initLevelWithARoom(Level* L, Room* R) {
@@ -161,5 +206,8 @@ void initLevelWithARoom(Level* L, Room* R) {
     // TODO maybe change type of ROOM?
   } while (roomsCollide(L->room, L->num_room));
   initRoomHallway(L);
-  initRoomsType(L);
+}
+
+void initRoomsType(Level *L) { //TODO
+  
 }

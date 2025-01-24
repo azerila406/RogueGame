@@ -48,6 +48,8 @@ int getColor(Tile *t) {
       return 3;
     case 20:
       return 5;
+    case 42:
+      return itemColor(t);
     default:
       exit(17);
   }

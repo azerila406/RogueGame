@@ -33,6 +33,10 @@ void initGame() {
     int r = rand() % G->lvl[i].num_room;
     makePassDoor(&G->lvl[i], r);
   }
+  for (int i = 0; i < G->num_level; ++i) {
+    initRoomsType(&G->lvl[i]); //does nothing currently
+    initItemsLevel(&G->lvl[i]);
+  }
 }
 
 void processInput(int x, Level *L) {

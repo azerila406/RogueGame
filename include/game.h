@@ -101,6 +101,10 @@ typedef struct Room {
   int width;
   bool visible;
   int type;
+  //Normal Room -> 0
+  //Treasure Room -> 1
+  //Enchant Room -> 2
+  //Nightmare Room -> 3
 } Room;
 
 typedef struct Tile {
@@ -181,6 +185,9 @@ void initLevelWithARoom(Level *lvl, Room *R);
 void initHallway(Level *lvl);
 void initRooms(Level *lvl);
 void initRoomHallway(Level *lvl);
+void initItemsLevel(Level *lvl);
+void initItemsRoom(Level *lvl, Room *room);
+void initRoomsType(Level *lvl);
 
 /* Game Fucntions */
 void initGame();
