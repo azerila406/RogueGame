@@ -49,6 +49,38 @@ void makeDoorHidden(Level* L, int r) {
   }
 }
 
+void makePassDoor(Level* L, int r) {
+  int x0 = getX0(&(L->room[r])), x1 = getX1(&(L->room[r])),
+      y0 = getY0(&(L->room[r])), y1 = getY1(&(L->room[r]));
+
+  int cnt = (x1 - x0 + 1) * (y1 - y0 + 1);
+  while (1) {
+    int cur = 0, random = rand() % cnt;
+    for (int i = x0; i <= x1; ++i) {
+      for (int j = y0; j <= y1; ++j) {
+        if (L->tile[i][j].type == 6) {
+          if (cur == random) {
+            L->tile[i][j].type = 18;
+            Lock* lock = (Lock*)malloc(sizeof(Lock));
+            initLock(lock, 0);
+            int X[2] = {x0 + 1, x1 - 1};
+            int Y[2] = {y0 + 1, y1 - 1};
+            int sx = X[rand() & 1], sy = Y[rand() & 1];
+            L->tile[sx][sy].lock = lock;
+            L->tile[sx][sy].type = 16;
+            random = -1;
+          }
+          cur++;
+        }
+      }
+    }
+    if (random == -1)
+      break;
+    else
+      cnt = random;
+  }
+}
+
 void initHallway(Level* L) {
   DSU dsu;
   int E[10][3], e;

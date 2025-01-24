@@ -16,7 +16,7 @@ bool isCorrectFormEmail(const char *s, bool error) {
       return 0;
   }
   if (at_sign == 1 && dot == 1) return 1;
-  if (error) renderMsgAndWait("Email is not in correct form");
+  if (error) renderMsgAndWait("Email is not in correct form", 1);
   return 0;
 }
 
@@ -31,15 +31,15 @@ bool isCorrectFormPass(const char *pass, bool error) {
   if (n >= 7 && num && bigAlpha && smallAlpha) return 1;
   if (error) {
     if (n < 7)
-      renderMsgAndWait("Password is less than 7 char");
+      renderMsgAndWait("Password is less than 7 char", 1);
     else if (!num)
-      renderMsgAndWait("Password doesn't have a digit");
+      renderMsgAndWait("Password doesn't have a digit", 1);
     else if (!bigAlpha)
-      renderMsgAndWait("Password doesn't have a capital letter");
+      renderMsgAndWait("Password doesn't have a capital letter", 1);
     else if (!smallAlpha)
-      renderMsgAndWait("Password doesn't have a small letter");
+      renderMsgAndWait("Password doesn't have a small letter", 1);
     else
-      renderMsgAndWait("Something went wrong...");
+      renderMsgAndWait("Something went wrong...", 1);
   }
   return 0;
 }

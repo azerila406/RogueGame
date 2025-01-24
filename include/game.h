@@ -21,6 +21,7 @@
 #define MIN_HALLWAY_LEN 10
 #define HALLWAY_SIGHT 2
 #define MSG_RESET_TIME 30
+#define DURATION_PASS 30
 
 typedef struct DSU {
   int dpr[MAX_ROOMS_PER_LEVEL];
@@ -50,6 +51,13 @@ extern int pr[HEIGHT][WIDTH][2], dist[HEIGHT][WIDTH], X[HEIGHT * WIDTH],
     Y[HEIGHT * WIDTH];
 extern bool toggle_map_status;
 
+typedef struct Lock {
+  char *pass;
+  int tried;
+  clock_t last_generated_pass;
+  bool time_based;
+} Lock;
+
 typedef struct Room {
   int type;
   /*type = 0 -> Normal Room*/
@@ -65,7 +73,7 @@ typedef struct Tile {
   int num_item;
   Item items[MAX_ITEMS_TILE];
   bool visible;
-  Room *room;
+  Lock *lock;
   int type;
   /*
   Type is floor, wall, door(!!)
@@ -80,7 +88,8 @@ typedef struct Tile {
   12 -> hidden normal door |
   14 -> hidden normal door -
   16 -> pass generator &
-  18 -> pass door @
+  18 -> pass door @ (locked)
+  20 -> pass door @ (unlocked)
   */
 } Tile;
 
@@ -102,8 +111,8 @@ extern Game *G;
 
 /* Screen Fucntions */
 void initScreen();
-void renderMsg(const char *string);
-void renderMsgAndWait(const char *string);
+void renderMsg(const char *string, int color);
+void renderMsgAndWait(const char *string, int color);
 void render(Level *level);
 void renderHUD(Level *level);
 
@@ -172,5 +181,10 @@ void userScoreboard();
 bool isCorrectFormEmail(const char *email, bool error);
 bool isCorrectFormPass(const char *password, bool error);
 bool doesUserExists(const char *user, bool error);
+
+/* Pass Door */
+int passDoorLogin(Lock *L);
+bool checkPass(Lock *L, char *pass);
+void initLock(Lock *L, bool time_based);
 
 #endif

@@ -21,6 +21,8 @@ int getColor(Tile *t) {
       return 4;
     case 18:
       return 3;
+    case 20:
+      return 5;
     default:
       exit(17);
   }
@@ -49,6 +51,7 @@ char tileChar(Tile *t) {
     case 16:
       return '&';
     case 18:
+    case 20:
       return '@';
     default:
       exit(18);
@@ -70,6 +73,7 @@ void initScreen() {
   init_pair(3, COLOR_RED, COLOR_BLACK);
   init_pair(4, COLOR_CYAN, COLOR_BLACK);
   init_pair(5, COLOR_GREEN, COLOR_BLACK);
+  init_pair(6, COLOR_RED, COLOR_YELLOW);
 
   refresh();
 }
@@ -80,23 +84,23 @@ void clearMsg() {
   attroff(COLOR_PAIR(1));
 }
 
-void renderMsg(const char *s) {
+void renderMsg(const char *s, int color) {
   clearMsg();
-  attron(COLOR_PAIR(1));
+  attron(COLOR_PAIR(color));
   mvprintw(0, 1, s);
-  attroff(COLOR_PAIR(1));
+  attroff(COLOR_PAIR(color));
 }
 
-void renderMsgAndWait(const char *s) {
+void renderMsgAndWait(const char *s, int color) {
   clear();
-  renderMsg(s);
+  renderMsg(s, color);
   move(0, 1);
   getch();
 }
 
 void renderHUD(Level *l) {
   clearMsg();
-  renderMsg(top_msg);
+  renderMsg(top_msg, 1);
   attron(COLOR_PAIR(1));
   mvprintw(
       HEIGHT + 2, 0,

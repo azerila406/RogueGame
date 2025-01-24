@@ -2,7 +2,7 @@
 
 char *getInput(const char *msg, bool enable_echo) {
   clear();
-  renderMsg(msg);
+  renderMsg(msg, 1);
   char *s = (char *)malloc(100 * sizeof(char));
   if (enable_echo) echo();
   getnstr(s, 99);
@@ -12,7 +12,7 @@ char *getInput(const char *msg, bool enable_echo) {
 
 void renderMenu(char *s[], char *msg[], int n, int x) {
   clear();
-  renderMsg(msg[x]);
+  renderMsg(msg[x], 1);
 
   for (int i = 0; i < n; i++) {
     if (i == x) attron(A_REVERSE | A_BOLD);

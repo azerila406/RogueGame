@@ -26,6 +26,11 @@ void movePlayer(Level* L, int x, int y) {
   if (x < 0 || x >= HEIGHT || y < 0 || y >= WIDTH) return;
   int t = L->tile[x][y].type;
   if (t & 1) return;
+  if (t == 18) {  // PASS DOOR
+    int x = passDoorLogin(L->tile[x][y].lock);
+    if (x == 1) L->tile[x][y].type = 20;
+    return;
+  }
   P->x = x;
   P->y = y;
   discoverTile(L, x, y);

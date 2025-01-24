@@ -2,7 +2,7 @@
 
 bool checkInfo(const char *s) {
   clear();
-  renderMsg(s);
+  renderMsg(s, 1);
   int ch;
   while (1) {
     ch = getch();
@@ -32,7 +32,7 @@ void userLogin() {
     pass = getInput("Enter Your Password: ", 0);
   } while (!isUserCorrect(user, pass));
   clear();
-  renderMsg("Logged in Successfully...");
+  renderMsg("Logged in Successfully...", 1);
   getch();
   gameMenu();
 }
@@ -59,7 +59,7 @@ void userRegister() {
     } while (!isCorrectFormPass(pass, 1) || strcmp(pass, pass2));
   }
   clear();
-  renderMsg("Registered Succesfully... Log in to continue");
+  renderMsg("Registered Succesfully... Log in to continue", 1);
   getch();
 }
 void userForgetPass() {}
