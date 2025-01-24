@@ -28,6 +28,11 @@ void initGame() {
     G->lvl[i + 1].tile[x][y].type = 10;
     lst_r = whichRoomID(&(G->lvl[i + 1]), x, y);
   }
+  // password door
+  for (int i = 0; i < G->num_level; ++i) {
+    int r = rand() % G->lvl[i].num_room;
+    makePassDoor(&G->lvl[i], r);
+  }
 }
 
 void processInput(int x, Level *L) {

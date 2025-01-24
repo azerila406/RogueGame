@@ -33,17 +33,58 @@ const char *ERRORS[] = {
     "ACCESS DENIED: Looks like someone got the wrong game. Try a legitimate "
     "password!"};
 #define ERROR_SZ 16
+
+const char *locked_msg[] = {
+    "Too many tries. Are you sure you've used a computer before?",
+    "Locked out. Maybe write your password down next time?",
+    "You've failed more times than a toddler trying to use chopsticks.",
+    "Too many attempts. Are you just mashing the keyboard at this point?",
+    "Locked out. Maybe ask your goldfish for help—it probably remembers your "
+    "password.",
+    "You've been locked out. Maybe take up a new hobby? Like memory training?",
+    "Too many tries. Are you even *trying* to remember, or just hoping for a "
+    "miracle?",
+    "Locked out. Maybe your password is '123456'? Oh wait, you already tried "
+    "that.",
+    "Too many failed attempts. Are you sure you're not a bot? Because you're "
+    "acting like one.",
+    "Locked out. Maybe try using your brain instead of your luck next time.",
+    "Too many tries. Did you forget your password or your entire identity?",
+    "Locked out. Maybe call your mom—she probably remembers your password.",
+    "Too many attempts. Are you trying to log in or brute-force your way in?",
+    "Locked out. Maybe take a break and rethink your life choices.",
+    "Too many tries. Are you sure you're not just typing 'password' over and "
+    "over?",
+    "Locked out. Maybe try using your other brain cell this time.",
+    "Too many failed attempts. Are you even human? Prove it by solving a "
+    "captcha.",
+    "Locked out. Maybe your password is 'incorrect.' Oh wait, you already "
+    "tried that.",
+    "Too many tries. Are you sure you're not just guessing randomly?",
+    "Locked out. Maybe try using your memory instead of your hope.",
+    "Too many attempts. Maybe it's time to admit you're not getting in today.",
+    "Locked out. Maybe try turning your brain on and off again.",
+    "Too many tries. Are you sure you're not just typing your Wi-Fi password?",
+    "Locked out. Maybe try using your password instead of your excuses.",
+    "Too many attempts. Are you sure you're not just typing 'letmein' "
+    "repeatedly?"};
+#define LOCKED_SZ 25
+
 const int ERROR_COLOR[3] = {1, 6, 3};
 
 int passDoorLogin(Lock *lock) {
+  if (lock->tried >= 3) {
+    renderMsgAndWait(locked_msg[rand() % LOCKED_SZ], ERROR_COLOR[2]);
+    return 0;
+  }
   char *menu[2] = {"Guess The Password", "Use Ancient Key"};
   char *msg[2] = {"You can try to guess the password to unlock the door....",
                   "If you have a key, you can use it..."};
   int x = createMenu(menu, msg, 2);
   if (x == -1) return 0;
   if (x == 0) {  // Guess Password
-    char *pass = getInput("Enter Password:", 1);
     for (int i = 0; i < 3; i++) {
+      char *pass = getInput("Enter Password:", 1);
       if (checkPass(lock, pass)) {
         return 1;
       }

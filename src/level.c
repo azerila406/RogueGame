@@ -53,32 +53,35 @@ void makePassDoor(Level* L, int r) {
   int x0 = getX0(&(L->room[r])), x1 = getX1(&(L->room[r])),
       y0 = getY0(&(L->room[r])), y1 = getY1(&(L->room[r]));
 
-  int cnt = (x1 - x0 + 1) * (y1 - y0 + 1);
-  while (1) {
-    int cur = 0, random = rand() % cnt;
-    for (int i = x0; i <= x1; ++i) {
-      for (int j = y0; j <= y1; ++j) {
-        if (L->tile[i][j].type == 6) {
-          if (cur == random) {
-            L->tile[i][j].type = 18;
-            Lock* lock = (Lock*)malloc(sizeof(Lock));
-            initLock(lock, 0);
-            int X[2] = {x0 + 1, x1 - 1};
-            int Y[2] = {y0 + 1, y1 - 1};
-            int sx = X[rand() & 1], sy = Y[rand() & 1];
-            L->tile[sx][sy].lock = lock;
-            L->tile[sx][sy].type = 16;
-            random = -1;
-          }
-          cur++;
-        }
+  Vector vecx, vecy;
+  vec_init(&vecx);
+  vec_init(&vecy);
+  for (int i = x0; i <= x1; ++i)
+    for (int j = y0; j <= y1; ++j) {
+      if (L->tile[i][j].type == 6) {
+        vec_push(&vecx, i);
+        vec_push(&vecy, j);
       }
     }
-    if (random == -1)
-      break;
-    else
-      cnt = random;
+  if (vecx.sz == 0) {  // we have only secret doors so ignore them
+    return;
   }
+  int R = rand() % vecx.sz;
+  int i = vecx.a[R];
+  int j = vecy.a[R];
+
+  int X[2] = {x0 + 1, x1 - 1};
+  int Y[2] = {y0 + 1, y1 - 1};
+  int sx = X[rand() & 1], sy = Y[rand() & 1];
+  L->tile[sx][sy].lock = (Lock*)malloc(sizeof(Lock));
+  L->tile[i][j].lock = L->tile[sx][sy].lock;
+  initLock(L->tile[sx][sy].lock, 0);
+
+  L->tile[sx][sy].type = 16;
+  L->tile[i][j].type = 18;
+
+  vec_free(&vecx);
+  vec_free(&vecy);
 }
 
 void initHallway(Level* L) {
