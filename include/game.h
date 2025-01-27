@@ -218,6 +218,7 @@ char *randomPass(int n);
 
 /* Game Logic */
 void gameloop();
+int get_game_timer();
 void processInput(int, Level *);
 
 /* BFS functions*/
