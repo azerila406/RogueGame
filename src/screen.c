@@ -184,10 +184,9 @@ void render(Level *l) {
 
 void setTopMsg(char *s) {
   top_msg = s;
-  timer_clock = clock();
+  timer_clock = time(NULL);
 }
 
 void checkTimerMsg() {
-  clock_t t = clock();
-  if ((1.0 * t - timer_clock) / CLOCKS_PER_SEC >= MSG_RESET_TIME) setTopMsg("");
+  if (MSG_RESET_TIME <= difftime(time(NULL), timer_clock)) setTopMsg("");
 }
