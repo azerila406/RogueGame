@@ -156,7 +156,13 @@ void consumeFood(Food *F) {
     char *s = (char *)malloc(100 * sizeof(char));
     sprintf(s, "You ate %s Food", REAL_FOOD_NAME_BY_TYPE[F->type]);
     renderMsgAndWait(s, FOOD_COLOR_BY_TYPE[F->type]);
-    //TODO EFFECT OF
+    if (P->hunger < MAX_HUNGER) P->hunger = MAX_HUNGER;
+    else P->health = P->max_health;
+    //TODO types of Food
+    if (F->type == 1) {
+        P->damage_mult = 2;
+        P->damage_mult_last_time = get_game_timer();
+    }
 }
 
 void showFood() {

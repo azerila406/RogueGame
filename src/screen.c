@@ -144,10 +144,13 @@ void renderHUD(Level *l) {
   clearMsg();
   renderMsg(top_msg, 1);
   attron(COLOR_PAIR(1));
+  for (int i = 0; i < WIDTH + 30; ++i)
+    mvprintw(HEIGHT + 2, i, " "); // TODO
+
   mvprintw(
       HEIGHT + 2, 0,
-      " Level: %d / %d    Health: %d / %d    Gold: %d    Exp: %d   Weapon: %s",
-      G->cur + 1, G->num_level, P->health, P->max_health, P->gold, P->exp, WEAPON_NAME_BY_TYPE[P->def_weapon]);
+      " Level: %d / %d    Health: %d / %d    Gold: %d    Exp: %d    Hunger: %d / %d    Weapon: %s    dmgX: %d",
+      G->cur + 1, G->num_level, P->health, P->max_health, P->gold, P->exp, P->hunger, MAX_HUNGER, WEAPON_NAME_BY_TYPE[P->def_weapon], P->damage_mult);
   attroff(COLOR_PAIR(1));
 }
 

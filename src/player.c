@@ -1,11 +1,23 @@
 #include "game.h"
 
+void processPlayer() {
+  if (P->hunger > 0) P->hunger--;
+  else P->health--;
+
+  if (P->damage_mult == 2 && (get_game_timer() - P->damage_mult_last_time) >= TIME_OF_DAMAGE_MULT_LASTING) {
+    P->damage_mult = 1;
+    setTopMsg("You lost your power :(((");
+  }
+}
+
 void initPlayer(Player* P, Level* L, int max_health) {
   P->max_health = P->health = max_health;
   P->num_curse = 0;
   P->num_food = 0;
   P->exp = 0;
   P->gold = 0;
+  P->damage_mult = 1;
+  P->hunger = MAX_HUNGER;
 
   for (int i = 0; i < MAX_WEAPON; ++i) {
     P->weapon[i].type = i;
