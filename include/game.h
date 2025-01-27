@@ -237,4 +237,7 @@ void initLock(Lock *L, bool time_based);
 void reinitLock(Lock *L);
 void makePassDoor(Level *L, int room);
 
+/* Item Management */
+void discoverItem(Tile *T);
+
 #endif

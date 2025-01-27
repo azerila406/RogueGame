@@ -20,6 +20,7 @@ void discoverTile(Level* L, int x, int y) {
   if (t == 12 || t == 14) {  // HIDDEN DOOR
     L->tile[x][y].type = 6;  // Discovered
   }
+  discoverItem(&L->tile[x][y]);
 }
 
 void movePlayer(Level* L, int x, int y) {
