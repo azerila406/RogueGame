@@ -147,7 +147,9 @@ void showWeapon() {
             ++sz;
         }
     }
-    P->def_weapon = ind[createMenu(menu, msg, sz)];
+    int x = createMenu(menu, msg, sz);
+    if (x == -1) return;
+    P->def_weapon = ind[x];
 }
 
 void consumeFood(Food *F) {
