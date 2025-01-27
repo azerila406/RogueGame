@@ -146,9 +146,8 @@ void renderHUD(Level *l) {
   attron(COLOR_PAIR(1));
   mvprintw(
       HEIGHT + 2, 0,
-      " Level: %d / %d    Health: %d / %d    Gold: %d    Exp: %d    Items: %d",
-      G->cur + 1, G->num_level, P->health, P->max_health, P->gold, P->exp,
-      P->num_item);
+      " Level: %d / %d    Health: %d / %d    Gold: %d    Exp: %d   ",
+      G->cur + 1, G->num_level, P->health, P->max_health, P->gold, P->exp);
   attroff(COLOR_PAIR(1));
 }
 

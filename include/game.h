@@ -23,9 +23,9 @@
 #define HALLWAY_SIGHT 2
 #define MSG_RESET_TIME 30
 #define DURATION_PASS 30
-#define MAX_FOOD 10
-#define MAX_CURSE 10
-#define MAX_WEAPON 10
+#define MAX_FOOD 100
+#define MAX_CURSE 100
+#define MAX_WEAPON 100
 
 typedef struct DSU {
   int dpr[MAX_ROOMS_PER_LEVEL];
@@ -49,6 +49,8 @@ typedef struct Curse {
   int type;
 } Curse;
 
+
+
 typedef struct Weapon {
   int type;
   // Mace ⚒ 0
@@ -58,6 +60,8 @@ typedef struct Weapon {
   // Sword ⚔ 4
 } Weapon;
 
+extern char *WEAPON_NAME_BY_TYPE[];
+
 typedef struct Player {
   int x;
   int y;
@@ -65,10 +69,12 @@ typedef struct Player {
   int max_health;
   int gold;
   int exp;
-  int num_item;
-  Food food[MAX_FOOD];
-  Weapon weapon[MAX_WEAPON];
-  Curse curse[MAX_CURSE];
+  int num_weapon;
+  int num_food;
+  int num_curse;
+  Food *food[MAX_FOOD];
+  Weapon *weapon[MAX_WEAPON];
+  Curse *curse[MAX_CURSE];
 } Player;
 
 typedef struct Vector {
@@ -239,5 +245,6 @@ void makePassDoor(Level *L, int room);
 
 /* Item Management */
 void discoverItem(Tile *T);
+void searchItem(Tile *T);
 
 #endif

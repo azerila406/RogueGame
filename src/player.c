@@ -2,7 +2,9 @@
 
 void initPlayer(Player* P, Level* L, int max_health) {
   P->max_health = P->health = max_health;
-  P->num_item = 0;
+  P->num_curse = 0;
+  P->num_food = 0;
+  P->num_weapon = 0;
   P->exp = 0;
   P->gold = 0;
 

@@ -83,6 +83,10 @@ void processInput(int x, Level *L) {
     case 'M':
       toggle_map_status ^= 1;
       return;
+    case 'e':
+    case 'E':
+      searchItem(&L->tile[P->x][P->y]);
+      return;
     default:
       setTopMsg("Illegal Command");
       return;
