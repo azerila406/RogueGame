@@ -163,6 +163,7 @@ void consumeFood(Food *F) {
         P->damage_mult = 2;
         P->damage_mult_last_time = get_game_timer();
     }
+    if (F->type != 3) P->last_time_hunger = get_game_timer(); //isnt poison
 }
 
 void showFood() {

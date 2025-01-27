@@ -29,6 +29,7 @@
 #define MAX_HUNGER 20
 #define TIME_OF_DEGRADING_OF_FOOD 30
 #define TIME_OF_DAMAGE_MULT_LASTING 15
+#define TIME_OF_HUNGER_DECREASE 5
 
 typedef struct DSU {
   int dpr[MAX_ROOMS_PER_LEVEL];
@@ -87,7 +88,10 @@ typedef struct Player {
 
   int damage_mult_last_time;
   int damage_mult;
+
   int hunger;
+  int last_time_hunger;
+
 } Player;
 
 typedef struct Vector {
@@ -109,7 +113,7 @@ extern bool toggle_map_status;
 typedef struct Lock {
   char *pass;
   int tried;
-  clock_t last_generated_pass;
+  time_t last_generated_pass;
   bool time_based;
 } Lock;
 

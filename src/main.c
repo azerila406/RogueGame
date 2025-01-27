@@ -12,7 +12,6 @@ void gameloop() {
 
   while (1) {
     checkTimerMsg();
-    processFoodOverTime();
     processPlayer();
     processUnseen(&(G->lvl[G->cur]));
     render(&(G->lvl[G->cur]));

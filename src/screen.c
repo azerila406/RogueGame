@@ -10,7 +10,7 @@
   */
 
 char *top_msg = "";
-clock_t timer_clock;
+time_t timer_clock;
 
 int itemColor(Tile *t) {
   if (t->G) {
