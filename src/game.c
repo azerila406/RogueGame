@@ -73,6 +73,10 @@ void processInput(int x, Level *L) {
     case 'b':
       movePlayer(L, P->x + 1, P->y - 1);
       return;
+    case 'i':
+    case 'I':
+      showWeapon();
+      return;
     case KEY_UP:
       moveStairs(L, +1);
       return;

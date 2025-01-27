@@ -147,7 +147,23 @@ void initFood(Tile *t) {
 void initWeapon(Tile *t) {
   t->type = 42;
   t->W = (Weapon*) malloc(sizeof (Weapon));
-  t->W->type = 0;
+  t->W->type = rnd(1, MAX_WEAPON - 1);
+  switch (t->W->type) {
+    case 1:
+      t->W->td = 10;
+      break;
+    case 2:
+      t->W->td = 8;
+      break;
+    case 3:
+      t->W->td = 20;
+      break;
+    case 4:
+      t->W->td = -1;
+      break;
+    default:
+      assert(false);
+  }
 }
 
 void initCurse(Tile *t) {

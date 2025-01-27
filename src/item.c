@@ -60,7 +60,7 @@ void discoverItem(Tile *t) {
 
 void pickUpWeapon(Tile *t) {
     assert(t->W);
-    P->weapon[P->num_weapon++] = t->W;
+    P->weapon[t->W->type].td += t->W->td;
 
     char *s = (char *)malloc(100 * sizeof(char));
     sprintf(s, "Hmm... A %s Picked up!", WEAPON_NAME_BY_TYPE[t->W->type]);
@@ -68,7 +68,6 @@ void pickUpWeapon(Tile *t) {
 
     t->W = NULL;
     t->type = 0;
-       
 }
 
 //Todo (MORE ITEMS)
@@ -89,4 +88,25 @@ void searchItem(Tile *t) {
     else if (t->W) {
        pickUpWeapon(t);
     }
+}
+
+void showWeapon() {
+    char *menu[MAX_WEAPON], *msg[MAX_WEAPON];
+    int sz = 0;
+    for (int i = 0; i < MAX_WEAPON; ++i) {
+        if (P->weapon[i].td) {
+            menu[sz] = WEAPON_NAME_BY_TYPE[P->weapon[i].type];
+
+            if (P->weapon[i].td < 0) {
+                msg[sz] = "Inifinty Times :)";
+            }
+            else {
+                char *s = (char *)malloc(100 * sizeof(char));
+                sprintf(s, "You have %d of it", P->weapon[i].td);
+                msg[sz] = s;
+            }
+            ++sz;
+        }
+    }
+    P->def_weapon = createMenu(menu, msg, sz);
 }

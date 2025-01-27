@@ -25,7 +25,7 @@
 #define DURATION_PASS 30
 #define MAX_FOOD 100
 #define MAX_CURSE 100
-#define MAX_WEAPON 100
+#define MAX_WEAPON 5
 
 typedef struct DSU {
   int dpr[MAX_ROOMS_PER_LEVEL];
@@ -53,6 +53,7 @@ typedef struct Curse {
 
 typedef struct Weapon {
   int type;
+  int td;
   // Mace ⚒ 0
   // Dagger 🗡 1
   // Magic Wand 🪄 2
@@ -69,11 +70,11 @@ typedef struct Player {
   int max_health;
   int gold;
   int exp;
-  int num_weapon;
+  int def_weapon;
   int num_food;
   int num_curse;
   Food *food[MAX_FOOD];
-  Weapon *weapon[MAX_WEAPON];
+  Weapon weapon[MAX_WEAPON];
   Curse *curse[MAX_CURSE];
 } Player;
 
@@ -246,5 +247,6 @@ void makePassDoor(Level *L, int room);
 /* Item Management */
 void discoverItem(Tile *T);
 void searchItem(Tile *T);
+void showWeapon();
 
 #endif

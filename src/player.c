@@ -4,9 +4,15 @@ void initPlayer(Player* P, Level* L, int max_health) {
   P->max_health = P->health = max_health;
   P->num_curse = 0;
   P->num_food = 0;
-  P->num_weapon = 0;
   P->exp = 0;
   P->gold = 0;
+
+  for (int i = 0; i < MAX_WEAPON; ++i) {
+    P->weapon[i].type = i;
+    P->weapon[i].td = 0;
+  }
+  P->weapon[0].td = -1; //INF
+  P->def_weapon = 0;
 
   P->x = -1;
   do {
