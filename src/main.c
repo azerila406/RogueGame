@@ -3,6 +3,8 @@
 Game *G;
 Player *P;
 
+int game_movement_timer = 0;
+
 void gameloop() {
   clear();
 
@@ -15,7 +17,12 @@ void gameloop() {
     int ch = getch();
     if (ch == 'q') return;
     processInput(ch, &(G->lvl[G->cur]));
+    game_movement_timer++;
   }
+}
+
+int get_game_time() {
+  return game_movement_timer;
 }
 
 signed main() {
