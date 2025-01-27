@@ -25,6 +25,7 @@ void initPlayer(Player* P, Level* L, int max_health) {
   P->damage_mult = 1;
   P->hunger = MAX_HUNGER;
   P->last_time_hunger = get_game_timer();
+  P->score = 0;
 
   for (int i = 0; i < MAX_WEAPON; ++i) {
     P->weapon[i].type = i;

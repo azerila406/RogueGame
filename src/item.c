@@ -3,12 +3,12 @@
 const char* NO_ITEM_ERROR[] = {
         "Looks like you just summoned the invisible item! Truly a master of nothingness.",
         "Congratulations! You've successfully picked up... absolutely nothing. A true champion of the void!",
-        "Nice try! But even the ghosts didn’t leave anything behind for you to pick up.",
-        "Your talent for finding air is nothing short of astonishing! Are you sure you want to carry that ‘weight’?",
-        "If picking up nothing was an Olympic sport, you’d definitely take home the gold!",
-        "You’ve got the magic touch! Too bad that magic is only good for picking up thin air.",
-        "Ah, the classic ‘attempted pick-up’ maneuver! It seems gravity is working against you today.",
-        "Well done! You’ve shown impressive dedication to the art of empty-handedness.",
+        "Nice try! But even the ghosts didn't leave anything behind for you to pick up.",
+        "Your talent for finding air is nothing short of astonishing! Are you sure you want to carry that ‘weight'?",
+        "If picking up nothing was an Olympic sport, you'd definitely take home the gold!",
+        "You've got the magic touch! Too bad that magic is only good for picking up thin air.",
+        "Ah, the classic ‘attempted pick-up' maneuver! It seems gravity is working against you today.",
+        "Well done! You've shown impressive dedication to the art of empty-handedness.",
         "You should really check your pockets. They must be full of all the things you can't pick up!",
         "Looks like you just earned the prestigious 'Master of the Empty Hand' award! Wear it with pride!"
     };
@@ -22,21 +22,21 @@ int FOOD_COLOR_BY_TYPE[] = {5, 5, 5, 3};
 
 #define NO_FOOD_ERROR_SZ 15
 const char* NO_FOOD_ERROR[] = {
-    "You’re so hungry, you’d fight a raccoon for a half-eaten sandwich... and lose.",
-    "You lick the crumbs off the floor, only to realize they’re just dirt. Pathetic.",
-    "You open the fridge, and the light goes out. Even it’s given up on you.",
-    "You try to eat your own shadow, but it’s too fast for you. How embarrassing.",
-    "You stare at an empty plate, pretending it’s a feast. Delusion is your only seasoning.",
+    "You're so hungry, you'd fight a raccoon for a half-eaten sandwich... and lose.",
+    "You lick the crumbs off the floor, only to realize they're just dirt. Pathetic.",
+    "You open the fridge, and the light goes out. Even it's given up on you.",
+    "You try to eat your own shadow, but it's too fast for you. How embarrassing.",
+    "You stare at an empty plate, pretending it's a feast. Delusion is your only seasoning.",
     "You beg the vending machine for mercy, but it just laughs in 'Out of Order.'",
-    "You consider eating the wallpaper. It’s floral, so it’s basically a salad, right? Wrong.",
+    "You consider eating the wallpaper. It's floral, so it's basically a salad, right? Wrong.",
     "You try to chew on your own hair, but even your split ends reject you.",
-    "You sniff the air, hoping to catch a whiff of someone else’s dinner. You’re basically a food stalker now.",
+    "You sniff the air, hoping to catch a whiff of someone else's dinner. You're basically a food stalker now.",
     "You try to convince yourself that hunger is just a mindset. Your stomach calls you a liar.",
     "You check the trash can for leftovers, but even the mold has standards.",
-    "You try to eat your own words, but they’re too bitter to swallow.",
+    "You try to eat your own words, but they're too bitter to swallow.",
     "You stare at a picture of food so long, your phone locks itself out of pity.",
     "You try to drink water to feel full, but it just reminds you how empty your life is.",
-    "You consider eating your homework, but it’s not even edible. Fail."
+    "You consider eating your homework, but it's not even edible. Fail."
 };
 
 

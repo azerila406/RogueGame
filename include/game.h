@@ -82,6 +82,7 @@ typedef struct Player {
   int def_weapon;
   int num_food;
   int num_curse;
+  int score;
   Food *food[MAX_FOOD];
   Weapon weapon[MAX_WEAPON];
   Curse *curse[MAX_CURSE];
