@@ -141,7 +141,7 @@ int rooms_type_prob[4][5] = {
 void initFood(Tile *t) {
   t->type = 42;
   t->F = (Food*) malloc(sizeof (Food));
-  t->F->type = 0;
+  t->F->type = rand() % 4;
 }
 
 void initWeapon(Tile *t) {

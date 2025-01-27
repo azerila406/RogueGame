@@ -75,7 +75,7 @@ void processInput(int x, Level *L) {
       return;
     case 'i':
     case 'I':
-      showWeapon();
+      showInventory();
       return;
     case KEY_UP:
       moveStairs(L, +1);

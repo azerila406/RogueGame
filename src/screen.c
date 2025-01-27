@@ -19,11 +19,11 @@ int itemColor(Tile *t) {
     else
       return 2;
   } else if (t->F) {
-    return t->F->type + 1;
+    return 1;
   } else if (t->C) {
     return t->C->type + 1;
   } else if (t->W) {
-    return t->W->type + 1;
+    return 1;
   }
   assert(0);
 }

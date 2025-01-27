@@ -38,6 +38,10 @@ void initDSU(DSU *, int);
 
 typedef struct Food {
   int type;
+  // 0 -> Normal Food
+  // 1 -> Power Food
+  // 2 -> Speed Food
+  // 3 -> Bad Food
 } Food;
 
 typedef struct Gold {
@@ -62,6 +66,8 @@ typedef struct Weapon {
 } Weapon;
 
 extern char *WEAPON_NAME_BY_TYPE[];
+extern char *FOOD_NAME_BY_TYPE[];
+extern char *CURSE_NAME_BY_TYPE[];
 
 typedef struct Player {
   int x;
@@ -248,5 +254,6 @@ void makePassDoor(Level *L, int room);
 void discoverItem(Tile *T);
 void searchItem(Tile *T);
 void showWeapon();
+void showInventory();
 
 #endif
