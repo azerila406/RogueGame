@@ -28,7 +28,7 @@
 #define MAX_WEAPON 5
 #define MAX_HUNGER 20
 #define TIME_OF_DEGRADING_OF_FOOD 30
-#define TIME_OF_DAMAGE_MULT_LASTING 20
+#define TIME_OF_DAMAGE_MULT_LASTING 3
 
 typedef struct DSU {
   int dpr[MAX_ROOMS_PER_LEVEL];

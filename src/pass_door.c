@@ -98,8 +98,7 @@ int passDoorLogin(Lock *lock) {
 bool checkPass(Lock *lock, char *pass) {
   if (lock->tried >= 3) return 0;
   if (lock->time_based) {
-    clock_t t = clock();
-    if ((1.0 * t - lock->last_generated_pass) / CLOCKS_PER_SEC > DURATION_PASS)
+    if (difftime(time(NULL), lock->last_generated_pass) >= DURATION_PASS)
       return 0;
   }
   if (strcmp(pass, lock->pass)) return 0;
@@ -114,7 +113,7 @@ void initLock(Lock *lock, bool time_based) {
 }
 
 void reinitLock(Lock *lock) {
-  lock->last_generated_pass = clock();
+  lock->last_generated_pass = time(NULL);
   lock->pass = randomPass(4);
   setTopMsg(lock->pass);
 }
