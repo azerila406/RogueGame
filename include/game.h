@@ -26,6 +26,7 @@
 #define MAX_FOOD 100
 #define MAX_CURSE 100
 #define MAX_WEAPON 5
+#define TIME_OF_DEGRADING_OF_FOOD 10
 
 typedef struct DSU {
   int dpr[MAX_ROOMS_PER_LEVEL];
@@ -42,6 +43,7 @@ typedef struct Food {
   // 1 -> Power Food
   // 2 -> Speed Food
   // 3 -> Bad Food
+  int pickup_time;
 } Food;
 
 typedef struct Gold {
@@ -256,5 +258,6 @@ void discoverItem(Tile *T);
 void searchItem(Tile *T);
 void showWeapon();
 void showInventory();
+void processFoodOverTime();
 
 #endif

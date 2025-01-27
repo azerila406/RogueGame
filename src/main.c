@@ -12,6 +12,7 @@ void gameloop() {
 
   while (1) {
     checkTimerMsg();
+    processFoodOverTime();
     processUnseen(&(G->lvl[G->cur]));
     render(&(G->lvl[G->cur]));
     int ch = getch();
@@ -21,7 +22,7 @@ void gameloop() {
   }
 }
 
-int get_game_time() {
+int get_game_timer() {
   return game_movement_timer;
 }
 

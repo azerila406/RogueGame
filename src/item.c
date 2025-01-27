@@ -13,6 +13,8 @@ const char* NO_ITEM_ERROR[] = {
         "Looks like you just earned the prestigious 'Master of the Empty Hand' award! Wear it with pride!"
     };
 #define NO_ITEM_ERROR_SZ 10
+
+
 char *WEAPON_NAME_BY_TYPE[] = {"Mace", "Dagger", "Magic Wand", "Normal Arrow", "Sword"};
 char *FOOD_NAME_BY_TYPE[] = {"Normal", "Power", "Speed", "Normal"};
 char *REAL_FOOD_NAME_BY_TYPE[] = {"Normal", "Power", "Speed", "Poisoned"};
@@ -94,7 +96,9 @@ void pickUpWeapon(Tile *t) {
 
 void pickUpFood(Tile *t) {
     assert(t->F);
-    P->food[P->num_food++] = t->F;
+    P->food[P->num_food] = t->F;
+    P->food[P->num_food]->pickup_time = get_game_timer();
+    P->num_food++;
 
     char *s = (char *)malloc(100 * sizeof(char));
     sprintf(s, "Hmm... A %s Food Picked up!", FOOD_NAME_BY_TYPE[t->F->type]);
@@ -194,4 +198,17 @@ void showInventory() {
         default:
             return;
     }
+}
+
+//Foods should be poisned after sometime and ...
+void processFoodOverTime() {
+    int changed = 0;
+    for (int i = 0; i < P->num_food; ++i) if (P->food[i] != NULL && get_game_timer() - P->food[i]->pickup_time >= TIME_OF_DEGRADING_OF_FOOD) {
+        int t = P->food[i]->type;
+        if (t == 0) P->food[i]->type = 3; //to poison
+        else if (t == 1 || t == 2) P->food[i]->type = 0;
+        P->food[i]->pickup_time = get_game_timer();
+        changed = 1;
+    }
+    if (changed) setTopMsg("Some of your food(s) corrupted");
 }
