@@ -122,7 +122,7 @@ void initScreen() {
 
 void clearMsg() {
   attron(COLOR_PAIR(1));
-  for (int i = 0; i < WIDTH; ++i) mvprintw(0, i, " ");
+  for (int i = 0; i < WIDTH + 30; ++i) mvprintw(0, i, " "); //TODO
   attroff(COLOR_PAIR(1));
 }
 
