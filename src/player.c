@@ -1,5 +1,6 @@
 #include "game.h"
 
+//TODO add getting health
 void processPlayer() {
   processFoodOverTime();
 
