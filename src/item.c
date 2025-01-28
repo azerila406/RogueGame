@@ -16,6 +16,10 @@ const char* NO_ITEM_ERROR[] = {
 
 
 char *WEAPON_NAME_BY_TYPE[] = {"Mace", "Dagger", "Magic Wand", "Normal Arrow", "Sword"};
+
+char *CURSE_NAME_BY_TYPE[] = {"Health", "Speed", "Damage"};
+char *CURSE_EXPLAIN_BY_TYPE[] = {"You regain health faster", "Your will be faster", "Your weapons will be stronger"};
+
 char *FOOD_NAME_BY_TYPE[] = {"Normal", "Power", "Speed", "Normal"};
 char *REAL_FOOD_NAME_BY_TYPE[] = {"Normal", "Power", "Speed", "Poisoned"};
 int FOOD_COLOR_BY_TYPE[] = {5, 5, 5, 3};
@@ -38,6 +42,20 @@ const char* NO_FOOD_ERROR[] = {
     "You try to drink water to feel full, but it just reminds you how empty your life is.",
     "You consider eating your homework, but it's not even edible. Fail."
 };
+
+#define NO_CURSE_ERROR_SZ 10
+const char* NO_CURSE_ERROR[] = {
+        "A potion? Oh, sweet summer child. We don't have that. Maybe try crying into a bottle and see if your tears work instead?",
+        "You want a potion? Sorry, we're all out. But hey, I hear overconfidence and poor planning are great substitutes!",
+        "Oh, you need a potion? That's cute. Unfortunately, we're fresh out of 'Liquid Luck for the Hopeless.' Try again never!",
+        "A potion? HA! The only thing we have in stock is disappointment. Looks like you're already an expert at that, though.",
+        "You want a potion? Wow, bold of you to assume we'd have something useful for someone like you. Try a health bar next time!",
+        "Sorry, we're out of potions. But don't worry—your sheer lack of skill is its own kind of protection. You'll be fine!",
+        "A potion? Oh, honey. We don't have those here. Maybe try closing your eyes and pretending you're better at this game?",
+        "You want a potion? How quaint. Unfortunately, we're all out of 'Juice for the Clueless.' Maybe try not getting hit next time?",
+        "A potion? Sorry, we're fresh out. But hey, at least your failure is entertaining for the rest of us!",
+        "You need a potion? That's adorable. Unfortunately, we're out of stock. Maybe try being less bad at the game instead?"
+    };
 
 
 void handleGold(Tile *t) {
@@ -108,6 +126,19 @@ void pickUpFood(Tile *t) {
     t->type = 0;
 }
 
+void pickUpCurse(Tile *t) {
+    assert(t->C);
+    P->curse[P->num_curse] = t->C;
+    P->num_curse++;
+
+    char *s = (char *)malloc(100 * sizeof(char));
+    sprintf(s, "You picked up %s Curse!", CURSE_NAME_BY_TYPE[t->C->type]);
+    setTopMsg(s);
+
+    t->C = NULL;
+    t->type = 0;
+}
+
 //TODO (MORE ITEMS)
 void searchItem(Tile *t) {
     int type = t->type;
@@ -120,7 +151,7 @@ void searchItem(Tile *t) {
         pickUpFood(t);
     }
     else if (t->C) {
-        renderMsgAndWait("Picking up da Curse", 1);
+        pickUpCurse(t);
     }
     else if (t->W) {
        pickUpWeapon(t);
@@ -202,11 +233,55 @@ void showFood() {
     P->food[x] = NULL;
 }
 
-void showInventory() {
-    char *menu[3] = {"Weapon", "Food"};
-    char *msg[3] = {"Show Weapons in your backpack", "Show Food in your backpack"};
+//Health, Speed, Damage
+void consumeCurse(Curse *C) {
+    switch (C->type) {
+        case 0:
+            P->health_recover_mult = 2;
+            P->health_recover_mult_last_time = get_game_timer();
+            break;
+        case 1:
+            P->speed_mult = 2;
+            P->speed_mult_last_time = get_game_timer();
+            break;
+        case 2:
+            P->damage_mult = 2;
+            P->damage_mult_last_time = get_game_timer();
+            break;
+        default:
+            assert(false);
+    }
+}
 
-    int x = createMenu(menu, msg, 2);
+void showCurse() {
+    char *menu[MAX_CURSE], *msg[MAX_CURSE];
+    int ind[MAX_CURSE];
+    int sz = 0;
+    for (int i = 0; i < MAX_CURSE; ++i) {
+        if (P->curse[i] != NULL) {
+            menu[sz] = CURSE_NAME_BY_TYPE[P->curse[i]->type];
+            msg[sz] = CURSE_EXPLAIN_BY_TYPE[P->curse[i]->type];
+            ind[sz] = i;
+            ++sz;
+        }
+    }
+    if (sz == 0) {
+        renderMsgAndWait(NO_CURSE_ERROR[rand() % NO_CURSE_ERROR_SZ], 3);
+        return;
+    }
+    int x = createMenu(menu, msg, sz);
+    if (x == -1) return;
+    x = ind[x];
+    //You should eat x'th curse
+    consumeCurse(P->curse[x]);
+    P->curse[x] = NULL;
+}
+
+void showInventory() {
+    char *menu[3] = {"Weapon", "Food", "Curse"};
+    char *msg[3] = {"Show Weapons in your backpack", "Show Food in your backpack", "Show Curses in your backpack"};
+
+    int x = createMenu(menu, msg, 3);
     switch (x) {
         case -1:
             return;
@@ -215,6 +290,9 @@ void showInventory() {
             return;
         case 1:
             showFood();
+            return;
+        case 2:
+            showCurse();
             return;
         default:
             return;

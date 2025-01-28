@@ -160,14 +160,14 @@ void initWeapon(Tile *t) {
 void initCurse(Tile *t) {
   t->type = 42;
   t->C = (Curse*) malloc(sizeof (Curse));
-  t->C->type = 0;
+  t->C->type = rand() % 3;
 }
 
 void initGold(Tile *t) {
   t->type = 42;
   t->G = (Gold*) malloc(sizeof (Gold));
-  t->G->type = 0;
-  t->G->gold = (t->G->type == 1 ? rnd(10, 50) : rnd(2, 9)); //Gold Values
+  t->G->type = rand() % 8 == 0; //(1 / 8) being Black
+  t->G->gold = (t->G->type == 1 ? rnd(50, 100) : rnd(1, 10)); //Gold Values
 }
 
 void initItemsRoom(Level *L, Room *R) {
