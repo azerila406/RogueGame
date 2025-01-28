@@ -77,6 +77,9 @@ void processInput(int x, Level *L) {
     case 'I':
       showInventory();
       return;
+    case ' ':
+      attack(L);
+      return;
     case KEY_UP:
       moveStairs(L, +1);
       return;

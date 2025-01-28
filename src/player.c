@@ -31,6 +31,8 @@ void initPlayer(Player* P, Level* L, int max_health) {
   for (int i = 0; i < MAX_WEAPON; ++i) {
     P->weapon[i].type = i;
     P->weapon[i].td = 0;
+    P->weapon[i].dmg = WEAPON_DAMAGE_BY_TYPE[i];
+    P->weapon[i].range = WEAPON_RANGE_BY_TYPE[i];
   }
   P->weapon[0].td = -1; //INF
   P->def_weapon = 0;

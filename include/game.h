@@ -61,16 +61,21 @@ typedef struct Curse {
 typedef struct Weapon {
   int type;
   int td;
-  // Mace ⚒ 0
+  int range;
+  int dmg;
+  // Mace ⚒ 0 -> short range
   // Dagger 🗡 1
   // Magic Wand 🪄 2
   // Normal Arrow ➳ 3
-  // Sword ⚔ 4
+  // Sword ⚔ 4 -> short range
 } Weapon;
 
 extern char *WEAPON_NAME_BY_TYPE[];
 extern char *FOOD_NAME_BY_TYPE[];
 extern char *CURSE_NAME_BY_TYPE[];
+extern int WEAPON_DAMAGE_BY_TYPE[];
+extern int WEAPON_RANGE_BY_TYPE[];
+extern int WEAPON_TD_BY_TYPE[];
 
 typedef struct Player {
   int x;
@@ -269,5 +274,8 @@ void searchItem(Tile *T);
 void showWeapon();
 void showInventory();
 void processFoodOverTime();
+
+/* Enemy Stuff */
+void attack(Level *lvl);
 
 #endif

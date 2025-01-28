@@ -144,26 +144,17 @@ void initFood(Tile *t) {
   t->F->type = rand() % 4;
 }
 
+int WEAPON_DAMAGE_BY_TYPE[] = {5, 12, 15, 5, 10};
+int WEAPON_RANGE_BY_TYPE[] = {0, 5, 10, 5, 0};
+int WEAPON_TD_BY_TYPE[] = {-1, 10, 8, 20, -1};
+
 void initWeapon(Tile *t) {
   t->type = 42;
   t->W = (Weapon*) malloc(sizeof (Weapon));
   t->W->type = rnd(1, MAX_WEAPON - 1);
-  switch (t->W->type) {
-    case 1:
-      t->W->td = 10;
-      break;
-    case 2:
-      t->W->td = 8;
-      break;
-    case 3:
-      t->W->td = 20;
-      break;
-    case 4:
-      t->W->td = -1;
-      break;
-    default:
-      assert(false);
-  }
+  t->W->td = WEAPON_TD_BY_TYPE[t->W->type];
+  t->W->range = WEAPON_RANGE_BY_TYPE[t->W->type];
+  t->W->dmg = WEAPON_DAMAGE_BY_TYPE[t->W->type];
 }
 
 void initCurse(Tile *t) {
