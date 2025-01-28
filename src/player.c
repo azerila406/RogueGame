@@ -15,6 +15,11 @@ void processPlayer() {
     P->damage_mult = 1;
     setTopMsg("You lost your power :(((");
   }
+
+  if (P->speed_mult == 2 && (get_game_timer() - P->speed_mult_last_time) >= TIME_OF_SPEED_MULT_LASTING) {
+    P->speed_mult = 1;
+    setTopMsg("You lost your speed :(((");
+  }
 }
 
 void initPlayer(Player* P, Level* L, int max_health) {
@@ -24,6 +29,7 @@ void initPlayer(Player* P, Level* L, int max_health) {
   P->exp = 0;
   P->gold = 0;
   P->damage_mult = 1;
+  P->speed_mult = 1;
   P->hunger = MAX_HUNGER;
   P->last_time_hunger = get_game_timer();
   P->score = 0;
