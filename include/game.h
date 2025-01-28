@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <sqlite3.h>
 
 #define MAX_ITEMS_PLAYER 100
 #define MAX_ITEMS_TILE 100
@@ -78,6 +79,7 @@ extern char *CURSE_NAME_BY_TYPE[];
 extern int WEAPON_DAMAGE_BY_TYPE[];
 extern int WEAPON_RANGE_BY_TYPE[];
 extern int WEAPON_TD_BY_TYPE[];
+
 
 typedef struct Player {
   int x;

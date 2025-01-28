@@ -60,7 +60,7 @@ void gameMenu() {
 
 void userMenu() {
   char *s[4] = {"Login", "Register", "Forget Password", "Scoreboard"};
-  char *msg[4] = {"", "", "", ""};
+  char *msg[4] = {"Login using username and password", "Is this your first time entering the game? then signup", "Change password in case you forgot", "Show the scoreboard"};
 
   while (1) {
     int x = createMenu(s, msg, 4);

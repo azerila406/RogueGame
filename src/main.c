@@ -1,4 +1,5 @@
 #include "game.h"
+#include "database.h"
 
 // Array of strings
 const char *GAME_OVER_ERROR[] = {
@@ -68,10 +69,11 @@ int get_game_timer() {
 signed main() {
   setlocale(LC_ALL, "");
   srand(time(0));
+  initDB();
+
   initScreen();
-  gameMenu();
-  // userMenu();
-  //  gameloop();
+  userMenu();
+  // gameMenu();
   endwin();
   return 0;
 }
