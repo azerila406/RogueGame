@@ -48,6 +48,10 @@ void gameloop() {
     processPlayer();
     if (P->health <= 0) return gameOver();
 
+    if (get_game_timer() % P->speed_mult == 0) {
+      //processEnemies :))
+    }
+
     processUnseen(&(G->lvl[G->cur]));
     render(&(G->lvl[G->cur]));
     int ch = getch();
