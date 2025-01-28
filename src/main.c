@@ -46,7 +46,7 @@ void gameloop() {
   while (1) {
     checkTimerMsg();
     processPlayer();
-    if (P->health <= 0) return gameOver();
+    // if (P->health <= 0) return gameOver(); FOR DEBUG PURPOSES
 
     if (get_game_timer() % P->speed_mult == 0) {
       //processEnemies :))
