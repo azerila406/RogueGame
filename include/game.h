@@ -30,6 +30,7 @@
 #define TIME_OF_DEGRADING_OF_FOOD 30
 #define TIME_OF_DAMAGE_MULT_LASTING 15
 #define TIME_OF_SPEED_MULT_LASTING 15
+#define TIME_OF_HEALTH_RECOVER_MULT_LASTING 15
 #define TIME_OF_HUNGER_DECREASE 5
 
 typedef struct DSU {
@@ -101,6 +102,9 @@ typedef struct Player {
 
   int speed_mult;
   int speed_mult_last_time;
+
+  int health_recover_mult;
+  int health_recover_mult_last_time;
 
 } Player;
 

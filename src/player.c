@@ -4,6 +4,12 @@
 void processPlayer() {
   processFoodOverTime();
 
+  if (P->hunger == MAX_HUNGER) {
+    if (P->health < P->max_health) {
+      P->health = max(P->max_health, P->health + P->health_recover_mult);
+    }
+  }
+
   if (P->hunger > 0) {
     if (get_game_timer() - P->last_time_hunger >= TIME_OF_HUNGER_DECREASE) {
       P->hunger--;
@@ -20,6 +26,11 @@ void processPlayer() {
     P->speed_mult = 1;
     setTopMsg("You lost your speed :(((");
   }
+
+  if (P->health_recover_mult == 2 && (get_game_timer() - P->health_recover_mult_last_time) >= TIME_OF_HEALTH_RECOVER_MULT_LASTING) {
+    P->health_recover_mult = 1;
+    setTopMsg("You lost your special healing power :((((");
+  }
 }
 
 void initPlayer(Player* P, Level* L, int max_health) {
@@ -28,8 +39,7 @@ void initPlayer(Player* P, Level* L, int max_health) {
   P->num_food = 0;
   P->exp = 0;
   P->gold = 0;
-  P->damage_mult = 1;
-  P->speed_mult = 1;
+  P->damage_mult = P->speed_mult = P->health_recover_mult = 1;
   P->hunger = MAX_HUNGER;
   P->last_time_hunger = get_game_timer();
   P->score = 0;
