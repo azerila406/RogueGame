@@ -21,10 +21,11 @@ void shortRangeAttack(Level *lvl, Weapon *W) {
             if (E->health <= 0) {
                 sprintf(s, "%s and It's finnaly dead!", s);
                 renderMsgAndWait(s, 3);
+                P->exp += E->score;
             }
             else renderMsgAndWait(s, 2);
 
-            P->score++;
+            P->exp++;
         }
     }
 }
@@ -86,39 +87,48 @@ void initEnemy(Enemy *E) {
 
 
 int isTheTileGoodForEnemy(Level *lvl, int x, int y) {
-    if (P->x == x && P->y == y) return 0;
     if (lvl->tile[x][y].type == 0 || lvl->tile[x][y].type == 42) {
         return 1;
     }
     return 0;
 }
 
-void attackEnemy(Level *lvl) {
-    for (int i = 0; i < lvl->num_enemy; ++i) if (lvl->enemy[i].health > 0) {
-        Enemy *E = &lvl->enemy[i];
-        int dx = myabs(E->x - P->x), dy = myabs(E->y - P->y);
-        if (dx <= 1 && dy <= 1) {
-            char *s = (char *) malloc(200 * sizeof(char));
-            sprintf(s, "You have been attacked by %s and took %d damage", ENEMEY_NAME_BY_TYPE[E->type], ENEMY_DAMAGE_BY_TYPE[E->type]);
-            renderMsgAndWait(s, 6);
-            E->last_time_attacked = get_game_timer();
-            P->health -= ENEMY_DAMAGE_BY_TYPE[E->type];
-        }
+int move_or_attack[MAX_ENEMEY];
+
+void attackEnemy(Enemy *E) {
+    int dx = myabs(E->x - P->x), dy = myabs(E->y - P->y);
+    if (dx <= 1 && dy <= 1)
+    {
+        char *s = (char *)malloc(200 * sizeof(char));
+        sprintf(s, "You have been attacked by %s and took %d damage", ENEMEY_NAME_BY_TYPE[E->type], ENEMY_DAMAGE_BY_TYPE[E->type]);
+        renderMsgAndWait(s, 6);
+        E->last_time_attacked = get_game_timer();
+        P->health -= ENEMY_DAMAGE_BY_TYPE[E->type];
     }
 }
 
-void processEnemies(Level *lvl) {
-    for (int i = 0; i < lvl->num_enemy; ++i) if (lvl->enemy[i].speed > 0 && lvl->enemy[i].health > 0) {
-        Enemy *E = &lvl->enemy[i];
-        int nx = sgn(P->x - E->x) + E->x, ny = sgn(P->y - E->y) + E->y;
-        
-        if (!isTheTileGoodForEnemy(lvl, nx, ny)) continue;
-        if ((get_game_timer() - E->last_time_attacked) > ENEMY_LOSE_INTEREST_TIME_BY_TYPE[E->type])
-            continue;
-        if (whichRoomID(lvl, P->x, P->y) != whichRoomID(lvl, E->x, E->y))
-            continue;
-        E->x = nx;
-        E->y = ny;
-    }
+void processEnemies(Level *lvl)
+{
+    for (int i = 0; i < lvl->num_enemy; ++i)
+        if (lvl->enemy[i].speed > 0 && lvl->enemy[i].health > 0)
+        {
+            Enemy *E = &lvl->enemy[i];
+            int nx = sgn(P->x - E->x) + E->x, ny = sgn(P->y - E->y) + E->y;
+
+            if (!isTheTileGoodForEnemy(lvl, nx, ny))
+                continue;
+            if (P->x == nx && P->y == ny)
+            {
+                attackEnemy(E);
+                continue;
+            }
+
+            if ((get_game_timer() - E->last_time_attacked) > ENEMY_LOSE_INTEREST_TIME_BY_TYPE[E->type])
+                continue;
+            if (whichRoomID(lvl, P->x, P->y) != whichRoomID(lvl, E->x, E->y))
+                continue;
+            E->x = nx;
+            E->y = ny;
+        }
     attackEnemy(lvl);
 }
