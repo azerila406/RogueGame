@@ -39,6 +39,23 @@ void gameOver() {
   //TODO call scoreboard here :)
 }
 
+bool checkWinStatus() {
+  if (G->cur + 1 != G->num_level) return 0;
+  Level *L = &G->lvl[G->cur];
+  int r = whichRoomID(L, P->x, P->y);
+  if (r == -1) return 0;
+  if (L->room[r].type != 1) return 0; //Treasure Room
+  for (int i = 0; i < L->num_enemy; ++i) {
+    Enemy *E = &L->enemy[i];
+    if (E->health > 0 && whichRoomID(L, E->x, E->y) == r) return 0;
+  }
+  return 1;
+}
+
+void gameWon() {
+  renderMsgAndWait("You have won the game", 3);
+}
+
 void gameloop() {
   clear();
 
@@ -46,12 +63,20 @@ void gameloop() {
 
   while (1) {
     // if (P->health <= 0) return gameOver(); FOR DEBUG PURPOSES
+    if (checkWinStatus()) {
+      gameWon();
+      return;
+    }
     checkTimerMsg();
     processPlayer();
     processUnseen(&(G->lvl[G->cur]));
     render(&(G->lvl[G->cur]));
     int ch = getch();
-    if (ch == 'q') return;
+    if (ch == 'q') {
+      //TODO
+      //saveGame();
+      return;
+    }
     processInput(ch, &(G->lvl[G->cur]));
     game_movement_timer++;
 
