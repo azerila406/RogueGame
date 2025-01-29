@@ -90,7 +90,8 @@ int passDoorLogin(Lock *lock) {
       return 0;
     }
   } else if (x == 1) {  // TODO
-    renderMsgAndWait("Ooops we've been too lazy to implement this...", 1);
+    renderMsgAndWait("Ooops we've been too lazy to implement this... so we will let you pass", 3);
+    return 1;
   }
   return 0;
 }
