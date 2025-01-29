@@ -56,3 +56,14 @@ void attack(Level *L) {
     P->weapon[P->def_weapon].td--;
     if (P->weapon[P->def_weapon].td == 0) P->def_weapon = 0; // change to Mace
 }
+
+int ENEMY_HEALTH_BY_TYPE[] = {5, 10, 15, 20, 30};
+int ENEMY_SCORE_BY_TYPE[] = {5, 10, 15, 20, 30};
+
+//dont mess with E->x, E->y
+void initEnemy(Enemy *E) {
+    E->type = rand() % 5;
+    E->health = ENEMY_HEALTH_BY_TYPE[E->type];
+    E->score = ENEMY_SCORE_BY_TYPE[E->type];
+    E->speed = 1;
+}

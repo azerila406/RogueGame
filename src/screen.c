@@ -55,6 +55,12 @@ int getColor(Tile *t) {
   }
 }
 
+const char ENEMY_CHAR_BY_TYPE[] = {'D', 'F', 'G', 'S', 'U'};
+
+char enemyChar(Enemy *E) {
+  return ENEMY_CHAR_BY_TYPE[E->type];
+}
+
 wchar_t *itemChar(Tile *t) {
   if (t->G) {
     return L"G";
@@ -176,6 +182,20 @@ void render(Level *l) {
       }
     }
   }
+  //print enemies:
+
+  attron(COLOR_PAIR(6));
+  for (int i = 0; i < l->num_enemy; ++i) if (l->enemy[i].health > 0) {
+    int x = l->enemy[i].x;
+    int y = l->enemy[i].y;
+    Tile *t = &(l->tile[x][y]);
+    int r = whichRoomID(l, x, y);
+    bool vis =
+        toggle_map_status | t->visible | (r != -1 && l->room[r].visible);
+    if (vis) mvprintw(l->enemy[i].x + 1, l->enemy[i].y + 1, "%c", enemyChar(&l->enemy[i]));
+  }
+  attroff(COLOR_PAIR(6));
+
   attron(COLOR_PAIR(1));
   mvprintw(P->x + 1, (P->y + 1), "@");
   move(P->x + 1, (P->y + 1));

@@ -199,11 +199,26 @@ void initItemsLevel(Level *L) { //ROOM TYPE MATTERS HERE: TODO
   }
 }
 
+void initEnemies(Level *L) {
+  L->num_enemy = rand() % MAX_ENEMEY;
+  for (int i = 0; i < L->num_enemy; ++i) {
+    int x, y;
+    do {
+      x = rand() % HEIGHT;
+      y = rand() % WIDTH;
+    } while (L->tile[x][y].type);
+    L->enemy[i].x = x;
+    L->enemy[i].y = y;
+    initEnemy(&L->enemy[i]);
+  }
+}
+
 void initLevel(Level* L) {
   do {
     initRooms(L);
   } while (roomsCollide(L->room, L->num_room));
   initRoomHallway(L);
+  initEnemies(L);
 }
 
 void initLevelWithARoom(Level* L, Room* R) {
@@ -213,6 +228,7 @@ void initLevelWithARoom(Level* L, Room* R) {
     // TODO maybe change type of ROOM?
   } while (roomsCollide(L->room, L->num_room));
   initRoomHallway(L);
+  initEnemies(L);
 }
 
 void initRoomsType(Level *L) { //TODO

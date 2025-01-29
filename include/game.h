@@ -28,6 +28,7 @@
 #define MAX_CURSE 100
 #define MAX_WEAPON 5
 #define MAX_HUNGER 20
+#define MAX_ENEMEY 15
 #define TIME_OF_DEGRADING_OF_FOOD 30
 #define TIME_OF_DAMAGE_MULT_LASTING 15
 #define TIME_OF_SPEED_MULT_LASTING 15
@@ -178,11 +179,27 @@ typedef struct Tile {
 
 } Tile;
 
+typedef struct Enemy {
+  int x;
+  int y;
+  int type;
+  //0 -> Deamon
+  //1 -> Fire
+  //2 -> Giant
+  //3 -> Snake
+  //4 -> Undeed
+  int speed;
+  int health;
+  int score;
+} Enemy;
+
 typedef struct Level {
   int lvl_num;
   int num_room;
   Room room[MAX_ROOMS_PER_LEVEL];
   Tile tile[HEIGHT][WIDTH];
+  int num_enemy;
+  Enemy enemy[MAX_ENEMEY];
 } Level;
 
 typedef struct Game {
@@ -288,5 +305,7 @@ void processFoodOverTime();
 
 /* Enemy Stuff */
 void attack(Level *lvl);
+void initEnemies(Level *lvl);
+void initEnemy(Enemy *enemy);
 
 #endif
