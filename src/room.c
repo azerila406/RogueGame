@@ -19,3 +19,12 @@ void initRoom(Level *L, Room *R) {
     }
   }
 }
+
+int isThereStairs(Level *L, Room *R) {
+  for (int i = getX0(R); i <= getX1(R); ++i) {
+    for (int j = getY0(R); j <= getY1(R); ++j) {
+      if (L->tile[i][j].type == 8) return 1;
+    }
+  }
+  return 0;
+}

@@ -59,7 +59,7 @@ void initPlayer(Player* P, Level* L, int max_health) {
     // TODO probably some conditions on the room
     P->x = rnd(L->room[r].x + 1, L->room[r].x + L->room[r].height - 1);
     P->y = rnd(L->room[r].y + 1, L->room[r].y + L->room[r].width - 1);
-  } while (P->x == -1);
+  } while (P->x == -1 || L->tile[P->x][P->y].type != 0);
 }
 
 void discoverTile(Level* L, int x, int y) {
@@ -67,7 +67,7 @@ void discoverTile(Level* L, int x, int y) {
   if (t == 12 || t == 14) {  // HIDDEN DOOR
     L->tile[x][y].type = 6;  // Discovered
   }
-  if (t == 7) {
+  if (t == 22) {
     renderMsgAndWait("You stepped on a trap", 3);
     P->health -= 3;
   }
@@ -113,13 +113,12 @@ bool checkUnseen(Level* L, int x, int y) {
 
 void processUnseen(Level* L) {
   int r = whichRoomID(L, P->x, P->y);
-  if (r != -1) L->room[r].visible = 1;
+  if (r != -1 && L->room[r].type != 3) L->room[r].visible = 1;
   BFS(L, P->x, P->y, checkUnseen);
   for (int i = 0; i < HEIGHT; ++i) {
     for (int j = 0; j < WIDTH; ++j) {
       int t = L->tile[i][j].type;
-      if (dist[i][j] <= HALLWAY_SIGHT &&
-          (t == 0 || t == 2 || t == 6 || t == 8 || t == 10)) {
+      if (dist[i][j] <= HALLWAY_SIGHT) {
         L->tile[i][j].visible = 1;
       }
     }

@@ -29,10 +29,17 @@ int itemColor(Tile *t) {
   assert(0);
 }
 
+const int WALL_COLOR_BY_TYPE[] = {4, 1, 2, 3};
+
+int wallColor(Tile *t) {
+  int r = t->room_type;
+  return WALL_COLOR_BY_TYPE[r];
+}
+
 int getColor(Tile *t) {
   switch (t->type) {
     case 0:
-    case 7:
+    case 22:
       return 2;
     case 16:
     case 5:
@@ -45,8 +52,8 @@ int getColor(Tile *t) {
     case 10:
     case 12:
     case 14:
-    case 4:
-      return 4;
+    case 21:
+      return wallColor(t);
     case 18:
       return 3;
     case 20:
@@ -81,7 +88,7 @@ wchar_t *tileChar(Tile *t) {
   switch (t->type) {
     case 0:
       return L".";
-    case 7:
+    case 22:
       return L"T";
     case 12:
     case 1:
@@ -106,7 +113,7 @@ wchar_t *tileChar(Tile *t) {
       return L"@";
     case 42:
       return itemChar(t);
-    case 4:
+    case 21:
       return L"O";
     default:
       exit(18);

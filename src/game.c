@@ -22,6 +22,7 @@ void initGame() {
       y = rnd(getY0(&(G->lvl[i].room[r])) + 1, getY1(&(G->lvl[i].room[r])) - 1);
     } while (G->lvl[i].tile[x][y].type || lst_r == r);
     G->lvl[i].tile[x][y].type = 8;
+
     do {
       initLevelWithARoom(&(G->lvl[i + 1]), &(G->lvl[i].room[r]));
     } while (G->lvl[i + 1].tile[x][y].type);
@@ -34,7 +35,15 @@ void initGame() {
     makePassDoor(&G->lvl[i], r);
   }
   for (int i = 0; i < G->num_level; ++i) {
-    initRoomsType(&G->lvl[i]); //does nothing currently
+    initRoomsType(&G->lvl[i]);
+  }
+  
+  //last floor -> Treasure Room :)
+  int r = rand() % G->lvl[G->num_level - 1].num_room;
+  G->lvl[G->num_level - 1].room[r].type = 1;
+  expandTypeToAllTiles(&G->lvl[G->num_level - 1], &G->lvl[G->num_level - 1].room[r]);
+
+  for (int i = 0; i < G->num_level; ++i) {
     initItemsLevel(&G->lvl[i]);
   }
 }

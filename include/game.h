@@ -28,7 +28,7 @@
 #define MAX_CURSE 100
 #define MAX_WEAPON 5
 #define MAX_HUNGER 20
-#define MAX_ENEMEY 15
+#define MAX_ENEMEY 300
 #define TIME_OF_DEGRADING_OF_FOOD 30
 #define TIME_OF_DAMAGE_MULT_LASTING 15
 #define TIME_OF_SPEED_MULT_LASTING 15
@@ -145,10 +145,10 @@ typedef struct Room {
   int width;
   bool visible;
   int type;
-  //Normal Room -> 0
-  //Treasure Room -> 1
-  //Enchant Room -> 2
-  //Nightmare Room -> 3
+  //Normal Room -> 0 (50%)
+  //Treasure Room -> 1 (only last floor (game finishes on this room when defeat all enemies))
+  //Enchant Room -> 2 (only accessable by stairs, no enemy, lots of curse and food)
+  //Nightmare Room -> 3 (no gold, no food, low sight)
 } Room;
 
 typedef struct Tile {
@@ -163,10 +163,10 @@ typedef struct Tile {
   1 -> vert wall && corner |
   2 -> corridor #
   3 -> horz wall -
-  4 -> O (sotoon)
+  21 -> O (sotoon)
   5 -> nothing
   6 -> door (normal door)
-  7 -> trap
+  22 -> trap
   8 -> upstairs
   10 -> downstairs
   12 -> hidden normal door |
@@ -242,6 +242,7 @@ int getX0(Room *room);
 int getX1(Room *room);
 int getY0(Room *room);
 int getY1(Room *room);
+int isThereStairs(Level *lvl, Room *room);
 
 /* Level Functions*/
 void initLevel(Level *lvl);
@@ -252,6 +253,8 @@ void initRoomHallway(Level *lvl);
 void initItemsLevel(Level *lvl);
 void initItemsRoom(Level *lvl, Room *room);
 void initRoomsType(Level *lvl);
+void expandTypeToAllTiles(Level *lvl, Room *room);
+
 
 /* Game Fucntions */
 void initGame();

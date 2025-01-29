@@ -128,15 +128,6 @@ void initRoomHallway(Level* L) {
   initHallway(L);
 }
 
-//Food, Weapon, Curse, Gold, Enemy
-//TODO ROOMS TYPE
-//prob is partial sum of x/50
-int rooms_type_prob[4][5] = {
-  {1, 3, 5, 7, 8},
-  {},
-  {},
-  {}
-};
 
 void initFood(Tile *t) {
   t->type = 42;
@@ -170,24 +161,48 @@ void initGold(Tile *t) {
   t->G->gold = (t->G->type == 1 ? rnd(50, 100) : rnd(1, 10)); //Gold Values
 }
 
+//Food, Weapon, Curse, Gold
+//TODO ROOMS TYPE
+//prob is partial sum of x/50
+const int ROOMS_TYPE_PROB[4][5] = {
+  {1, 3, 5, 7}, 
+  {1, 5, 6, 15}, 
+  {7, 7, 14, 14},
+  {0, 0, 0, 0}
+};
+
+//out of 20
+const int ROOMS_ENEMY_PROB_BY_TYPE[4] = {2, 5, 0, 3};
+
 void initItemsRoom(Level *L, Room *R) {
   int x0 = getX0(R), x1 = getX1(R),
     y0 = getY0(R), y1 = getY1(R);
   int tp = R->type;
   for (int i = x0; i <= x1; ++i) {
     for (int j = y0; j <= y1; ++j) if (L->tile[i][j].type == 0) {
-      int r = rand() % 50;
+      int r = rand() % 50 + 1;
       void (*initFunctions[])(Tile *) = {
           initFood,
           initWeapon,
           initCurse,
           initGold};
-      //TODO add initEnemy
       for (int k = 0; k < 4; k++) {
-        if (r <= rooms_type_prob[tp][k]) {
+        if (r <= ROOMS_TYPE_PROB[tp][k]) {
           initFunctions[k](&L->tile[i][j]);
           break;
         }
+      }
+    }
+  }
+
+  for (int i = x0; i <= x1; ++i) {
+    for (int j = y0; j <= y1; ++j) if (L->tile[i][j].type == 0) {
+      int r = rand() % 20;
+      if (r < ROOMS_ENEMY_PROB_BY_TYPE[tp]) {
+        L->enemy[L->num_enemy].x = i;
+        L->enemy[L->num_enemy].y = j;
+        initEnemy(&L->enemy[L->num_enemy]);
+        L->num_enemy++;
       }
     }
   }
@@ -219,21 +234,41 @@ void initSotoon(Level *lvl) {
     x = rand() % HEIGHT;
     y = rand() % WIDTH;
   } while (lvl->tile[x][y].type);
-  lvl->tile[x][y].type = 4;
+  lvl->tile[x][y].type = 21;
 }
 
 void initTrap(Level *lvl) {
 
 }
 
+void expandTypeToAllTiles(Level *L, Room *R) {
+  for (int i = getX0(R); i <= getX1(R); ++i)
+    for (int j = getY0(R); j <= getY1(R); ++j)
+      L->tile[i][j].room_type = R->type;
+}
+
+void initRoomsType(Level *L) {
+  for (int i = 0; i < L->num_room; ++i) {
+    if (rand() % 5) L->room[i].type = 0; //Normal
+    else {
+      int found_stairs = isThereStairs(L, &L->room[i]);
+      if (found_stairs && rand() % 3 == 0) L->room[i].type = 2; //Enchant
+      else L->room[i].type = 3; //Nightmare
+    }
+    expandTypeToAllTiles(L, &L->room[i]);
+  }
+}
+
+
 void initLevel(Level* L) {
   do {
     initRooms(L);
   } while (roomsCollide(L->room, L->num_room));
   initRoomHallway(L);
-  initEnemies(L);
+  //initEnemies(L);
   initSotoon(L);
   initTrap(L);
+  initRoomsType(L);
 }
 
 void initLevelWithARoom(Level* L, Room* R) {
@@ -243,11 +278,8 @@ void initLevelWithARoom(Level* L, Room* R) {
     // TODO maybe change type of ROOM?
   } while (roomsCollide(L->room, L->num_room));
   initRoomHallway(L);
-  initEnemies(L);
+  //initEnemies(L);
   initSotoon(L);
   initTrap(L);
-}
-
-void initRoomsType(Level *L) { //TODO
-  
+  initRoomsType(L);
 }
