@@ -53,7 +53,7 @@ bool checkWinStatus() {
 }
 
 void gameWon() {
-  renderMsgAndWait("You have won the game", 3);
+  renderMsgAndWait("You have won the game", 5);
 }
 
 void gameloop() {
