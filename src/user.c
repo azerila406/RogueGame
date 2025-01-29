@@ -42,6 +42,12 @@ bool doesUserExists(const char *user, bool error) {
 void userLogin() {
   char *user, *pass;
   user = getInput("Enter Your Username: ", 1);
+  if (!strcmp("GUEST", user)) {
+    renderMsgAndWait("Logged in as a guest... (Your progress won't save)", 5);
+    username = "GUEST";
+    gameMenu();
+    return;
+  }
   pass = getInput("Enter Your Password: ", 0);
   if (isUserCorrect(user, pass)) {
     renderMsgAndWait("Logged in Successfully...", 5);

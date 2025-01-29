@@ -74,7 +74,11 @@ void changeMainCharColor() {
 }
 
 void userInfo() {
-
+  if (!strcmp("GUEST", username)) {
+    renderMsgAndWait("You are logged in as a guest therefore no info!", 1);
+    return;
+  }
+  //TODO some background on the user :))
 }
 
 void settingMenu()

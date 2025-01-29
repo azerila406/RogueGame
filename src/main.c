@@ -72,8 +72,7 @@ signed main() {
   initDB();
 
   initScreen();
-  //userMenu();
-  gameMenu();
+  userMenu();
   endwin();
   return 0;
 }
