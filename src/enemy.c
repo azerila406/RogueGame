@@ -59,30 +59,28 @@ void longRangeAttackWithDirection(Level *L, Weapon *W, int dx, int dy)
 
 void longRangeAttack(Level *L, Weapon *W)
 {
-    while (true)
+    int ch = getch();
+    switch (ch)
     {
-        int ch = getch();
-        switch (ch)
-        {
-        case 'a':
-        case 'A':
-            longRangeAttackWithDirection(L, W, 0, -1);
-            return;
-        case 'W':
-        case 'w':
-            longRangeAttackWithDirection(L, W, -1, 0);
-            return;
-        case 'd':
-        case 'D':
-            longRangeAttackWithDirection(L, W, 0, +1);
-            return;
-        case 'S':
-        case 's':
-            longRangeAttackWithDirection(L, W, +1, 0);
-            return;
-        }
-        renderMsgAndWait("Choose a correct direction...!", 3);
+    case 'a':
+    case 'A':
+        longRangeAttackWithDirection(L, W, 0, -1);
+        return;
+    case 'W':
+    case 'w':
+        longRangeAttackWithDirection(L, W, -1, 0);
+        return;
+    case 'd':
+    case 'D':
+        longRangeAttackWithDirection(L, W, 0, +1);
+        return;
+    case 'S':
+    case 's':
+        longRangeAttackWithDirection(L, W, +1, 0);
+        return;
     }
+    P->weapon[P->def_weapon].td++;
+    renderMsgAndWait("Choose a correct direction...!", 3);
 }
 
 void attack(Level *L)

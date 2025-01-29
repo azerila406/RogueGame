@@ -155,8 +155,8 @@ void renderHUD(Level *l) {
 
   mvprintw(
       HEIGHT + 2, 0,
-      " Level: %d / %d    Health: %d / %d    Gold: %d    Exp: %d    Hunger: %d / %d    Weapon: %s    dmg/speed/healthX: %d / %d / %d",
-      G->cur + 1, G->num_level, P->health, P->max_health, P->gold, P->exp, P->hunger, MAX_HUNGER, WEAPON_NAME_BY_TYPE[P->def_weapon], P->damage_mult, P->speed_mult, P->health_recover_mult);
+      " Level: %d/%d   Health: %d/%d   Gold: %d   Exp: %d   Hunger: %d/%d   Weapon: %s/%d   dmg/speed/healthX: %d/%d/%d",
+      G->cur + 1, G->num_level, P->health, P->max_health, P->gold, P->exp, P->hunger, MAX_HUNGER, WEAPON_NAME_BY_TYPE[P->def_weapon], P->weapon[P->def_weapon].td, P->damage_mult, P->speed_mult, P->health_recover_mult);
   attroff(COLOR_PAIR(1));
 }
 
