@@ -166,6 +166,7 @@ typedef struct Tile {
   4 -> O (sotoon)
   5 -> nothing
   6 -> door (normal door)
+  7 -> trap
   8 -> upstairs
   10 -> downstairs
   12 -> hidden normal door |

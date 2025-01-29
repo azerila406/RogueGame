@@ -222,6 +222,10 @@ void initSotoon(Level *lvl) {
   lvl->tile[x][y].type = 4;
 }
 
+void initTrap(Level *lvl) {
+
+}
+
 void initLevel(Level* L) {
   do {
     initRooms(L);
@@ -229,6 +233,7 @@ void initLevel(Level* L) {
   initRoomHallway(L);
   initEnemies(L);
   initSotoon(L);
+  initTrap(L);
 }
 
 void initLevelWithARoom(Level* L, Room* R) {
@@ -240,6 +245,7 @@ void initLevelWithARoom(Level* L, Room* R) {
   initRoomHallway(L);
   initEnemies(L);
   initSotoon(L);
+  initTrap(L);
 }
 
 void initRoomsType(Level *L) { //TODO

@@ -67,6 +67,10 @@ void discoverTile(Level* L, int x, int y) {
   if (t == 12 || t == 14) {  // HIDDEN DOOR
     L->tile[x][y].type = 6;  // Discovered
   }
+  if (t == 7) {
+    renderMsgAndWait("You stepped on a trap", 3);
+    P->health -= 3;
+  }
   discoverItem(&L->tile[x][y]);
 }
 

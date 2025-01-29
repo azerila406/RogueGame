@@ -32,6 +32,7 @@ int itemColor(Tile *t) {
 int getColor(Tile *t) {
   switch (t->type) {
     case 0:
+    case 7:
       return 2;
     case 16:
     case 5:
@@ -80,6 +81,8 @@ wchar_t *tileChar(Tile *t) {
   switch (t->type) {
     case 0:
       return L".";
+    case 7:
+      return L"T";
     case 12:
     case 1:
       return L"|";
