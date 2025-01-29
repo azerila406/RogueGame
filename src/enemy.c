@@ -1,17 +1,32 @@
 #include "game.h"
 
+const int ENEMY_LOSE_INTEREST_TIME_BY_TYPE[] = {1, 1, 5, 1 << 30, 5};
+const char* ENEMEY_NAME_BY_TYPE[] = {"Deamon", "Fire Breathing Monster", "Giant", "Snake", "Undeed"};
+const int ENEMY_DAMAGE_BY_TYPE[] = {1, 2, 3, 4, 5};
 
 int isValidTile(Level *L, int x, int y) {
     return x >= 0 && x < HEIGHT && y >= 0 && y < WIDTH && (L->tile[x][y].type == 0 || L->tile[x][y].type == 42);
 }
 
-void shortRangeAttack(Level *L, Weapon *W) {
-    for (int x = P->x - 1; x <= P->x + 1; ++x) {
-        for (int y = P->y - 1; y <= P->y + 1; ++y) {
-            //TODO if enemey exists damage it...
+void shortRangeAttack(Level *lvl, Weapon *W) {
+     for (int i = 0; i < lvl->num_enemy; ++i) if (lvl->enemy[i].health > 0) {
+        Enemy *E = &lvl->enemy[i];
+        int dx = myabs(E->x - P->x), dy = myabs(E->y - P->y);
+        if (dx <= 1 && dy <= 1) {
+
+            char *s = (char *) malloc(200 * sizeof(char));
+            sprintf(s, "You attacked %s by %d", ENEMEY_NAME_BY_TYPE[E->type], W->dmg);
+            E->health -= W->dmg;
+
+            if (E->health <= 0) {
+                sprintf(s, "%s and It's finnaly dead!", s);
+                renderMsgAndWait(s, 3);
+            }
+            else renderMsgAndWait(s, 2);
+
+            P->score++;
         }
     }
-    renderMsgAndWait("You Attacked!", 1);
 }
 
 void longRangeAttackWithDirection(Level *L, Weapon *W, int dx, int dy) {
@@ -69,9 +84,6 @@ void initEnemy(Enemy *E) {
     E->last_time_attacked = -1000; //-INF
 }
 
-const int ENEMY_LOSE_INTEREST_TIME_BY_TYPE[] = {1, 1, 5, 1 << 30, 5};
-const char* ENEMEY_NAME_BY_TYPE[] = {"Deamon", "Fire Breathing Monster", "Giant", "Snake", "Undeed"};
-const int ENEMY_DAMAGE_BY_TYPE[] = {1, 2, 3, 4, 5};
 
 int isTheTileGoodForEnemy(Level *lvl, int x, int y) {
     if (P->x == x && P->y == y) return 0;
