@@ -35,6 +35,9 @@
 #define TIME_OF_HEALTH_RECOVER_MULT_LASTING 15
 #define TIME_OF_HUNGER_DECREASE 5
 
+extern int DIFF_LEVEL;
+extern int MAIN_COLOR;
+
 typedef struct DSU {
   int dpr[MAX_ROOMS_PER_LEVEL];
   int connected_component;

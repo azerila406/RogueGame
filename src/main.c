@@ -65,6 +65,8 @@ int get_game_timer() {
 }
 
 signed main() {
+  DIFF_LEVEL = 0;
+  MAIN_COLOR = 1;
   setlocale(LC_ALL, "");
   srand(time(0));
   initDB();

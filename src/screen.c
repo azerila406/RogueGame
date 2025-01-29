@@ -11,6 +11,7 @@
 
 char *top_msg = "";
 time_t timer_clock;
+int MAIN_COLOR;
 
 int itemColor(Tile *t) {
   if (t->G) {
@@ -196,10 +197,10 @@ void render(Level *l) {
   }
   attroff(COLOR_PAIR(6));
 
-  attron(COLOR_PAIR(1));
+  attron(COLOR_PAIR(MAIN_COLOR));
   mvprintw(P->x + 1, (P->y + 1), "@");
   move(P->x + 1, (P->y + 1));
-  attroff(COLOR_PAIR(1));
+  attroff(COLOR_PAIR(MAIN_COLOR));
 }
 
 void setTopMsg(char *s) {

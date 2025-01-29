@@ -1,7 +1,7 @@
 #include "game.h"
 
-#define DIFF_LEVEL 3
 const int DIFF_LEVELS[4] = {100, 50, 25, 10};
+int DIFF_LEVEL;
 
 bool toggle_map_status;
 
