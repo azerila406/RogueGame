@@ -44,6 +44,7 @@ int getColor(Tile *t) {
     case 10:
     case 12:
     case 14:
+    case 4:
       return 4;
     case 18:
       return 3;
@@ -102,6 +103,8 @@ wchar_t *tileChar(Tile *t) {
       return L"@";
     case 42:
       return itemChar(t);
+    case 4:
+      return L"O";
     default:
       exit(18);
   }

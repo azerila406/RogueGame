@@ -49,7 +49,7 @@ bool bfsDoor(Level *l, int sx, int sy, int c, bool replace) {
     for (int j = getY0(&(l->room[c])); j <= getY1(&(l->room[c])); ++j)
       if (pr[i][j][0] != -1) {
         int t = l->tile[i][j].type;
-        if ((t == 1 || t == 3) && dist[i][j] >= MIN_HALLWAY_LEN) {
+        if ((t == 1 || t == 3 || t == 4) && dist[i][j] >= MIN_HALLWAY_LEN) {
           if (x == -1 || rand() % 5) {  // randomness is not uniform
             x = i;
             y = j;

@@ -213,12 +213,22 @@ void initEnemies(Level *L) {
   }
 }
 
+void initSotoon(Level *lvl) {
+  int x, y;
+  do {
+    x = rand() % HEIGHT;
+    y = rand() % WIDTH;
+  } while (lvl->tile[x][y].type);
+  lvl->tile[x][y].type = 4;
+}
+
 void initLevel(Level* L) {
   do {
     initRooms(L);
   } while (roomsCollide(L->room, L->num_room));
   initRoomHallway(L);
   initEnemies(L);
+  initSotoon(L);
 }
 
 void initLevelWithARoom(Level* L, Room* R) {
@@ -229,6 +239,7 @@ void initLevelWithARoom(Level* L, Room* R) {
   } while (roomsCollide(L->room, L->num_room));
   initRoomHallway(L);
   initEnemies(L);
+  initSotoon(L);
 }
 
 void initRoomsType(Level *L) { //TODO
