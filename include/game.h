@@ -191,6 +191,7 @@ typedef struct Enemy {
   int speed;
   int health;
   int score;
+  int last_time_attacked;
 } Enemy;
 
 typedef struct Level {
@@ -260,6 +261,8 @@ int max(int, int);
 int min(int, int);
 void rand_permute(int *a, int n);
 char *randomPass(int n);
+int sgn(int x);
+int myabs(int x);
 
 /* Game Logic */
 void gameloop();
@@ -307,5 +310,6 @@ void processFoodOverTime();
 void attack(Level *lvl);
 void initEnemies(Level *lvl);
 void initEnemy(Enemy *enemy);
+void processEnemies(Level *lvl);
 
 #endif

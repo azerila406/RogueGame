@@ -45,20 +45,18 @@ void gameloop() {
   initGame();
 
   while (1) {
+    // if (P->health <= 0) return gameOver(); FOR DEBUG PURPOSES
     checkTimerMsg();
     processPlayer();
-    // if (P->health <= 0) return gameOver(); FOR DEBUG PURPOSES
-
-    if (get_game_timer() % P->speed_mult == 0) {
-      //processEnemies :))
-    }
-
     processUnseen(&(G->lvl[G->cur]));
     render(&(G->lvl[G->cur]));
     int ch = getch();
     if (ch == 'q') return;
     processInput(ch, &(G->lvl[G->cur]));
     game_movement_timer++;
+
+    if (get_game_timer() % P->speed_mult == 0)
+      processEnemies(&G->lvl[G->cur]);
   }
 }
 

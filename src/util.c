@@ -37,3 +37,13 @@ char *randomPass(int n) {
   for (int i = 0; i < n; i++) pass[i] = PASS_CHAR[rand() % SZ];
   return pass;
 }
+
+int sgn(int x) {
+  if (x < 0) return -1;
+  if (x > 0) return 1;
+  return 0;
+}
+
+int myabs(int x) {
+  return max(x, -x);
+}
