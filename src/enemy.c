@@ -20,7 +20,7 @@ void shortRangeAttack(Level *lvl, Weapon *W) {
 
             if (E->health <= 0) {
                 sprintf(s, "%s and It's finnaly dead!", s);
-                renderMsgAndWait(s, 3);
+                renderMsgAndWait(s, 5);
                 P->exp += E->score;
             }
             else renderMsgAndWait(s, 2);
