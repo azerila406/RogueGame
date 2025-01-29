@@ -3,7 +3,4 @@ Alireza Rahimi
 
 ## TODO:
 - [ ] File work
-- [ ] End of the Game
-- [ ] Themes of the rooms
-- [ ] Enemies
 - [ ] Scoreboard
