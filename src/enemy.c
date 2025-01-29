@@ -1,47 +1,69 @@
 #include "game.h"
 
 const int ENEMY_LOSE_INTEREST_TIME_BY_TYPE[] = {1, 1, 5, 1 << 30, 5};
-const char* ENEMEY_NAME_BY_TYPE[] = {"Deamon", "Fire Breathing Monster", "Giant", "Snake", "Undeed"};
+const char *ENEMEY_NAME_BY_TYPE[] = {"Deamon", "Fire Breathing Monster", "Giant", "Snake", "Undeed"};
 const int ENEMY_DAMAGE_BY_TYPE[] = {1, 2, 3, 4, 5};
 
-int isValidTile(Level *L, int x, int y) {
+int isValidTile(Level *L, int x, int y)
+{
     return x >= 0 && x < HEIGHT && y >= 0 && y < WIDTH && (L->tile[x][y].type == 0 || L->tile[x][y].type == 42);
 }
 
-void shortRangeAttack(Level *lvl, Weapon *W) {
-     for (int i = 0; i < lvl->num_enemy; ++i) if (lvl->enemy[i].health > 0) {
-        Enemy *E = &lvl->enemy[i];
-        int dx = myabs(E->x - P->x), dy = myabs(E->y - P->y);
-        if (dx <= 1 && dy <= 1) {
+void attackInfo(Enemy *E, Weapon *W)
+{
+    char *s = (char *)malloc(200 * sizeof(char));
+    sprintf(s, "You attacked %s by %d", ENEMEY_NAME_BY_TYPE[E->type], W->dmg);
+    E->health -= W->dmg;
 
-            char *s = (char *) malloc(200 * sizeof(char));
-            sprintf(s, "You attacked %s by %d", ENEMEY_NAME_BY_TYPE[E->type], W->dmg);
-            E->health -= W->dmg;
+    if (E->health <= 0)
+    {
+        sprintf(s, "%s and It's finnaly dead!", s);
+        renderMsgAndWait(s, 5);
+        P->exp += E->score;
+    }
+    else
+        renderMsgAndWait(s, 2);
 
-            if (E->health <= 0) {
-                sprintf(s, "%s and It's finnaly dead!", s);
-                renderMsgAndWait(s, 5);
-                P->exp += E->score;
+    P->exp++;
+}
+
+void shortRangeAttack(Level *lvl, Weapon *W)
+{
+    for (int i = 0; i < lvl->num_enemy; ++i)
+        if (lvl->enemy[i].health > 0)
+        {
+            Enemy *E = &lvl->enemy[i];
+            int dx = myabs(E->x - P->x), dy = myabs(E->y - P->y);
+            if (dx <= 1 && dy <= 1)
+            {
+                attackInfo(E, W);
             }
-            else renderMsgAndWait(s, 2);
-
-            P->exp++;
         }
-    }
 }
 
-void longRangeAttackWithDirection(Level *L, Weapon *W, int dx, int dy) {
+void longRangeAttackWithDirection(Level *L, Weapon *W, int dx, int dy)
+{
     int x = P->x, y = P->y;
-    for (int i = 0; i < W->range; ++i, x += dx, y += dy) {
-        if (!isValidTile(L, x, y)) return;
-        //if hit enemy...
+    for (int i = 0; i < L->num_enemy; ++i)
+    {
+        Enemy *E = &L->enemy[i];
+        if (E->health <= 0)
+            continue;
+        int q = (dx ? (E->x - P->x) / dx : (E->y - P->y) / dy);
+        if (q < 0 || q * dx != (E->x - P->x) || q * dy != (E->y - P->y))
+            continue;
+        E->last_time_attacked = get_game_timer();
+        attackInfo(E, W);
     }
 }
 
-void longRangeAttack(Level *L, Weapon *W) {
-    while (true) {
+void longRangeAttack(Level *L, Weapon *W)
+{
+    while (true)
+    {
         int ch = getch();
-        switch (ch) {
+        switch (ch)
+        {
         case 'a':
         case 'A':
             longRangeAttackWithDirection(L, W, 0, -1);
@@ -63,21 +85,26 @@ void longRangeAttack(Level *L, Weapon *W) {
     }
 }
 
-void attack(Level *L) {
+void attack(Level *L)
+{
     assert(P->weapon[P->def_weapon].td != 0);
     Weapon *W = &P->weapon[P->def_weapon];
-    if (W->type == 0 || W->type == 4) shortRangeAttack(L, W);
-    else longRangeAttack(L, W);
+    if (W->type == 0 || W->type == 4)
+        shortRangeAttack(L, W);
+    else
+        longRangeAttack(L, W);
 
     P->weapon[P->def_weapon].td--;
-    if (P->weapon[P->def_weapon].td == 0) P->def_weapon = 0; // change to Mace
+    if (P->weapon[P->def_weapon].td == 0)
+        P->def_weapon = 0; // change to Mace
 }
 
 int ENEMY_HEALTH_BY_TYPE[] = {5, 10, 15, 20, 30};
 int ENEMY_SCORE_BY_TYPE[] = {5, 10, 15, 20, 30};
 
-//dont mess with E->x, E->y
-void initEnemy(Enemy *E) {
+// dont mess with E->x, E->y
+void initEnemy(Enemy *E)
+{
     E->type = rand() % 5;
     E->health = ENEMY_HEALTH_BY_TYPE[E->type];
     E->score = ENEMY_SCORE_BY_TYPE[E->type];
@@ -85,9 +112,10 @@ void initEnemy(Enemy *E) {
     E->last_time_attacked = -1000; //-INF
 }
 
-
-int isTheTileGoodForEnemy(Level *lvl, int x, int y) {
-    if (lvl->tile[x][y].type == 0 || lvl->tile[x][y].type == 42) {
+int isTheTileGoodForEnemy(Level *lvl, int x, int y)
+{
+    if (lvl->tile[x][y].type == 0 || lvl->tile[x][y].type == 42)
+    {
         return 1;
     }
     return 0;
@@ -95,7 +123,8 @@ int isTheTileGoodForEnemy(Level *lvl, int x, int y) {
 
 int move_or_attack[MAX_ENEMEY];
 
-void attackEnemy(Enemy *E) {
+void attackEnemy(Enemy *E)
+{
     int dx = myabs(E->x - P->x), dy = myabs(E->y - P->y);
     if (dx <= 1 && dy <= 1)
     {
@@ -127,7 +156,8 @@ void processEnemies(Level *lvl)
                 continue;
             if (whichRoomID(lvl, P->x, P->y) != whichRoomID(lvl, E->x, E->y))
                 continue;
-            if (E->speed) {
+            if (E->speed)
+            {
                 E->x = nx;
                 E->y = ny;
             }
