@@ -16,7 +16,7 @@ bool isCorrectFormEmail(const char *s, bool error) {
       return 0;
   }
   if (at_sign == 1 && dot == 1) return 1;
-  if (error) renderMsgAndWait("Email is not in correct form", 1);
+  if (error) renderMsgAndWait("Email is not in correct form", 3);
   return 0;
 }
 
@@ -27,22 +27,23 @@ bool isCorrectFormPass(const char *pass, bool error) {
     num += '0' <= pass[i] && pass[i] <= '9';
     bigAlpha += 'A' <= pass[i] && pass[i] <= 'Z';
     smallAlpha += 'a' <= pass[i] && pass[i] <= 'z';
+    if (pass[i] == '\'') {
+      if (error) renderMsgAndWait("Password can't contain this <'>", 3);
+      return 0;
+    }
   }
   if (n >= 7 && num && bigAlpha && smallAlpha) return 1;
   if (error) {
     if (n < 7)
-      renderMsgAndWait("Password is less than 7 char", 1);
+      renderMsgAndWait("Password is less than 7 char", 3);
     else if (!num)
-      renderMsgAndWait("Password doesn't have a digit", 1);
+      renderMsgAndWait("Password doesn't have a digit",3);
     else if (!bigAlpha)
-      renderMsgAndWait("Password doesn't have a capital letter", 1);
+      renderMsgAndWait("Password doesn't have a capital letter", 3);
     else if (!smallAlpha)
-      renderMsgAndWait("Password doesn't have a small letter", 1);
+      renderMsgAndWait("Password doesn't have a small letter", 3);
     else
-      renderMsgAndWait("Something went wrong...", 1);
+      renderMsgAndWait("Something went wrong...", 3);
   }
   return 0;
 }
-
-// TODO
-bool doesUserExists(const char *user, bool error) { return 0; }

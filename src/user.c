@@ -1,4 +1,5 @@
 #include "game.h"
+#include "database.h"
 
 bool checkInfo(const char *s) {
   clear();
@@ -23,44 +24,62 @@ bool confirmInfo(const char *s) {
   return checkInfo(t);
 }
 
-bool isUserCorrect(const char *user, const char *pass) { return 1; }  // TODO
+bool isUserCorrect(const char *user, const char *pass) { 
+  return checkCredentials(user, pass);
+}
+
+bool doesUserExists(const char *user, bool error) { 
+  if (usernameExists(user)) {
+    if (error) renderMsgAndWait("Username already exists!", 3);
+    return 1;
+  }
+  return 0;
+}
+
 
 void userLogin() {
   char *user, *pass;
-  do {
-    user = getInput("Enter Your Username: ", 1);
-    pass = getInput("Enter Your Password: ", 0);
-  } while (!isUserCorrect(user, pass));
-  clear();
-  renderMsg("Logged in Successfully...", 1);
-  getch();
-  gameMenu();
+  user = getInput("Enter Your Username: ", 1);
+  pass = getInput("Enter Your Password: ", 0);
+  if (isUserCorrect(user, pass)) {
+    renderMsgAndWait("Logged in Successfully...", 5);
+    gameMenu();
+    return;
+  }
+  renderMsgAndWait("Username and Password combination is not correct", 3);
 }
+
 void userRegister() {
   char *user;
-  do {
-    user = getInput("Enter Your Username: ", 1);
-  } while (doesUserExists(user, 1) || !confirmInfo(user));
+  user = getInput("Enter Your Username: ", 1);
+  if (doesUserExists(user, 1) || !confirmInfo(user)) return;
 
   char *email;
-  do {
-    email = getInput("Enter Your E-Mail: ", 1);
-  } while (!isCorrectFormEmail(email, 1) || !confirmInfo(email));
+  email = getInput("Enter Your E-Mail: ", 1);
+  if (!isCorrectFormEmail(email, 1) || !confirmInfo(email)) return;
 
   char *pass, *pass2;
   if (checkInfo("Do you want randomly generated password? (y/n)")) {
+    int cnt = 0;
     do {
       pass = randomPass(rnd(9, 20));
+      ++cnt;
+      if (cnt >= 4) return;
     } while (!confirmInfo(pass));
   } else {
+    int cnt = 0;
     do {
       pass = getInput("Enter Your Password: ", 0);
       pass2 = getInput("Repeat Your Password: ", 0);
+      ++cnt;
+      if (cnt >= 4) return;
     } while (!isCorrectFormPass(pass, 1) || strcmp(pass, pass2));
   }
-  clear();
-  renderMsg("Registered Succesfully... Log in to continue", 1);
-  getch();
+  signup(user, email, pass);
+  renderMsgAndWait("Registered Succesfully... Log in to continue", 5);
 }
-void userForgetPass() {}
+
+void userForgetPass() {
+
+}
 void userScoreboard() {}
