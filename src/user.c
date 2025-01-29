@@ -80,6 +80,36 @@ void userRegister() {
 }
 
 void userForgetPass() {
-
+  char *user;
+  user = getInput("Enter Your User: ", 1);
+  if (!usernameExists(user)) {
+    renderMsgAndWait("We couldn't find this username.", 3);
+    return;
+  }
+  char *pass, *pass2;
+  if (checkInfo("Do you want randomly generated password? (y/n)"))
+  {
+    int cnt = 0;
+    do
+    {
+      pass = randomPass(rnd(9, 20));
+      ++cnt;
+      if (cnt >= 4)
+        return;
+    } while (!confirmInfo(pass));
+  }
+  else
+  {
+    int cnt = 0;
+    do
+    {
+      pass = getInput("Enter Your Password: ", 0);
+      pass2 = getInput("Repeat Your Password: ", 0);
+      ++cnt;
+      if (cnt >= 4)
+        return;
+    } while (!isCorrectFormPass(pass, 1) || strcmp(pass, pass2));
+  }
+  forgetPassword(user, pass);
 }
 void userScoreboard() {}
