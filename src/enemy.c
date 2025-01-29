@@ -110,7 +110,7 @@ void attackEnemy(Enemy *E) {
 void processEnemies(Level *lvl)
 {
     for (int i = 0; i < lvl->num_enemy; ++i)
-        if (lvl->enemy[i].speed > 0 && lvl->enemy[i].health > 0)
+        if (lvl->enemy[i].health > 0)
         {
             Enemy *E = &lvl->enemy[i];
             int nx = sgn(P->x - E->x) + E->x, ny = sgn(P->y - E->y) + E->y;
@@ -127,8 +127,10 @@ void processEnemies(Level *lvl)
                 continue;
             if (whichRoomID(lvl, P->x, P->y) != whichRoomID(lvl, E->x, E->y))
                 continue;
-            E->x = nx;
-            E->y = ny;
+            if (E->speed) {
+                E->x = nx;
+                E->y = ny;
+            }
         }
     attackEnemy(lvl);
 }
