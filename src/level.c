@@ -237,8 +237,21 @@ void initSotoon(Level *lvl) {
   lvl->tile[x][y].type = 21;
 }
 
-void initTrap(Level *lvl) {
+//out of /20
+const int TRAP_PROB_BY_TYPE[] = {1, 4, 1, 1};
 
+void initTrap(Level *lvl) {
+  for (int x = 0; x < HEIGHT; ++x) {
+    for (int y = 0; y < WIDTH; ++y) {
+      Tile *t = &lvl->tile[x][y];
+      if (t->type == 0) {
+        int r = rand() % 20;
+        if (r < TRAP_PROB_BY_TYPE[t->room_type]) {
+          t->type = 22;
+        }
+      }
+    }
+  }
 }
 
 void expandTypeToAllTiles(Level *L, Room *R) {
@@ -252,7 +265,7 @@ void initRoomsType(Level *L) {
     if (rand() % 5) L->room[i].type = 0; //Normal
     else {
       int found_stairs = isThereStairs(L, &L->room[i]);
-      if (found_stairs && rand() % 3 == 0) L->room[i].type = 2; //Enchant
+      if (found_stairs) L->room[i].type = 2; //Enchant
       else L->room[i].type = 3; //Nightmare
     }
     expandTypeToAllTiles(L, &L->room[i]);

@@ -87,9 +87,8 @@ wchar_t *itemChar(Tile *t) {
 wchar_t *tileChar(Tile *t) {
   switch (t->type) {
     case 0:
-      return L".";
     case 22:
-      return L"T";
+      return L".";
     case 12:
     case 1:
       return L"|";
