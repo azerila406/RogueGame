@@ -132,5 +132,4 @@ void processEnemies(Level *lvl)
                 E->y = ny;
             }
         }
-    attackEnemy(lvl);
 }
