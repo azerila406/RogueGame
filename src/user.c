@@ -1,6 +1,8 @@
 #include "game.h"
 #include "database.h"
 
+char *username;
+
 bool checkInfo(const char *s) {
   clear();
   renderMsg(s, 1);
@@ -43,6 +45,7 @@ void userLogin() {
   pass = getInput("Enter Your Password: ", 0);
   if (isUserCorrect(user, pass)) {
     renderMsgAndWait("Logged in Successfully...", 5);
+    username = user;
     gameMenu();
     return;
   }

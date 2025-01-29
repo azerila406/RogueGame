@@ -79,6 +79,7 @@ extern char *CURSE_NAME_BY_TYPE[];
 extern int WEAPON_DAMAGE_BY_TYPE[];
 extern int WEAPON_RANGE_BY_TYPE[];
 extern int WEAPON_TD_BY_TYPE[];
+extern char *username;
 
 
 typedef struct Player {
