@@ -322,4 +322,8 @@ void initEnemies(Level *lvl);
 void initEnemy(Enemy *enemy);
 void processEnemies(Level *lvl);
 
+/*Save Stuff*/
+void saveGame();
+void resumeGame();
+
 #endif

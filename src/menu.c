@@ -118,10 +118,11 @@ void gameMenu()
     case -1:
       return;
     case 0:
+      initGame();
       gameloop();
       break;
     case 1:
-      renderMsgAndWait("We've been too lazy", 1);
+      resumeGame();
       break;
     case 2:
       settingMenu();

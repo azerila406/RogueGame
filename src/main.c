@@ -60,8 +60,6 @@ void gameWon() {
 void gameloop() {
   clear();
 
-  initGame();
-
   while (1) {
     if (!GOD_MODE && P->health <= 0) return gameOver();
     if (checkWinStatus()) {
