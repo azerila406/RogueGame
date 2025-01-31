@@ -37,7 +37,8 @@ void gameOver() {
   sprintf(s, "Gold: %d    Score: %d    ", P->gold, P->score);
   renderMsgAndWait(s, 2);
   //save the result
-  //TODO call scoreboard here :)
+  addMatch(username, P->gold, P->score, P->exp, 0);
+  return;
 }
 
 bool checkWinStatus() {
@@ -55,6 +56,8 @@ bool checkWinStatus() {
 
 void gameWon() {
   renderMsgAndWait("You have won the game", 5);
+  addMatch(username, P->gold, P->score, P->exp, 1); //won
+  return;
 }
 
 void gameloop() {
