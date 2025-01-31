@@ -1,8 +1,6 @@
 #include "game.h"
 #include "database.h"
 
-#define MAX_ENTRY 500
-
 char *getInput(const char *msg, bool enable_echo)
 {
   clear();
@@ -32,13 +30,59 @@ void renderMenu(char *s[], char *msg[], int n, int x)
   move(x + 2, 2);
 }
 
+void renderMenuW(wchar_t *s[], char *msg[], int n, int x)
+{
+  clear();
+  renderMsg(msg[x], 1);
+
+  for (int i = 0; i < n; i++)
+  {
+    if (i == x)
+      attron(A_REVERSE | A_BOLD);
+    mvprintw(i + 2, 2, "%ls", s[i]);
+    if (i == x)
+      attroff(A_BOLD | A_REVERSE);
+  }
+  move(x + 2, 2);
+}
+
 int createMenu(char *s[], char *msg[], int n)
 {
+  if (n == 0) assert(0);
   clear();
   int i = 0, ch;
   do
   {
     renderMenu(s, msg, n, i);
+    ch = getch();
+    switch (ch)
+    {
+    case KEY_UP:
+    case 'w':
+    case 'W':
+      i = (n + i - 1) % n;
+      continue;
+    case KEY_DOWN:
+    case 's':
+    case 'S':
+      i = (i + 1) % n;
+      continue;
+    case '\n':
+    case '\r':
+      return i;
+    }
+  } while (ch != 'q' && ch != 'Q');
+  return -1;
+}
+
+int createMenuW(wchar_t *s[], char *msg[], int n)
+{
+  if (n == 0) assert(0);
+  clear();
+  int i = 0, ch;
+  do
+  {
+    renderMenuW(s, msg, n, i);
     ch = getch();
     switch (ch)
     {
@@ -79,6 +123,10 @@ void changeMainCharColor() {
 void userInfo() {
   int score[MAX_ENTRY], gold[MAX_ENTRY], result[MAX_ENTRY], exp[MAX_ENTRY];
   int n = getAllMatches(username, score, gold, exp, result);
+  if (n == 0) {
+    renderMsgAndWait("You have no info currently", 1);
+    return;
+  }
   //TODO some background on the user :))
   char *s[MAX_ENTRY], *msg[MAX_ENTRY];
   for (int i = 0; i < n; i++) {

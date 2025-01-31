@@ -9,6 +9,7 @@
 #include <string.h>
 #include <time.h>
 #include <sqlite3.h>
+#include <wchar.h>
 
 #define MAX_ITEMS_PLAYER 100
 #define MAX_ITEMS_TILE 100
@@ -34,6 +35,9 @@
 #define TIME_OF_SPEED_MULT_LASTING 15
 #define TIME_OF_HEALTH_RECOVER_MULT_LASTING 15
 #define TIME_OF_HUNGER_DECREASE 5
+#define MAX_ENTRY 500
+
+
 
 extern int DIFF_LEVEL;
 extern int MAIN_COLOR;
@@ -288,7 +292,9 @@ bool bfsDoor(Level *level, int sx, int sy, int roomID, bool rep);
 bool checkInfo(const char *s);
 char *getInput(const char *msg, bool is_echo);
 int createMenu(char *s[], char *msg[], int n);
+int createMenuW(wchar_t *s[], char *msg[], int n);
 void renderMenu(char *s[], char *msg[], int n, int x);
+void renderMenuW(wchar_t *s[], char *msg[], int n, int x);
 void gameMenu();
 void userMenu();
 

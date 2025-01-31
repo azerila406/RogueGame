@@ -121,4 +121,38 @@ void userForgetPass() {
   }
   forgetPassword(user, pass);
 }
-void userScoreboard() {}
+
+void userScoreboard() {
+  int score[MAX_ENTRY], gold[MAX_ENTRY], result[MAX_ENTRY], exp[MAX_ENTRY];
+  char *user[MAX_ENTRY];
+  int n = getScoreboard(user, score, gold, exp, result);
+
+  if (n == 0) {
+    renderMsgAndWait("You have no info currently", 1);
+    return;
+  }
+  wchar_t *s[MAX_ENTRY]; // Use wide strings for the scoreboard
+  char *msg[MAX_ENTRY];
+
+  for (int i = 0; i < n; i++) {
+    wchar_t *x = (wchar_t *)malloc(500 * sizeof(wchar_t));
+
+    if (i == 0) {
+      swprintf(x, 500, L"🥇 1st %s Score: %d   Gold: %d   Exp: %d   Game Status: %ls", user[i], score[i], gold[i], exp[i], (result[i] ? L"WON" : L"LOST"));
+    } else if (i == 1) {
+      swprintf(x, 500, L"🥈 2nd %s Score: %d   Gold: %d   Exp: %d   Game Status: %ls", user[i], score[i], gold[i], exp[i], (result[i] ? L"WON" : L"LOST"));
+    } else if (i == 2) {
+      swprintf(x, 500, L"🥉 3rd %s Score: %d   Gold: %d   Exp: %d   Game Status: %ls", user[i], score[i], gold[i], exp[i], (result[i] ? L"WON" : L"LOST"));
+    } else {
+      swprintf(x, 500, L"%s Score: %d   Gold: %d   Exp: %d   Game Status: %ls", user[i], score[i], gold[i], exp[i], (result[i] ? L"WON" : L"LOST"));
+    }
+
+    s[i] = x;
+    msg[i] = "";
+  }
+  createMenuW(s, msg, n);
+
+  for (int i = 0; i < n; i++) {
+    free(s[i]);
+  }
+}

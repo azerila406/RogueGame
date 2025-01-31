@@ -73,7 +73,9 @@ int getScoreboard(char *name[], int score[], int gold[], int exp[], int result[]
     int rc = sqlite3_prepare_v2(db, sql, -1, &stmt, 0);
     int n = 0;
     while (sqlite3_step(stmt) == SQLITE_ROW) {
-        name[n] = (const char *)sqlite3_column_text(stmt, 0);
+        const char *usr = (const char *)sqlite3_column_text(stmt, 0);
+        name[n] = (char *) malloc(strlen(usr) * sizeof(char) + 5);
+        strcpy(name[n], usr);
         score[n] = sqlite3_column_int(stmt, 1);
         gold[n] = sqlite3_column_int(stmt, 2);
         exp[n] = sqlite3_column_int(stmt, 3);
