@@ -1,4 +1,7 @@
 #include "game.h"
+#include "database.h"
+
+#define MAX_ENTRY 500
 
 char *getInput(const char *msg, bool enable_echo)
 {
@@ -74,11 +77,17 @@ void changeMainCharColor() {
 }
 
 void userInfo() {
-  if (!strcmp("GUEST", username)) {
-    renderMsgAndWait("You are logged in as a guest therefore no info!", 1);
-    return;
-  }
+  int score[MAX_ENTRY], gold[MAX_ENTRY], result[MAX_ENTRY], exp[MAX_ENTRY];
+  int n = getAllMatches(username, score, gold, exp, result);
   //TODO some background on the user :))
+  char *s[MAX_ENTRY], *msg[MAX_ENTRY];
+  for (int i = 0; i < n; i++) {
+    char *x = (char *) malloc(500 * sizeof(char));
+    sprintf(x, "Score: %d   Gold: %d   Exp: %d   Game Status: %s", score[i], gold[i], exp[i], (result[i] ? "WON" : "LOST"));
+    s[i] = x;
+    msg[i] = "";
+  }
+  createMenu(s, msg, n);
 }
 
 void settingMenu()
