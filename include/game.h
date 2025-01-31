@@ -37,6 +37,7 @@
 
 extern int DIFF_LEVEL;
 extern int MAIN_COLOR;
+extern int game_movement_timer;
 
 typedef struct DSU {
   int dpr[MAX_ROOMS_PER_LEVEL];

@@ -75,7 +75,7 @@ void gameloop() {
     int ch = getch();
     if (ch == 'q') {
       //TODO
-      //saveGame();
+      saveGame();
       return;
     }
     processInput(ch, &(G->lvl[G->cur]));
