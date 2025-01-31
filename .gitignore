@@ -6,3 +6,4 @@ rogue
 !Info.plist  # Keep the essential Info.plist file
 build/
 DerivedData/
+*.db

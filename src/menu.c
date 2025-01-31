@@ -1,6 +1,7 @@
 #include "game.h"
 #include "database.h"
 
+
 char *getInput(const char *msg, bool enable_echo)
 {
   clear();
@@ -51,21 +52,26 @@ int createMenu(char *s[], char *msg[], int n)
   if (n == 0) assert(0);
   clear();
   int i = 0, ch;
+  int L = 0;
   do
   {
-    renderMenu(s, msg, n, i);
+    renderMenu(s + L, msg + L, min(MAX_ENTRY_IN_MENU, n), i - L);
     ch = getch();
     switch (ch)
     {
     case KEY_UP:
     case 'w':
     case 'W':
-      i = (n + i - 1) % n;
+      if (i == 0) continue;
+      if (i == L) --L;
+      --i;
       continue;
     case KEY_DOWN:
     case 's':
     case 'S':
-      i = (i + 1) % n;
+      if (i == n - 1) continue;
+      if (i - L + 1 == MAX_ENTRY_IN_MENU) L++;
+      i++;  
       continue;
     case '\n':
     case '\r':

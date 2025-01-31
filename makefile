@@ -24,4 +24,4 @@ run:
 	./rogue
 
 clean:
-	rm -f rogue rogue-db.db
+	rm -f rogue
