@@ -29,6 +29,7 @@ Game *G;
 Player *P;
 
 int game_movement_timer = 0;
+int GOD_MODE = 0;
 
 void gameOver() {
   renderMsgAndWait(GAME_OVER_ERROR[rand() % GAME_OVER_ERROR_SZ], 3);
@@ -62,7 +63,7 @@ void gameloop() {
   initGame();
 
   while (1) {
-    // if (P->health <= 0) return gameOver(); FOR DEBUG PURPOSES
+    if (!GOD_MODE && P->health <= 0) return gameOver();
     if (checkWinStatus()) {
       gameWon();
       return;

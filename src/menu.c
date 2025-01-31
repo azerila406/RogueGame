@@ -83,9 +83,9 @@ void userInfo() {
 
 void settingMenu()
 {
-  char *s[3] = {"Difficulty", "Main Character Color", "Music"};
-  char *msg[3] = {"Change hardness", "Change Color", "Music settings"};
-  int x = createMenu(s, msg, 3);
+  char *s[4] = {"Difficulty", "Main Character Color", "Music", "GOD Mode"};
+  char *msg[4] = {"Change hardness", "Change Color", "Music settings", "You won't die"};
+  int x = createMenu(s, msg, 4);
   switch (x)
   {
   case -1:
@@ -98,6 +98,9 @@ void settingMenu()
     return;
   case 2:
     renderMsgAndWait("currently no music!", 1);
+    return;
+  case 3:
+    GOD_MODE = 1;
     return;
   }
 }
