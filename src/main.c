@@ -58,6 +58,8 @@ void gameWon() {
 }
 
 void gameloop() {
+  remove(username); //delete any saves
+
   clear();
 
   while (1) {

@@ -157,7 +157,7 @@ typedef struct Tile {
   // Enemies
   int num_item;
   bool visible;
-  Lock *lock;
+  Lock lock;
   int type;
   /*
   Type is floor, wall, door(!!)
@@ -178,6 +178,7 @@ typedef struct Tile {
   20 -> pass door @ (unlocked)
   42 -> Item!
   */
+  int lockx, locky;
   int room_type;
   Gold *G;
   Food *F;

@@ -107,7 +107,7 @@ bool checkPass(Lock *lock, char *pass) {
 }
 
 void initLock(Lock *lock, bool time_based) {
-  lock->last_generated_pass = clock();
+  lock->last_generated_pass = time(NULL);
   lock->time_based = time_based;
   lock->tried = 0;
   lock->pass = randomPass(4);

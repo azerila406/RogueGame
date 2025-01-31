@@ -79,12 +79,12 @@ void movePlayer(Level* L, int x, int y) {
   int t = L->tile[x][y].type;
   if (t & 1) return;
   if (t == 18) {  // PASS DOOR
-    int q = passDoorLogin(L->tile[x][y].lock);
+    int q = passDoorLogin(&L->tile[x][y].lock);
     if (q == 1) L->tile[x][y].type = 20;
     return;
   }
   if (t == 16) {  // PASS GENERATOR
-    reinitLock(L->tile[x][y].lock);
+    reinitLock(&L->tile[L->tile[x][y].lockx][L->tile[x][y].locky].lock);
     return;
   }
   P->x = x;

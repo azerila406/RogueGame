@@ -73,9 +73,9 @@ void makePassDoor(Level* L, int r) {
   int X[2] = {x0 + 1, x1 - 1};
   int Y[2] = {y0 + 1, y1 - 1};
   int sx = X[rand() & 1], sy = Y[rand() & 1];
-  L->tile[sx][sy].lock = (Lock*)malloc(sizeof(Lock));
-  L->tile[i][j].lock = L->tile[sx][sy].lock;
-  initLock(L->tile[sx][sy].lock, 0);
+  initLock(&L->tile[i][j].lock, 0);
+  L->tile[sx][sy].lockx = i;
+  L->tile[sx][sy].locky = j;
 
   L->tile[sx][sy].type = 16;
   L->tile[i][j].type = 18;

@@ -45,9 +45,6 @@ void saveGame() {
                     else if (t == 4)
                         fwrite(T->F, sizeof(Food), 1, F);
                 }
-                if (T->type == 16 || T->type == 18 || T->type == 20) { //LOCK TODO
-                    fwrite(T->lock, sizeof(Lock), 1, F);
-                }
             }
         }
     }
@@ -103,10 +100,6 @@ void resumeGame() {
                         T->F = (Food *)malloc(sizeof(Food));
                         fread(T->F, sizeof(Food), 1, F);
                     }
-                }
-                if (T->type == 16 || T->type == 18 || T->type == 20) { // Locks
-                    T->lock = (Lock *)malloc(sizeof(Lock));
-                    fread(T->lock, sizeof(Lock), 1, F);
                 }
             }
         }
