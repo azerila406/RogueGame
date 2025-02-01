@@ -80,7 +80,7 @@ int passDoorLogin(Lock *lock) {
   char *menu[2] = {"Guess The Password", "Use Ancient Key"};
   char *msg[2] = {"You can try to guess the password to unlock the door....",
                   "If you have a key, you can use it..."};
-  int x = createMenu(menu, msg, 2);
+  int x = createMenu(menu, msg, "Lock Menu", 2);
   if (x == -1) return 0;
   if (x == 0) {  // Guess Password
       char *pass = getInput("Enter Password:", 1);

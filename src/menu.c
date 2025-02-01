@@ -15,39 +15,44 @@ char *getInput(const char *msg, bool enable_echo)
   return s;
 }
 
-void renderMenu(char *s[], char *msg[], int n, int x)
+void renderMenu(char *s[], char *msg[], char *menu_name, int n, int x)
 {
-  clear();
-  renderMsg(msg[x], 1);
+    clear();
+    refresh();
 
-  for (int i = 0; i < n; i++)
-  {
-    if (i == x)
-      attron(A_REVERSE | A_BOLD);
-    mvprintw(i + 2, 2, s[i]);
-    if (i == x)
-      attroff(A_BOLD | A_REVERSE);
-  }
-  move(x + 2, 2);
+    int w = 0;
+    for (int i = 0; i < n; i++) {
+        w = max(w, strlen(s[i]));
+    }
+    w += 6;
+    int h = n + 4;
+
+    int startX = (COLS - w) / 2;
+    int startY = (LINES - h) / 2;
+    WINDOW *win = newwin(h, w, startY, startX);
+    box(win, 0, 0);
+
+    wattron(win, COLOR_PAIR(1) | A_BOLD);
+    mvwprintw(win, 1, (w - strlen(menu_name)) / 2, menu_name);
+    wattroff(win, COLOR_PAIR(1) | A_BOLD);
+
+    renderMsg(msg[x], 1);
+
+    for (int i = 0; i < n; i++) {
+        if (i == x)
+            wattron(win, A_REVERSE | A_BOLD);
+        mvwprintw(win, i + 3, 3, "%s", s[i]);
+        if (i == x)
+            wattroff(win, A_REVERSE | A_BOLD);
+    }
+
+    wrefresh(win);
+    refresh();
+    move(startY + x + 3, startX + 3);
+    delwin(win);
 }
 
-void renderMenuW(wchar_t *s[], char *msg[], int n, int x)
-{
-  clear();
-  renderMsg(msg[x], 1);
-
-  for (int i = 0; i < n; i++)
-  {
-    if (i == x)
-      attron(A_REVERSE | A_BOLD);
-    mvprintw(i + 2, 2, "%ls", s[i]);
-    if (i == x)
-      attroff(A_BOLD | A_REVERSE);
-  }
-  move(x + 2, 2);
-}
-
-int createMenu(char *s[], char *msg[], int n)
+int createMenu(char *s[], char *msg[], char *menu_name, int n)
 {
   if (n == 0) assert(0);
   clear();
@@ -55,7 +60,7 @@ int createMenu(char *s[], char *msg[], int n)
   int L = 0;
   do
   {
-    renderMenu(s + L, msg + L, min(MAX_ENTRY_IN_MENU, n), i - L);
+    renderMenu(s + L, msg + L, menu_name, min(MAX_ENTRY_IN_MENU, n), i - L);
     ch = getch();
     switch (ch)
     {
@@ -81,39 +86,10 @@ int createMenu(char *s[], char *msg[], int n)
   return -1;
 }
 
-int createMenuW(wchar_t *s[], char *msg[], int n)
-{
-  if (n == 0) assert(0);
-  clear();
-  int i = 0, ch;
-  do
-  {
-    renderMenuW(s, msg, n, i);
-    ch = getch();
-    switch (ch)
-    {
-    case KEY_UP:
-    case 'w':
-    case 'W':
-      i = (n + i - 1) % n;
-      continue;
-    case KEY_DOWN:
-    case 's':
-    case 'S':
-      i = (i + 1) % n;
-      continue;
-    case '\n':
-    case '\r':
-      return i;
-    }
-  } while (ch != 'q' && ch != 'Q');
-  return -1;
-}
-
 void diffMenu() {
   char *s[4] = {"Easy", "Med", "Hard", "Impossible"};
   char *msg[4] = {"For begginers", "For intermediates", "For exprienced players", "Darksouls"};
-  int x = createMenu(s, msg, 4);
+  int x = createMenu(s, msg, "Difficulty Settings", 4);
   if (x == -1) return;
   DIFF_LEVEL = x;
 }
@@ -121,7 +97,7 @@ void diffMenu() {
 void changeMainCharColor() {
   char *s[] = {"Yellow", "White", "Red", "Cyan", "Green"};
   char *msg[] = {"", "", "", "", ":)"};
-  int x = createMenu(s, msg, 5);
+  int x = createMenu(s, msg, "Color Settings", 5);
   if (x == -1) return;
   MAIN_COLOR = x;  
 }
@@ -141,14 +117,15 @@ void userInfo() {
     s[i] = x;
     msg[i] = "";
   }
-  createMenu(s, msg, n);
+  //createMenu(s, msg, n);
+  //TODO
 }
 
 void settingMenu()
 {
   char *s[4] = {"Difficulty", "Main Character Color", "Music", "GOD Mode"};
   char *msg[4] = {"Change hardness", "Change Color", "Music settings", "You won't die"};
-  int x = createMenu(s, msg, 4);
+  int x = createMenu(s, msg, "Settings", 4);
   switch (x)
   {
   case -1:
@@ -174,7 +151,7 @@ void gameMenu()
   char *msg[4] = {"Starts a New Game", "Continues previous game if exists", "Change Settings", "Check your info"};
   while (1)
   {
-    int x = createMenu(s, msg, 4);
+    int x = createMenu(s, msg, "Game Menu", 4);
     // TODO for now
     switch (x)
     {
@@ -204,7 +181,7 @@ void userMenu()
 
   while (1)
   {
-    int x = createMenu(s, msg, 4);
+    int x = createMenu(s, msg, "Main Menu", 4);
     switch (x)
     {
     case -1:

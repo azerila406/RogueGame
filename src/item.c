@@ -178,7 +178,7 @@ void showWeapon() {
             ++sz;
         }
     }
-    int x = createMenu(menu, msg, sz);
+    int x = createMenu(menu, msg, "Weapon Menu", sz);
     if (x == -1) return;
     P->def_weapon = ind[x];
 }
@@ -225,7 +225,7 @@ void showFood() {
         renderMsgAndWait(NO_FOOD_ERROR[rand() % NO_FOOD_ERROR_SZ], 3);
         return;
     }
-    int x = createMenu(menu, msg, sz);
+    int x = createMenu(menu, msg, "Food Inventory", sz);
     if (x == -1) return;
     x = ind[x];
     //You should eat x'th food
@@ -269,7 +269,7 @@ void showCurse() {
         renderMsgAndWait(NO_CURSE_ERROR[rand() % NO_CURSE_ERROR_SZ], 3);
         return;
     }
-    int x = createMenu(menu, msg, sz);
+    int x = createMenu(menu, msg, "Curse Inventory", sz);
     if (x == -1) return;
     x = ind[x];
     //You should eat x'th curse
@@ -281,7 +281,7 @@ void showInventory() {
     char *menu[3] = {"Weapon", "Food", "Curse"};
     char *msg[3] = {"Show Weapons in your backpack", "Show Food in your backpack", "Show Curses in your backpack"};
 
-    int x = createMenu(menu, msg, 3);
+    int x = createMenu(menu, msg, "Backpack", 3);
     switch (x) {
         case -1:
             return;

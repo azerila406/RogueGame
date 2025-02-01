@@ -293,10 +293,8 @@ bool bfsDoor(Level *level, int sx, int sy, int roomID, bool rep);
 /*MENU*/
 bool checkInfo(const char *s);
 char *getInput(const char *msg, bool is_echo);
-int createMenu(char *s[], char *msg[], int n);
-int createMenuW(wchar_t *s[], char *msg[], int n);
-void renderMenu(char *s[], char *msg[], int n, int x);
-void renderMenuW(wchar_t *s[], char *msg[], int n, int x);
+int createMenu(char *s[], char *msg[], char *menu_name, int n);
+void renderMenu(char *s[], char *msg[], char *menu_name, int n, int x);
 void gameMenu();
 void userMenu();
 
