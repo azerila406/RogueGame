@@ -31,15 +31,55 @@ Player *P;
 int game_movement_timer = 0;
 int GOD_MODE = 0;
 
-void gameOver() {
-  renderMsgAndWait(GAME_OVER_ERROR[rand() % GAME_OVER_ERROR_SZ], 3);
-  char *s = (char *) malloc(100 * sizeof(char));
-  sprintf(s, "Gold: %d    Score: %d    ", P->gold, P->score);
-  renderMsgAndWait(s, 2);
-  //save the result
-  addMatch(username, P->gold, P->score, P->exp, 0);
-  return;
+void gameOver()
+{
+    clear();
+    refresh();
+
+    const char *tombstone[] = {
+        "                       ",
+        " _____________________ ",
+        "|                     |",
+        "|       R.I.P.        |",
+        "|                     |",
+        "|                     |",
+        "|                     |",
+        "|                     |",
+        "|_____________________|",
+        "|                     |",
+        "|      GAME OVER      |",
+        "|                     |",
+        "|_____________________|",
+        "                       "
+    };
+
+    int y = (LINES - 14) / 2;
+    int x = (COLS - 23) / 2; 
+
+    attron(COLOR_PAIR(3)); 
+    for (int i = 0; i < 14; i++) {
+        mvprintw(y + i, x, "%s", tombstone[i]);
+    }
+    attroff(COLOR_PAIR(3));
+
+    mvprintw(y + 5, x + 8, "%-9s", username);
+
+    char stats[100];
+    sprintf(stats, "Gold: %d    Score: %d", P->gold, P->score);
+    mvprintw(y + 15, (COLS - strlen(stats)) / 2, "%s", stats);
+
+    const char *msg = GAME_OVER_ERROR[rand() % GAME_OVER_ERROR_SZ];
+    attron(A_ITALIC);
+    mvprintw(y + 17, (COLS - strlen(msg)) / 2 - 1, "\"%s\"", msg);
+    attroff(A_ITALIC);
+
+    refresh();
+
+    addMatch(username, P->gold, P->score, P->exp, 0);
+
+    getch();
 }
+
 
 bool checkWinStatus() {
   if (G->cur + 1 != G->num_level) return 0;
@@ -94,7 +134,7 @@ int get_game_timer() {
 }
 
 signed main() {
-  DIFF_LEVEL = 0;
+  DIFF_LEVEL = 3;
   MAIN_COLOR = 1;
   setlocale(LC_ALL, "");
   srand(time(0));

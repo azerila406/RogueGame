@@ -89,7 +89,7 @@ int createMenu(char *s[], char *msg[], char *menu_name, int n)
 void diffMenu() {
   char *s[4] = {"Easy", "Med", "Hard", "Impossible"};
   char *msg[4] = {"For begginers", "For intermediates", "For exprienced players", "Darksouls"};
-  int x = createMenu(s, msg, "Difficulty Settings", 4);
+  int x = createMenu(s, msg, "Difficulty", 4);
   if (x == -1) return;
   DIFF_LEVEL = x;
 }
