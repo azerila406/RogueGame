@@ -1,6 +1,6 @@
 #include "game.h"
 
-//TODO add getting health
+// TODO add getting health
 void processPlayer() {
   processFoodOverTime();
 
@@ -14,20 +14,24 @@ void processPlayer() {
     if (get_game_timer() - P->last_time_hunger >= TIME_OF_HUNGER_DECREASE) {
       P->hunger--;
     }
-  }
-  else P->health--;
+  } else
+    P->health--;
 
-  if (P->damage_mult == 2 && (get_game_timer() - P->damage_mult_last_time) >= TIME_OF_DAMAGE_MULT_LASTING) {
+  if (P->damage_mult == 2 && (get_game_timer() - P->damage_mult_last_time) >=
+                                 TIME_OF_DAMAGE_MULT_LASTING) {
     P->damage_mult = 1;
     setTopMsg("You lost your power :(((");
   }
 
-  if (P->speed_mult == 2 && (get_game_timer() - P->speed_mult_last_time) >= TIME_OF_SPEED_MULT_LASTING) {
+  if (P->speed_mult == 2 && (get_game_timer() - P->speed_mult_last_time) >=
+                                TIME_OF_SPEED_MULT_LASTING) {
     P->speed_mult = 1;
     setTopMsg("You lost your speed :(((");
   }
 
-  if (P->health_recover_mult == 2 && (get_game_timer() - P->health_recover_mult_last_time) >= TIME_OF_HEALTH_RECOVER_MULT_LASTING) {
+  if (P->health_recover_mult == 2 &&
+      (get_game_timer() - P->health_recover_mult_last_time) >=
+          TIME_OF_HEALTH_RECOVER_MULT_LASTING) {
     P->health_recover_mult = 1;
     setTopMsg("You lost your special healing power :((((");
   }
@@ -50,8 +54,11 @@ void initPlayer(Player* P, Level* L, int max_health) {
     P->weapon[i].dmg = WEAPON_DAMAGE_BY_TYPE[i];
     P->weapon[i].range = WEAPON_RANGE_BY_TYPE[i];
   }
-  P->weapon[0].td = -1; //INF
+  P->weapon[0].td = -1;  // INF
   P->def_weapon = 0;
+
+  for (int i = 0; i < MAX_FOOD; ++i) P->food[i] = NULL;
+  for (int i = 0; i < MAX_CURSE; ++i) P->curse[i] = NULL;
 
   P->x = -1;
   do {
