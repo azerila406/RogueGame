@@ -93,7 +93,7 @@ wchar_t *tileChar(Tile *t) {
     case 1:
       return L"|";
     case 2:
-      return L"#";
+      return L"█";
     case 14:
     case 3:
       return L"-";
@@ -159,18 +159,72 @@ void renderMsgAndWait(const char *s, int color) {
   getch();
 }
 
-void renderHUD(Level *l) {
-  clearMsg();
-  renderMsg(top_msg, 1);
-  attron(COLOR_PAIR(1));
-  for (int i = 0; i < WIDTH + 30; ++i)
-    mvprintw(HEIGHT + 2, i, " "); // TODO
+const wchar_t *generateBar(int current, int max, int width) {
+    static wchar_t bar[21];
+    int filled = (current * width) / max;
+    int empty = width - filled;
 
-  mvprintw(
-      HEIGHT + 2, 0,
-      " Level: %d/%d   Health: %d/%d   Gold: %d   Exp: %d   Hunger: %d/%d   Weapon: %s/%d   dmg/speed/healthX: %d/%d/%d",
-      G->cur + 1, G->num_level, P->health, P->max_health, P->gold, P->exp, P->hunger, MAX_HUNGER, WEAPON_NAME_BY_TYPE[P->def_weapon], P->weapon[P->def_weapon].td, P->damage_mult, P->speed_mult, P->health_recover_mult);
-  attroff(COLOR_PAIR(1));
+    wmemset(bar, L'█', filled);
+    wmemset(bar + filled, L'░', empty);
+    bar[width] = L'\0';
+    return bar;
+}
+
+
+void renderHUD(Level *l) {
+    clearMsg();
+    renderMsg(top_msg, 1);
+
+    attron(COLOR_PAIR(2));
+    for (int i = 0; i < WIDTH + 30; ++i) {
+        mvprintw(HEIGHT + 2, i, " ");
+    }
+    attroff(COLOR_PAIR(2));
+
+    int hud_y = HEIGHT + 2;
+
+    attron(COLOR_PAIR(1));
+    mvprintw(hud_y, 0, " Level: %d/%d ", G->cur + 1, G->num_level);
+    attroff(COLOR_PAIR(1));
+
+    attron(COLOR_PAIR(5));
+    mvprintw(hud_y, 15, "Health: [%ls] %d/%d", 
+             generateBar(P->health, P->max_health, 10), P->health, P->max_health);
+    attroff(COLOR_PAIR(5));
+
+    attron(COLOR_PAIR(1));
+    mvprintw(hud_y, 44, "Gold: %d", P->gold);
+    attroff(COLOR_PAIR(1));
+
+    attron(COLOR_PAIR(4));
+    mvprintw(hud_y, 54, "Exp: %d ", P->exp);
+    attroff(COLOR_PAIR(4));
+
+    attron(COLOR_PAIR(3));
+    mvprintw(hud_y, 65, "Hunger: [%ls]", generateBar(P->hunger, MAX_HUNGER, 10));
+    attroff(COLOR_PAIR(3));
+
+    attron(COLOR_PAIR(6));
+    mvprintw(hud_y + 1, 0, " Weapon: %s/%d ", WEAPON_NAME_BY_TYPE[P->def_weapon], P->weapon[P->def_weapon].td);
+
+    if (P->speed_mult > 1) {
+        attron(COLOR_PAIR(4));
+        mvprintw(hud_y + 1, 30, "S");
+        attroff(COLOR_PAIR(4));
+    }
+
+    if (P->damage_mult > 1) {
+        attron(COLOR_PAIR(3));
+        mvprintw(hud_y + 1, 32, "D");
+        attroff(COLOR_PAIR(3));
+    }
+
+    if (P->health_recover_mult > 1) {
+        attron(COLOR_PAIR(5));
+        mvprintw(hud_y + 1, 34, "H");
+        attroff(COLOR_PAIR(5));
+    }
+    attroff(COLOR_PAIR(6));
 }
 
 /* Render each Frame
