@@ -1,7 +1,7 @@
 UNAME_S := $(shell uname -s)
 
 CC = gcc
-CFLAGS = -Wall -lncursesw -lsqlite3 -I$(IDIR) -g -fsanitize=undefined
+CFLAGS = -Wall -lncursesw -lsqlite3 -I$(IDIR) -g -fsanitize=undefined -DNCURSES_WIDECHAR=1
 
 ifeq ($(UNAME_S), Darwin)
     LDFLAGS = -L/opt/homebrew/opt/ncurses/lib

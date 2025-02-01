@@ -123,36 +123,78 @@ void userForgetPass() {
 }
 
 void userScoreboard() {
-  int score[MAX_ENTRY], gold[MAX_ENTRY], result[MAX_ENTRY], exp[MAX_ENTRY];
-  char *user[MAX_ENTRY];
-  int n = getScoreboard(user, score, gold, exp, result);
+    int score[MAX_ENTRY], gold[MAX_ENTRY], result[MAX_ENTRY], exp[MAX_ENTRY];
+    char *user[MAX_ENTRY];
+    int n = getScoreboard(user, score, gold, exp, result);
 
-  if (n == 0) {
-    renderMsgAndWait("You have no info currently", 1);
-    return;
-  }
-  wchar_t *s[MAX_ENTRY]; // Use wide strings for the scoreboard
-  char *msg[MAX_ENTRY];
-
-  for (int i = 0; i < n; i++) {
-    wchar_t *x = (wchar_t *)malloc(500 * sizeof(wchar_t));
-
-    if (i == 0) {
-      swprintf(x, 500, L"🥇 1st %s Score: %d   Gold: %d   Exp: %d   Game Status: %ls", user[i], score[i], gold[i], exp[i], (result[i] ? L"WON" : L"LOST"));
-    } else if (i == 1) {
-      swprintf(x, 500, L"🥈 2nd %s Score: %d   Gold: %d   Exp: %d   Game Status: %ls", user[i], score[i], gold[i], exp[i], (result[i] ? L"WON" : L"LOST"));
-    } else if (i == 2) {
-      swprintf(x, 500, L"🥉 3rd %s Score: %d   Gold: %d   Exp: %d   Game Status: %ls", user[i], score[i], gold[i], exp[i], (result[i] ? L"WON" : L"LOST"));
-    } else {
-      swprintf(x, 500, L"%s Score: %d   Gold: %d   Exp: %d   Game Status: %ls", user[i], score[i], gold[i], exp[i], (result[i] ? L"WON" : L"LOST"));
+    if (n == 0) {
+        renderMsgAndWait("You have no info currently", 1);
+        return;
     }
+    clear();
+    refresh();
 
-    s[i] = x;
-    msg[i] = "";
-  }
-  createMenuW(s, msg, n);
+    wchar_t *s[MAX_ENTRY];
+    char *msg[MAX_ENTRY];
 
-  for (int i = 0; i < n; i++) {
-    free(s[i]);
-  }
+    init_pair(11, COLOR_YELLOW, COLOR_BLACK);
+    init_pair(12, COLOR_WHITE, COLOR_BLACK);
+    init_pair(13, COLOR_GREEN, COLOR_BLACK);
+    init_pair(14, COLOR_RED, COLOR_BLACK);
+
+    int height = n + 4;
+    int width = 60;
+    int start_y = (LINES - height) / 2;
+    int start_x = (COLS - width) / 2;
+
+    WINDOW *scoreboard_win = newwin(height, width, start_y, start_x);
+    box(scoreboard_win, 0, 0);
+    wattron(scoreboard_win, COLOR_PAIR(1));
+    mvwprintw(scoreboard_win, 0, 2, " Scoreboard ");
+    wattroff(scoreboard_win, COLOR_PAIR(1));
+
+    for (int i = 0; i < n; i++) {
+        wchar_t *x = (wchar_t *)malloc(500 * sizeof(wchar_t));
+
+        if (i == 0) {
+            swprintf(x, 500, L"🥇 1st %s", user[i]);
+        } else if (i == 1) {
+            swprintf(x, 500, L"🥈 2nd %s", user[i]);
+        } else if (i == 2) {
+            swprintf(x, 500, L"🥉 3rd %s", user[i]);
+        } else {
+            swprintf(x, 500, L"   %s", user[i]);
+        }
+
+        s[i] = x;
+        msg[i] = "";
+
+        wattron(scoreboard_win, COLOR_PAIR(12));
+        mvwaddwstr(scoreboard_win, i + 2, 2, s[i]);
+        wattroff(scoreboard_win, COLOR_PAIR(12));
+
+        wattron(scoreboard_win, COLOR_PAIR(13));
+        mvwprintw(scoreboard_win, i + 2, 20, "Score: %d", score[i]);
+        wattroff(scoreboard_win, COLOR_PAIR(13));
+
+        wattron(scoreboard_win, COLOR_PAIR(12));
+        mvwprintw(scoreboard_win, i + 2, 30, "Gold: %d", gold[i]);
+        wattroff(scoreboard_win, COLOR_PAIR(12));
+
+        wattron(scoreboard_win, COLOR_PAIR(13));
+        mvwprintw(scoreboard_win, i + 2, 40, "Exp: %d", exp[i]);
+        wattroff(scoreboard_win, COLOR_PAIR(13));
+
+        wattron(scoreboard_win, COLOR_PAIR(result[i] ? 13 : 14));
+        mvwprintw(scoreboard_win, i + 2, 50, "%s", result[i] ? "WON" : "LOST");
+        wattroff(scoreboard_win, COLOR_PAIR(result[i] ? 13 : 14));
+    }
+    wrefresh(scoreboard_win);
+
+    getch();
+    for (int i = 0; i < n; i++) {
+        free(s[i]);
+    }
+    delwin(scoreboard_win);
+    endwin();
 }
