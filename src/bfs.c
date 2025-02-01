@@ -45,17 +45,24 @@ bool checkDoors(Level *L, int x, int y) {
 bool bfsDoor(Level *l, int sx, int sy, int c, bool replace) {
   BFS(l, sx, sy, checkDoors);
   int x = -1, y = -1;
-  for (int i = getX0(&(l->room[c])); i <= getX1(&(l->room[c])); ++i) {
-    for (int j = getY0(&(l->room[c])); j <= getY1(&(l->room[c])); ++j)
+  int x0 = getX0(&l->room[c]), x1 = getX0(&l->room[c]);
+  int y0 = getY0(&l->room[c]), y1 = getY1(&l->room[c]);
+
+  for (int i = x0; i <= x1; ++i) {
+    for (int j = y0; j <= y1; ++j) {
+      if ((i == x0 || i == x1) && (j == y0 || j == y1)) continue;
       if (pr[i][j][0] != -1) {
         int t = l->tile[i][j].type;
-        if ((t == 1 || t == 3 || t == 21) && dist[i][j] >= MIN_HALLWAY_LEN) {
+        if ((t == 1 || t == 3 || t == 21 || t == 23 || t == 25 || t == 27 ||
+             t == 29) &&
+            dist[i][j] >= MIN_HALLWAY_LEN) {
           if (x == -1 || rand() % 5) {  // randomness is not uniform
             x = i;
             y = j;
           }
         }
       }
+    }
   }
   if (x == -1) return 0;
   if (replace) {

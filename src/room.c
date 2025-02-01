@@ -18,6 +18,10 @@ void initRoom(Level *L, Room *R) {
       }
     }
   }
+  L->tile[x0][y0].type = 23;
+  L->tile[x0][y1].type = 25;
+  L->tile[x1][y0].type = 29;
+  L->tile[x1][y1].type = 27;
 }
 
 int isThereStairs(Level *L, Room *R) {

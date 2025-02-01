@@ -172,6 +172,10 @@ typedef struct Tile {
   2 -> corridor #
   3 -> horz wall -
   21 -> O (sotoon)
+  23 -> ┌
+  25 -> ┐
+  27 -> ┘
+  29 -> └
   5 -> nothing
   6 -> door (normal door)
   22 -> trap

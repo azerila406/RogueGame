@@ -108,6 +108,7 @@ void gameloop() {
   clear();
 
   while (1) {
+    P->health = max(P->health, 0);
     if (!GOD_MODE && P->health <= 0) return gameOver();
     if (checkWinStatus()) {
       gameWon();
