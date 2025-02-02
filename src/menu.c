@@ -97,7 +97,7 @@ void diffMenu() {
 void changeMainCharColor() {
   char *s[] = {"Yellow", "White", "Red", "Cyan", "Green"};
   char *msg[] = {"", "", "", "", ":)"};
-  int x = createMenu(s, msg, "Color Settings", 5);
+  int x = createMenu(s, msg, "Color", 5);
   if (x == -1) return;
   MAIN_COLOR = x + 1;  
 }
@@ -151,7 +151,7 @@ void gameMenu()
   char *msg[4] = {"Starts a New Game", "Continues previous game if exists", "Change Settings", "Check your info"};
   while (1)
   {
-    int x = createMenu(s, msg, "Game Menu", 4);
+    int x = createMenu(s, msg, "Game", 4);
     // TODO for now
     switch (x)
     {
