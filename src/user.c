@@ -122,7 +122,6 @@ void userForgetPass() {
   forgetPassword(user, pass);
 }
 
-#define MAX_ENTRY 100
 #define ENTRIES_PER_PAGE 5
 
 void userScoreboard(char *username) {

@@ -1,6 +1,6 @@
 #include "game.h"
 #include "database.h"
-
+#include "music.h"
 
 char *getInput(const char *msg, bool enable_echo)
 {
@@ -145,7 +145,7 @@ void settingMenu()
     changeMainCharColor();
     return;
   case 2:
-    renderMsgAndWait("currently no music!", 1);
+    musicMenu();
     return;
   case 3:
     GOD_MODE = 1;

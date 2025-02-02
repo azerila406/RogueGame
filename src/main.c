@@ -1,7 +1,7 @@
 #include "database.h"
 #include "game.h"
+#include "music.h"
 
-// Array of strings
 const char *GAME_OVER_ERROR[] = {
     "Well, that was tragic. Maybe try using your hands next time?",
     "Congratulations! You've unlocked the 'Professional Floor Inspector' "
@@ -42,6 +42,7 @@ Player *P;
 
 int game_movement_timer = 0;
 int GOD_MODE = 0;
+int MUSIC = 0;
 
 void gameOver() {
   clear();
@@ -172,8 +173,13 @@ signed main() {
   srand(time(0));
   initDB();
 
+  MAIN_MUSIC = "music/main_theme_the_black_waltz.mp3";
+  if (!initSDL()) return 1;
+  initMusic(MAIN_MUSIC);
+
   initScreen();
   userMenu();
   endwin();
+  closeMusic(music);
   return 0;
 }

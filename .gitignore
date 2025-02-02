@@ -9,3 +9,4 @@ DerivedData/
 *.db
 ali
 GUEST
+.DS_Store
