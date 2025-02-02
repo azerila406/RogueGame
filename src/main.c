@@ -78,7 +78,7 @@ void gameOver() {
 
   refresh();
 
-  addMatch(username, P->gold, P->score, P->exp, 0);
+  addMatch(username, P->gold, P->score / 300, P->exp, 0);
 
   getch();
 }
@@ -98,7 +98,7 @@ bool checkWinStatus() {
 
 void gameWon() {
   renderMsgAndWait("You have won the game", 5);
-  addMatch(username, P->gold, P->score, P->exp, 1);  // won
+  addMatch(username, P->gold, P->score / 100, P->exp, 1);  // won
   return;
 }
 
@@ -108,9 +108,8 @@ void gameloop() {
   clear();
 
   while (1) {
-    P->health = max(P->health, 0);
     if (GOD_MODE) P->health = P->max_health;
-    if (!GOD_MODE && P->health <= 0) return gameOver();
+    if (P->health <= 0) return gameOver();
     if (checkWinStatus()) {
       gameWon();
       return;

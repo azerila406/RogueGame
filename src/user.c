@@ -122,6 +122,9 @@ void userForgetPass() {
   forgetPassword(user, pass);
 }
 
+#define MAX_ENTRY 100
+#define ENTRIES_PER_PAGE 5
+
 void userScoreboard(char *username) {
     int score[MAX_ENTRY], gold[MAX_ENTRY], result[MAX_ENTRY], exp[MAX_ENTRY];
     char *user[MAX_ENTRY];
@@ -131,6 +134,7 @@ void userScoreboard(char *username) {
         renderMsgAndWait("You have no info currently", 1);
         return;
     }
+
     clear();
     refresh();
 
@@ -143,61 +147,80 @@ void userScoreboard(char *username) {
     init_pair(14, COLOR_RED, COLOR_BLACK);
     init_pair(15, COLOR_BLUE, COLOR_BLACK);
 
-    int height = n + 4;
+    int height = ENTRIES_PER_PAGE + 4;
     int width = 60;
     int start_y = (LINES - height) / 2;
     int start_x = (COLS - width) / 2;
 
     WINDOW *scoreboard_win = newwin(height, width, start_y, start_x);
-    box(scoreboard_win, 0, 0);
-    wattron(scoreboard_win, COLOR_PAIR(1));
-    mvwprintw(scoreboard_win, 0, 2, " Scoreboard ");
-    wattroff(scoreboard_win, COLOR_PAIR(1));
 
-    for (int i = 0; i < n; i++) {
-        wchar_t *x = (wchar_t *)malloc(500 * sizeof(wchar_t));
+    int current_page = 0;
+    int total_pages = (n + ENTRIES_PER_PAGE - 1) / ENTRIES_PER_PAGE;
 
-        if (i == 0) {
-            swprintf(x, 500, L"🥇 1st %s", user[i]);
-        } else if (i == 1) {
-            swprintf(x, 500, L"🥈 2nd %s", user[i]);
-        } else if (i == 2) {
-            swprintf(x, 500, L"🥉 3rd %s", user[i]);
-        } else {
-            swprintf(x, 500, L"   %s", user[i]);
-        }
+    while (1) {
+        werase(scoreboard_win);
+        box(scoreboard_win, 0, 0);
+        wattron(scoreboard_win, COLOR_PAIR(1));
+        mvwprintw(scoreboard_win, 0, 2, " Scoreboard (Page %d/%d) ", current_page + 1, total_pages);
+        wattroff(scoreboard_win, COLOR_PAIR(1));
 
-        s[i] = x;
-        msg[i] = "";
+        int start_index = current_page * ENTRIES_PER_PAGE;
+        int end_index = min(start_index + ENTRIES_PER_PAGE, n);
 
-        if (username != NULL && strcmp(user[i], username) == 0) {
-            wattron(scoreboard_win, A_BOLD | COLOR_PAIR(15));
-        } else {
+        for (int i = start_index; i < end_index; i++) {
+            wchar_t *x = (wchar_t *)malloc(500 * sizeof(wchar_t));
+
+            if (i == 0) {
+                swprintf(x, 500, L"🥇 1st %s", user[i]);
+            } else if (i == 1) {
+                swprintf(x, 500, L"🥈 2nd %s", user[i]);
+            } else if (i == 2) {
+                swprintf(x, 500, L"🥉 3rd %s", user[i]);
+            } else {
+                swprintf(x, 500, L"   %s", user[i]);
+            }
+
+            s[i] = x;
+            msg[i] = "";
+
+            if (username != NULL && strcmp(user[i], username) == 0) {
+                wattron(scoreboard_win, A_BOLD | COLOR_PAIR(15));
+            } else {
+                wattron(scoreboard_win, COLOR_PAIR(12));
+            }
+
+            mvwaddwstr(scoreboard_win, (i - start_index) + 2, 2, s[i]);
+            wattroff(scoreboard_win, A_BOLD | COLOR_PAIR(15));
+
+            wattron(scoreboard_win, COLOR_PAIR(13));
+            mvwprintw(scoreboard_win, (i - start_index) + 2, 20, "Score: %d", score[i]);
+            wattroff(scoreboard_win, COLOR_PAIR(13));
+
             wattron(scoreboard_win, COLOR_PAIR(12));
+            mvwprintw(scoreboard_win, (i - start_index) + 2, 30, "Gold: %d", gold[i]);
+            wattroff(scoreboard_win, COLOR_PAIR(12));
+
+            wattron(scoreboard_win, COLOR_PAIR(13));
+            mvwprintw(scoreboard_win, (i - start_index) + 2, 40, "Exp: %d", exp[i]);
+            wattroff(scoreboard_win, COLOR_PAIR(13));
+
+            wattron(scoreboard_win, COLOR_PAIR(result[i] ? 13 : 14));
+            mvwprintw(scoreboard_win, (i - start_index) + 2, 50, "%s", result[i] ? "WON" : "LOST");
+            wattroff(scoreboard_win, COLOR_PAIR(result[i] ? 13 : 14));
         }
 
-        mvwaddwstr(scoreboard_win, i + 2, 2, s[i]);
-        wattroff(scoreboard_win, A_BOLD | COLOR_PAIR(15));
+        wrefresh(scoreboard_win);
 
-        wattron(scoreboard_win, COLOR_PAIR(13));
-        mvwprintw(scoreboard_win, i + 2, 20, "Score: %d", score[i]);
-        wattroff(scoreboard_win, COLOR_PAIR(13));
-
-        wattron(scoreboard_win, COLOR_PAIR(12));
-        mvwprintw(scoreboard_win, i + 2, 30, "Gold: %d", gold[i]);
-        wattroff(scoreboard_win, COLOR_PAIR(12));
-
-        wattron(scoreboard_win, COLOR_PAIR(13));
-        mvwprintw(scoreboard_win, i + 2, 40, "Exp: %d", exp[i]);
-        wattroff(scoreboard_win, COLOR_PAIR(13));
-
-        wattron(scoreboard_win, COLOR_PAIR(result[i] ? 13 : 14));
-        mvwprintw(scoreboard_win, i + 2, 50, "%s", result[i] ? "WON" : "LOST");
-        wattroff(scoreboard_win, COLOR_PAIR(result[i] ? 13 : 14));
+        int ch = wgetch(scoreboard_win);
+        if (ch == KEY_LEFT || ch == 'a') {
+            if (current_page > 0) current_page--;
+        } else if (ch == KEY_RIGHT || ch == 'd') {
+            if (current_page < total_pages - 1) current_page++;
+        } else if (ch == 'q' || ch == 'Q') {
+            break;
+        }
     }
-    wrefresh(scoreboard_win);
 
-    getch();
     for (int i = 0; i < n; i++) {
         free(s[i]);
     }
