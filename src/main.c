@@ -78,7 +78,7 @@ void gameOver() {
 
   refresh();
 
-  addMatch(username, P->gold, P->score / 300, P->exp, 0);
+  addMatch(username, P->gold, P->score, P->exp, 0);
 
   getch();
 }
@@ -97,9 +97,41 @@ bool checkWinStatus() {
 }
 
 void gameWon() {
-  renderMsgAndWait("You have won the game", 5);
-  addMatch(username, P->gold, P->score / 100, P->exp, 1);  // won
-  return;
+  clear();
+  refresh();
+
+  const char *celebration[] = {
+      "                       ", "       \\o/             ",
+      "        |              ", "       / \\             ",
+      "                       ", "   YOU HAVE WON!       ",
+      "                       ", "                       ",
+      "                       ", "                       ",
+      "                       ", "                       ",
+      "                       ", "                       "};
+
+  int y = (LINES - 14) / 2;
+  int x = (COLS - 23) / 2;
+
+  attron(COLOR_PAIR(5));
+  for (int i = 0; i < 14; i++) {
+    mvprintw(y + i, x, "%s", celebration[i]);
+  }
+  attroff(COLOR_PAIR(5));
+
+  char stats[100];
+  sprintf(stats, "Gold: %d    Score: %d    Exp: %d", P->gold, P->score, P->exp);
+  mvprintw(y + 15, (COLS - strlen(stats)) / 2, "%s", stats);
+
+  const char *congratsMsg = "Congratulations on your victory!";
+  attron(A_BOLD);
+  mvprintw(y + 17, (COLS - strlen(congratsMsg)) / 2 - 1, "%s", congratsMsg);
+  attroff(A_BOLD);
+
+  refresh();
+
+  addMatch(username, P->gold, P->score, P->exp, 1);  // won
+
+  getch();
 }
 
 void gameloop() {

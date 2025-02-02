@@ -20,11 +20,11 @@ void attackInfo(Enemy *E, Weapon *W)
         sprintf(s, "%s and It's finnaly dead!", s);
         renderMsgAndWait(s, 5);
         P->exp += E->score;
-        P->score += P->exp * DIFF_LEVEL;
+        P->score += E->score + DIFF_LEVEL;
     }
     else
         renderMsgAndWait(s, 2);
-    P->score += P->exp * DIFF_LEVEL;
+    P->score += DIFF_LEVEL;
     P->exp++;
 }
 

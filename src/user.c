@@ -221,9 +221,6 @@ void userScoreboard(char *username) {
         }
     }
 
-    for (int i = 0; i < n; i++) {
-        free(s[i]);
-    }
     delwin(scoreboard_win);
     endwin();
 }
