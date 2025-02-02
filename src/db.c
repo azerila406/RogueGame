@@ -92,6 +92,34 @@ void addMatch(const char *username, int gold, int score, int exp, int result) {
     sqlite3_finalize(stmt);
 }
 
+int getScoreboardForUser(const char *username, char *name[], int score[], int gold[], int exp[], int result[]) {
+    const char *sql = "SELECT users.username, matches.score, matches.gold, matches.experiences, matches.result "
+                      "FROM matches "
+                      "JOIN users ON matches.user_id = users.id "
+                      "WHERE users.username = ? "
+                      "ORDER BY matches.score DESC, matches.gold DESC;";
+
+    sqlite3_stmt *stmt;
+    int rc = sqlite3_prepare_v2(db, sql, -1, &stmt, 0);
+    
+    sqlite3_bind_text(stmt, 1, username, -1, SQLITE_STATIC);
+
+    int n = 0;
+    while (sqlite3_step(stmt) == SQLITE_ROW) {
+        const char *usr = (const char *)sqlite3_column_text(stmt, 0);
+        name[n] = (char *) malloc(strlen(usr) * sizeof(char) + 1);
+        strcpy(name[n], usr);
+        score[n] = sqlite3_column_int(stmt, 1);
+        gold[n] = sqlite3_column_int(stmt, 2);
+        exp[n] = sqlite3_column_int(stmt, 3);
+        result[n] = sqlite3_column_int(stmt, 4);
+        ++n;
+    }
+
+    sqlite3_finalize(stmt);
+    return n;
+}
+
 int getScoreboard(char *name[], int score[], int gold[], int exp[], int result[]) {
     const char *sql = "SELECT users.username, matches.score, matches.gold, matches.experiences, matches.result "
                       "FROM matches "

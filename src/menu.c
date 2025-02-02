@@ -127,6 +127,8 @@ void userInfo() {
     wrefresh(win);
     getch();
     delwin(win);
+
+    userProfileScoreboard();
 }
 
 void settingMenu()

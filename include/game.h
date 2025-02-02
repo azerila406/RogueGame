@@ -307,6 +307,8 @@ void userLogin();
 void userRegister();
 void userForgetPass();
 void userScoreboard();
+void userProfileScoreboard();
+
 
 /* Check if the input is corrct */
 bool isCorrectFormEmail(const char *email, bool error);
