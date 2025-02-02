@@ -122,7 +122,7 @@ void userForgetPass() {
   forgetPassword(user, pass);
 }
 
-void userScoreboard() {
+void userScoreboard(char *username) {
     int score[MAX_ENTRY], gold[MAX_ENTRY], result[MAX_ENTRY], exp[MAX_ENTRY];
     char *user[MAX_ENTRY];
     int n = getScoreboard(user, score, gold, exp, result);
@@ -141,6 +141,7 @@ void userScoreboard() {
     init_pair(12, COLOR_WHITE, COLOR_BLACK);
     init_pair(13, COLOR_GREEN, COLOR_BLACK);
     init_pair(14, COLOR_RED, COLOR_BLACK);
+    init_pair(15, COLOR_BLUE, COLOR_BLACK);
 
     int height = n + 4;
     int width = 60;
@@ -169,9 +170,14 @@ void userScoreboard() {
         s[i] = x;
         msg[i] = "";
 
-        wattron(scoreboard_win, COLOR_PAIR(12));
+        if (username != NULL && strcmp(user[i], username) == 0) {
+            wattron(scoreboard_win, A_BOLD | COLOR_PAIR(15));
+        } else {
+            wattron(scoreboard_win, COLOR_PAIR(12));
+        }
+
         mvwaddwstr(scoreboard_win, i + 2, 2, s[i]);
-        wattroff(scoreboard_win, COLOR_PAIR(12));
+        wattroff(scoreboard_win, A_BOLD | COLOR_PAIR(15));
 
         wattron(scoreboard_win, COLOR_PAIR(13));
         mvwprintw(scoreboard_win, i + 2, 20, "Score: %d", score[i]);

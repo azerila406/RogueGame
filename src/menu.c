@@ -147,11 +147,11 @@ void settingMenu()
 
 void gameMenu()
 {
-  char *s[4] = {"New Game", "Continue Game", "Settings", "User Info"};
-  char *msg[4] = {"Starts a New Game", "Continues previous game if exists", "Change Settings", "Check your info"};
+  char *s[5] = {"New Game", "Continue Game", "Settings", "User Info", "Scoreboard"};
+  char *msg[5] = {"Starts a New Game", "Continues previous game if exists", "Change Settings", "Check your info", ""};
   while (1)
   {
-    int x = createMenu(s, msg, "Game", 4);
+    int x = createMenu(s, msg, "Game", 5);
     // TODO for now
     switch (x)
     {
@@ -169,6 +169,9 @@ void gameMenu()
       break;
     case 3:
       userInfo();
+      break;
+    case 4:
+      userScoreboard(username);
       break;
     }
   }
@@ -196,7 +199,7 @@ void userMenu()
       userForgetPass();
       continue;
     case 3:
-      userScoreboard();
+      userScoreboard(NULL);
       continue;
     }
   }
