@@ -99,7 +99,7 @@ void changeMainCharColor() {
   char *msg[] = {"", "", "", "", ":)"};
   int x = createMenu(s, msg, "Color Settings", 5);
   if (x == -1) return;
-  MAIN_COLOR = x;  
+  MAIN_COLOR = x + 1;  
 }
 
 void userInfo() {
