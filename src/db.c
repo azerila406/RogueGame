@@ -168,7 +168,14 @@ void forgetPassword(const char *username, const char *new_password) {
     executeSql(sql);
 }
 
+void createGuest() {
+    if (!usernameExists("GUEST")) {
+        signup("GUEST", "g@e.c", "");
+    }
+}
+
 void initDB() {
     int rc = sqlite3_open("rogue-db.db", &db);
     initializeDatabase();
+    createGuest();
 }
