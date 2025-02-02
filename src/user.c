@@ -170,13 +170,13 @@ void userScoreboard(char *username) {
             wchar_t *x = (wchar_t *)malloc(500 * sizeof(wchar_t));
 
             if (i == 0) {
-              wattron(scoreboard_win, COLOR_PAIR(1));
-              mvwprintw(scoreboard_win, i - start_index + 2, 2, "%ls", L"🥇 1st GOAT");
-              wattroff(scoreboard_win, COLOR_PAIR(1));
+                wattron(scoreboard_win, COLOR_PAIR(1));
+                mvwprintw(scoreboard_win, i - start_index + 2, 2, "%ls", L"🥇 1st GOAT");
+                wattroff(scoreboard_win, COLOR_PAIR(1));
             } else if (i == 1) {
-              wattron(scoreboard_win, COLOR_PAIR(2));
-              mvwprintw(scoreboard_win, i - start_index + 2, 2, "%ls", L"🥈 2nd KING");
-              wattroff(scoreboard_win, COLOR_PAIR(2));
+                wattron(scoreboard_win, COLOR_PAIR(2));
+                mvwprintw(scoreboard_win, i - start_index + 2, 2, "%ls", L"🥈 2nd KING");
+                wattroff(scoreboard_win, COLOR_PAIR(2));
             } else if (i == 2) {
                 wattron(scoreboard_win, COLOR_PAIR(5));
                 mvwprintw(scoreboard_win, i - start_index + 2, 2, "%ls", L"🥉 3rd");
@@ -206,9 +206,9 @@ void userScoreboard(char *username) {
             mvwprintw(scoreboard_win, (i - start_index) + 2, 50, "Exp: %d", exp[i]);
             wattroff(scoreboard_win, COLOR_PAIR(13));
 
-            wattron(scoreboard_win, COLOR_PAIR(result[i] ? 13 : 14));
-            mvwprintw(scoreboard_win, (i - start_index) + 2, 60, "%s", result[i] ? "WON" : "LOST");
-            wattroff(scoreboard_win, COLOR_PAIR(result[i] ? 13 : 14));
+            wattron(scoreboard_win, COLOR_PAIR(14));
+            mvwprintw(scoreboard_win, (i - start_index) + 2, 60, "Games: %d", result[i]);
+            wattroff(scoreboard_win, COLOR_PAIR(14));
         }
 
         wrefresh(scoreboard_win);

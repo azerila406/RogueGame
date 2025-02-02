@@ -121,22 +121,28 @@ int getScoreboardForUser(const char *username, char *name[], int score[], int go
 }
 
 int getScoreboard(char *name[], int score[], int gold[], int exp[], int result[]) {
-    const char *sql = "SELECT users.username, matches.score, matches.gold, matches.experiences, matches.result "
+    const char *sql = "SELECT users.username, "
+                      "SUM(matches.score) AS total_score, "
+                      "SUM(matches.gold) AS total_gold, "
+                      "SUM(matches.experiences) AS total_exp, "
+                      "COUNT(matches.user_id) AS total_games "
                       "FROM matches "
                       "JOIN users ON matches.user_id = users.id "
-                      "ORDER BY matches.score DESC, matches.gold DESC;";
+                      "GROUP BY users.username "
+                      "ORDER BY total_score DESC, total_gold DESC;";
 
     sqlite3_stmt *stmt;
     int rc = sqlite3_prepare_v2(db, sql, -1, &stmt, 0);
+
     int n = 0;
     while (sqlite3_step(stmt) == SQLITE_ROW) {
         const char *usr = (const char *)sqlite3_column_text(stmt, 0);
-        name[n] = (char *) malloc(strlen(usr) * sizeof(char) + 5);
+        name[n] = (char *) malloc((strlen(usr) + 1) * sizeof(char));
         strcpy(name[n], usr);
         score[n] = sqlite3_column_int(stmt, 1);
         gold[n] = sqlite3_column_int(stmt, 2);
         exp[n] = sqlite3_column_int(stmt, 3);
-        result[n] = sqlite3_column_int(stmt, 4); // Add result to the output
+        result[n] = sqlite3_column_int(stmt, 4);
         ++n;
     }
     sqlite3_finalize(stmt);
