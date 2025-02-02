@@ -1,4 +1,5 @@
 #include "game.h"
+#include "music.h"
 
 // TODO add getting health
 void processPlayer() {
@@ -83,6 +84,33 @@ void discoverTile(Level* L, int x, int y) {
 
 void movePlayer(Level* L, int x, int y) {
   if (x < 0 || x >= HEIGHT || y < 0 || y >= WIDTH) return;
+
+  if (MUSIC) {
+    int r = whichRoomID(L, P->x, P->y);
+    int rp = whichRoomID(L, x, y);
+    if (rp != -1 && r == -1) {
+      //goes into a room
+      int type_of_room = L->room[rp].type;
+      switch (type_of_room) {
+        case 0: //Normal
+          initMusic("music/room0_guzheng_city.mp3");
+          break;
+        case 1: //Treasure
+          initMusic("music/room1_energizing.mp3");
+          break;
+        case 2: //Enchant
+          initMusic("music/room2_past_sadness.mp3");
+          break;
+        case 3: //Nightmare
+          initMusic("music/room3_lotus.mp3");
+          break;
+      }
+    }
+    else if (r != -1 && rp == -1) {
+      initMusic(MAIN_MUSIC);
+    }
+  }
+
   int t = L->tile[x][y].type;
   if (t & 1) return;
   if (t == 18) {  // PASS DOOR
