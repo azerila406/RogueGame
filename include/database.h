@@ -20,7 +20,7 @@ int getScoreboardForUser(const char *username, char *name[], int score[], int go
 int getAllMatches(const char *username, int score[], int gold[], int exp[], int result[]);
 void addMatch(const char *username, int gold, int score, int exp, int result);
 
-void userInfoDB(const char *username, int *score, int *gold, int *games, int *won, int *lost);
+void userInfoDB(const char *username, int *score, int *gold, int *games, int *won, int *lost, char *time);
 
 
 
