@@ -104,9 +104,9 @@ void changeMainCharColor() {
 
 void userInfo() {
     int score, g, games, won, lost;
-    char last_match_time[32];
+    char time[32];
 
-    userInfoDB(username, &score, &g, &games, &won, &lost, last_match_time);
+    userInfoDB(username, &score, &g, &games, &won, &lost, time);
 
     int height = 12, width = 40, start_y = (LINES - height) / 2, start_x = (COLS - width) / 2;
     WINDOW *win = newwin(height, width, start_y, start_x);
@@ -123,7 +123,7 @@ void userInfo() {
     mvwprintw(win, 6, 2, "Games Played: %d", games);
     mvwprintw(win, 7, 2, "Games Won: %d", won);
     mvwprintw(win, 8, 2, "Games Lost: %d", lost);
-    mvwprintw(win, 9, 2, "Last Match: %s", last_match_time);
+    mvwprintw(win, 9, 2, "First Match: %s", time);
     wattroff(win, COLOR_PAIR(1));
 
     wrefresh(win);
