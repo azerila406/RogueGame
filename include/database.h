@@ -19,5 +19,8 @@ int getScoreboard(char *name[], int score[], int gold[], int exp[], int result[]
 int getAllMatches(const char *username, int score[], int gold[], int exp[], int result[]);
 void addMatch(const char *username, int gold, int score, int exp, int result);
 
+void userInfoDB(const char *username, int *score, int *gold, int *games, int *won, int *lost);
+
+
 
 #endif

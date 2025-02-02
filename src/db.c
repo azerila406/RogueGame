@@ -29,6 +29,35 @@ void initializeDatabase() {
     executeSql(sql);
 }
 
+void userInfoDB(const char *username, int *score, int *gold, int *games, int *won, int *lost) {
+    char sql[512];
+    sqlite3_stmt *stmt;
+
+    sprintf(sql, "SELECT score, gold FROM matches WHERE user_id = (SELECT id FROM users WHERE username = '%s') ORDER BY score DESC LIMIT 1;", username);
+    sqlite3_prepare_v2(db, sql, -1, &stmt, 0);
+
+    *score = 0;
+    *gold = 0;
+    if (sqlite3_step(stmt) == SQLITE_ROW) {
+        *score = sqlite3_column_int(stmt, 0);
+        *gold = sqlite3_column_int(stmt, 1);
+    }
+    sqlite3_finalize(stmt);
+
+    sprintf(sql, "SELECT COUNT(*), SUM(result), COUNT(*) - SUM(result) FROM matches WHERE user_id = (SELECT id FROM users WHERE username = '%s');", username);
+    sqlite3_prepare_v2(db, sql, -1, &stmt, 0);
+
+    *games = 0;
+    *won = 0;
+    *lost = 0;
+    if (sqlite3_step(stmt) == SQLITE_ROW) {
+        *games = sqlite3_column_int(stmt, 0);
+        *won = sqlite3_column_int(stmt, 1);
+        *lost = sqlite3_column_int(stmt, 2);
+    }
+    sqlite3_finalize(stmt);
+}
+
 int usernameExists(const char *username) {
     char sql[256];
     sprintf(sql, "SELECT username FROM users WHERE username='%s';", username);

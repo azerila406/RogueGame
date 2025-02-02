@@ -103,22 +103,30 @@ void changeMainCharColor() {
 }
 
 void userInfo() {
-  int score[MAX_ENTRY], gold[MAX_ENTRY], result[MAX_ENTRY], exp[MAX_ENTRY];
-  int n = getAllMatches(username, score, gold, exp, result);
-  if (n == 0) {
-    renderMsgAndWait("You have no info currently", 1);
-    return;
-  }
-  //TODO some background on the user :))
-  char *s[MAX_ENTRY], *msg[MAX_ENTRY];
-  for (int i = 0; i < n; i++) {
-    char *x = (char *) malloc(500 * sizeof(char));
-    sprintf(x, "Score: %d   Gold: %d   Exp: %d   Game Status: %s", score[i], gold[i], exp[i], (result[i] ? "WON" : "LOST"));
-    s[i] = x;
-    msg[i] = "";
-  }
-  //createMenu(s, msg, n);
-  //TODO
+    int score, g, games, won, lost;
+    userInfoDB(username, &score, &g, &games, &won, &lost);
+
+    int height = 10, width = 40, start_y = (LINES - height) / 2, start_x = (COLS - width) / 2;
+
+    WINDOW *win = newwin(height, width, start_y, start_x);
+    box(win, 0, 0);
+
+    wattron(win, COLOR_PAIR(4) | A_BOLD);
+    mvwprintw(win, 1, (width - 9) / 2, "USER INFO");
+    wattroff(win, COLOR_PAIR(4) | A_BOLD);
+
+    wattron(win, COLOR_PAIR(1));
+    mvwprintw(win, 3, 2, "Username: %s", username);
+    mvwprintw(win, 4, 2, "Score: %d", score);
+    mvwprintw(win, 5, 2, "Gold: %d", g);
+    mvwprintw(win, 6, 2, "Games Played: %d", games);
+    mvwprintw(win, 7, 2, "Games Won: %d", won);
+    mvwprintw(win, 8, 2, "Games Lost: %d", lost);
+    wattroff(win, COLOR_PAIR(1));
+
+    wrefresh(win);
+    getch();
+    delwin(win);
 }
 
 void settingMenu()
