@@ -51,7 +51,7 @@ void longRangeAttackWithDirection(Level *L, Weapon *W, int dx, int dy)
         if (E->health <= 0)
             continue;
         int q = (dx ? (E->x - P->x) / dx : (E->y - P->y) / dy);
-        if (q < 0 || q * dx != (E->x - P->x) || q * dy != (E->y - P->y))
+        if (q < 0 || q * dx != (E->x - P->x) || q * dy != (E->y - P->y) || q >= 5)
             continue;
         E->last_time_attacked = get_game_timer();
         attackInfo(E, W);

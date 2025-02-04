@@ -82,59 +82,79 @@ void discoverTile(Level* L, int x, int y) {
   discoverItem(&L->tile[x][y]);
 }
 
-void movePlayer(Level* L, int x, int y) {
-  if (x < 0 || x >= HEIGHT || y < 0 || y >= WIDTH) return;
+void movePlayer(Level *L, int x, int y)
+{
+  if (x < 0 || x >= HEIGHT || y < 0 || y >= WIDTH)
+    return;
 
-  if (MUSIC) {
-    int r = whichRoomID(L, P->x, P->y);
-    int rp = whichRoomID(L, x, y);
-    if (rp != -1 && r == -1) {
-      //goes into a room
-      int type_of_room = L->room[rp].type;
-      switch (type_of_room) {
-        case 0: //Normal
-          initMusic("music/room0_guzheng_city.mp3");
-          break;
-        case 1: //Treasure
-          initMusic("music/room1_energizing.mp3");
-          break;
-        case 2: //Enchant
-          initMusic("music/room2_past_sadness.mp3");
-          break;
-        case 3: //Nightmare
-          initMusic("music/room3_lotus.mp3");
-          break;
+  int r = whichRoomID(L, P->x, P->y);
+  int rp = whichRoomID(L, x, y);
+  if (rp != -1 && r == -1)
+  {
+    // goes into a room
+    int type_of_room = L->room[rp].type;
+    if (MUSIC)
+    {
+      setTopMsg("Entered Room");
+      switch (type_of_room)
+      {
+      case 0: // Normal
+        initMusic("music/room0_guzheng_city.mp3");
+        break;
+      case 1: // Treasure
+        initMusic("music/room1_energizing.mp3");
+        break;
+      case 2: // Enchant
+        initMusic("music/room2_past_sadness.mp3");
+        break;
+      case 3: // Nightmare
+        initMusic("music/room3_lotus.mp3");
+        break;
       }
     }
-    else if (r != -1 && rp == -1) {
-      initMusic(MAIN_MUSIC);
+    else if (r != -1 && rp == -1)
+    {
+      if (MUSIC)
+        initMusic(MAIN_MUSIC);
     }
   }
 
-  int t = L->tile[x][y].type;
-  if (t & 1) return;
-  if (t == 18) {  // PASS DOOR
-    int q = passDoorLogin(&L->tile[x][y].lock);
-    if (q == 1) L->tile[x][y].type = 20;
-    return;
-  }
-  if (t == 16) {  // PASS GENERATOR
-    reinitLock(&L->tile[L->tile[x][y].lockx][L->tile[x][y].locky].lock);
-    return;
-  }
-  P->x = x;
-  P->y = y;
-  discoverTile(L, x, y);
+int t = L->tile[x][y].type;
+if (t & 1)
+  return;
+if (t == 18)
+{ // PASS DOOR
+  int q = passDoorLogin(&L->tile[x][y].lock);
+  if (q == 1)
+    L->tile[x][y].type = 20;
+  return;
+}
+if (t == 16)
+{ // PASS GENERATOR
+  reinitLock(&L->tile[L->tile[x][y].lockx][L->tile[x][y].locky].lock);
+  return;
+}
+P->x = x;
+P->y = y;
+discoverTile(L, x, y);
 }
 
-void moveStairs(Level* L, int where) {
+void moveStairs(Level *L, int where)
+{
   int x = P->x, y = P->y, t = L->tile[x][y].type;
-  if (where == -1) {
-    if (t == 10) {
+  if (where == -1)
+  {
+    if (t == 10)
+    {
+      setTopMsg("Prv Level");
       G->cur--;
     }
-  } else if (where == +1) {
-    if (t == 8) {
+  }
+  else if (where == +1)
+  {
+    if (t == 8)
+    {
+      setTopMsg("Next Level");
       G->cur++;
     }
   }
