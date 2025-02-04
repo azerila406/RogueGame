@@ -44,9 +44,10 @@ int getColor(Tile *t) {
     case 16:
     case 5:
       return 1;
+    case 2:
+      return 2;
     case 1:
     case 3:
-    case 2:
     case 6:
     case 8:
     case 10:

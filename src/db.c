@@ -29,6 +29,7 @@ void initializeDatabase() {
                                     "FOREIGN KEY(user_id) REFERENCES users(id));";
     executeSql(sql);
 }
+
 void userInfoDB(const char *username, int *score, int *gold, int *games, int *won, int *lost, char last_match_time[]) {
     char sql[512];
     sqlite3_stmt *stmt;
