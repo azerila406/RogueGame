@@ -61,6 +61,19 @@ void longRangeAttackWithDirection(Level *L, Weapon *W, int dx, int dy)
         E->last_time_attacked = get_game_timer();
         attackInfo(E, W);
     }
+    for (int i = 0; i < W->range; ++i) {
+        int nx = x + dx;
+        int ny = y + dy;
+        if (nx < 0 || ny < 0 || nx >= HEIGHT || ny >= WIDTH) break;
+        int t = L->tile[nx][ny].type;
+        if (t == 1 || t == 3 || t == 21 || t == 23 || t == 25 || t == 27 || t == 29) break;
+        x += dx;
+        y += dy;
+    }
+    L->tile[x][y].W = (Weapon*) malloc(sizeof(Weapon));
+    memcpy(L->tile[x][y].W, W, sizeof(Weapon));
+    L->tile[x][y].W->td = 1;
+    L->tile[x][y].type = 42;
 }
 
 void longRangeAttack(Level *L, Weapon *W)
