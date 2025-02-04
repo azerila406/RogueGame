@@ -103,6 +103,10 @@ void processInput(int x, Level *L) {
     case 'E':
       searchItem(&L->tile[P->x][P->y]);
       return;
+    case 'P':
+    case 'p':
+      fastMove(L);
+      return;
     default:
       setTopMsg("Illegal Command");
       return;

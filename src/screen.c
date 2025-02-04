@@ -18,7 +18,7 @@ int itemColor(Tile *t) {
     if (t->G->type == 0)
       return 1;
     else
-      return 2;
+      return 5;
   } else if (t->F) {
     return 1;
   } else if (t->C) {
@@ -75,7 +75,7 @@ char enemyChar(Enemy *E) { return ENEMY_CHAR_BY_TYPE[E->type]; }
 
 wchar_t *itemChar(Tile *t) {
   if (t->G) {
-    return L"G";
+    return L"$";
   } else if (t->F) {
     return L"F";
   } else if (t->C) {
@@ -187,6 +187,7 @@ void renderHUD(Level *l) {
   attron(COLOR_PAIR(2));
   for (int i = 0; i < WIDTH + 30; ++i) {
     mvprintw(HEIGHT + 2, i, " ");
+    mvprintw(HEIGHT + 3, i, " ");
   }
   attroff(COLOR_PAIR(2));
 

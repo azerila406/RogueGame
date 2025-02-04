@@ -165,8 +165,8 @@ void initGold(Tile *t) {
 //TODO ROOMS TYPE
 //prob is partial sum of x/50
 const int ROOMS_TYPE_PROB[4][5] = {
-  {1, 3, 5, 7}, 
-  {1, 5, 6, 15}, 
+  {3, 5, 6, 7}, 
+  {3, 5, 6, 15}, 
   {7, 7, 14, 14},
   {0, 0, 0, 0}
 };

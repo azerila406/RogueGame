@@ -7,16 +7,20 @@ void processPlayer() {
 
   if (P->hunger == MAX_HUNGER) {
     if (P->health < P->max_health) {
-      P->health = max(P->max_health, P->health + P->health_recover_mult);
+      P->health = min(P->max_health, P->health + P->health_recover_mult);
     }
   }
 
-  if (P->hunger > 0) {
-    if (get_game_timer() - P->last_time_hunger >= TIME_OF_HUNGER_DECREASE) {
-      P->hunger--;
+  if (get_game_timer() % 3 == 0)
+  {
+    if (P->hunger > 0)
+    {
+      if (get_game_timer() - P->last_time_hunger >= TIME_OF_HUNGER_DECREASE)
+        P->hunger--;
     }
-  } else
-    P->health--;
+    else
+      P->health--;
+  }
 
   if (P->damage_mult == 2 && (get_game_timer() - P->damage_mult_last_time) >=
                                  TIME_OF_DAMAGE_MULT_LASTING) {
@@ -80,6 +84,39 @@ void discoverTile(Level* L, int x, int y) {
     P->health -= 3;
   }
   discoverItem(&L->tile[x][y]);
+}
+
+void fastMove(Level *L) {
+  int ch = getch();
+  int dx = 0, dy = 0;
+  switch (ch) {
+  case 'a':
+    dy = -1;
+    break;
+  case 'd':
+    dy = +1;
+    break;
+  case 'w':
+    dx = -1;
+    break;
+  case 's':
+    dx = +1;
+    break;
+  default:
+    return;
+  }
+  
+  int x = P->x;
+  int y = P->y;
+  while (true) {
+    int nx = x + dx, ny = y + dy;
+    if (nx < 0 || ny < 0 || nx >= HEIGHT || ny >= WIDTH || (L->tile[nx][ny].type != L->tile[x][y].type && L->tile[nx][ny].type != 22 && L->tile[x][y].type != 22)) break;
+    x = nx;
+    y = ny;
+  }
+  P->x = x;
+  P->y = y;
+  discoverTile(L, x, y);
 }
 
 void movePlayer(Level *L, int x, int y)

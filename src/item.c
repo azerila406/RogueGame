@@ -202,10 +202,11 @@ void consumeFood(Food *F) {
             P->speed_mult = 2;
             P->speed_mult_last_time = get_game_timer();
         }
+        P->last_time_hunger = get_game_timer();
     }
     else {
         P->hunger = 0;
-        P->health /= 2;
+        P->health -= 5;
     }
 }
 

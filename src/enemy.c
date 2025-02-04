@@ -12,8 +12,13 @@ int isValidTile(Level *L, int x, int y)
 void attackInfo(Enemy *E, Weapon *W)
 {
     char *s = (char *)malloc(200 * sizeof(char));
-    sprintf(s, "You attacked %s by %d", ENEMEY_NAME_BY_TYPE[E->type], W->dmg);
-    E->health -= W->dmg;
+    sprintf(s, "You attacked %s by %d", ENEMEY_NAME_BY_TYPE[E->type], W->dmg * P->damage_mult);
+    E->health -= W->dmg * P->damage_mult;
+
+    if (W->type == 2) {
+        renderMsgAndWait("It lost its movement ability", 4);
+        E->speed = 0;
+    }
 
     if (E->health <= 0)
     {

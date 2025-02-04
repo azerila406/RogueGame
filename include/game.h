@@ -35,7 +35,7 @@
 #define TIME_OF_DAMAGE_MULT_LASTING 15
 #define TIME_OF_SPEED_MULT_LASTING 15
 #define TIME_OF_HEALTH_RECOVER_MULT_LASTING 15
-#define TIME_OF_HUNGER_DECREASE 5
+#define TIME_OF_HUNGER_DECREASE 15
 #define MAX_ENTRY 500
 #define MAX_ENTRY_IN_MENU 5
 
@@ -248,6 +248,7 @@ void moveStairs(Level *lvl, int where);
 void processUnseen(Level *lvl);
 void discoverTile(Level *lvl, int x, int y);
 void processPlayer();
+void fastMove(Level *L);
 
 /* Room Functions*/
 void initRoom(Level *, Room *);
